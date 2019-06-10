@@ -21,10 +21,11 @@ class InputArea extends Component {
               label={label}
               name={name}
               value={value}
-              // onChange={event => handleInputChange(event)}
-              style={styleprops}
+              onChange={event => handleInputChange(event)}
+              className={styleprops}
               margin="normal"
               type={type}
+              fullWidth
               helperText={validation ? "" : `*Enter A ${label}`}
               InputLabelProps={{
                 style: {

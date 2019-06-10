@@ -1,15 +1,23 @@
-export const styles = {
-    rectangle: {
-        maxWidth: '620px',
-        height: '590px',
-        borderRadius: '5px',
-        backgroundColor: '#fff',
-        display: 'flex',
-        margin: '0 auto',
-        display: 'flex',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        padding: '5px 0 5px 0'
+export const styles =theme => ({
+    paper: {
+        borderRadius: '10px',
+        '&>div:nth-of-type(3)>div:nth-of-type(1)': {
+        margin:0,
+        height: '100% !important',
+        maxHeight: '100vh',
+        borderRadius: '0px',
+        },
+        [theme.breakpoints.up('sm')]: {
+            maxWidth: '620px',
+            height: '570px',
+            borderRadius: '5px',
+            backgroundColor: '#fff',
+            display: 'flex',
+            margin: '30px auto',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '5px 0 5px 0',
+          },
     },
     mainWrapper: {
         width: "30%",
@@ -17,43 +25,69 @@ export const styles = {
         flexDirection: "column",
         alignItems: "center"
     },
+    back:{
+        [theme.breakpoints.up('sm')]: {
+            display:'none'
+        }
+    },
+    Header:{
+        width: '100%',
+        height: 40,
+        backgroundColor:' #e2e2e2',
+        [theme.breakpoints.up('sm')]: {
+            display:'none'
+        }
+    },
     headerText: {
-        width: '292px',
-        height: '28px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '24px',
-        fontWeight: '500',
-        fontStyle: 'normal',
-        fontStretch: 'normal',
-        lineHeight: 'normal',
-        letterSpacing: 'normal',
-        color: '#575553',
+        [theme.breakpoints.up('sm')]: {
+            width: '292px',
+            height: '28px',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+            fontSize: '24px',
+            fontWeight: '500',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: 'normal',
+            letterSpacing: 'normal',
+            color: '#575553',
+        },
+        marginTop:25,
+        width: '100%',
+            height: '28px',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+            fontSize: '20px',
+            fontWeight: '500',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: '2.5',
+            letterSpacing: 'normal',
+            color: '#575553',
+            display:'flex',
+            flexDirection:'row' 
     },
     forgotTypo: {
         width: '130px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         height: '20px',
-        fontSize: '14px',
-        fontWeight: 'bold',
+        fontFamily: 'Roboto',
+        fontSize: '16px',
+        fontWeight: '500',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.25,
         letterSpacing: 'normal',
         color: '#2b35e0',
-        cursor: 'pointer'
     },
     signupTypo: {
         width: '133px',
         height: '20px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '14px',
-        fontWeight: 'bold',
+        fontFamily: 'Roboto',
+        fontSize: '16px',
+        fontWeight: '500',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.25,
         letterSpacing: 'normal',
         color: '#2b35e0',
-        cursor: 'pointer'
     },
     formWrapper: {
         textAlign: "center",
@@ -64,9 +98,7 @@ export const styles = {
         color: '#000'
     },
     errorText: {
-        color: "Red",
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-
+        color: "Red"
     },
     emailField: {
         width: "inherit",
@@ -132,10 +164,12 @@ export const styles = {
         paddingBottom: '35px'
     },
     closeIcon: {
+        display:'none',
+        [theme.breakpoints.up('sm')]: {
         display: 'flex', 
         justifyContent: 'flex-end',
         width: '50px',
-        alignSelf: 'flex-end' 
+        alignSelf: 'flex-end' }
     },
     icon: {
         width: '24px',
@@ -197,12 +231,10 @@ export const styles = {
         maxWidth: '300px'
     },
     textField: {
-        width: "100%",
-        fontFamily: 'Roboto Helvetica, Arial, sans-serif'
+        width: "100%"
     },
     textFieldPass: {
         width: "100%",
-        fontFamily: 'Roboto Helvetica, Arial, sans-serif',
         marginTop: "30px"
     },
     links: {
@@ -258,5 +290,5 @@ export const styles = {
           backgroundColor: "green"
         }
     }
-};
+});
   

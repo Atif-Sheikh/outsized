@@ -1,26 +1,30 @@
-export const styles = {
-    rectangle: {
-        maxWidth: '620px',
-        height: '712px',
-        borderRadius: '5px',
-        backgroundColor: '#fff',
-        display: 'flex',
-        margin: '-30px auto',
-        display: 'flex',
-        justifyContent: 'center',
-        minHeight: '90vh',
-        border: 'none',
-        padding: '5px 0 5px 0',
-        '&>div:nth-of-type(1)': {
-            backgroundColor: '#000000c7 !important'
-        }
-    },
-    inner:{
-        maxWidth: '620px',
-        height: '712px',
-        borderRadius: '5px',
-        backgroundColor: '#fff',
-        display: 'flex',
+export const styles = theme => ({
+    paper: {
+      
+        borderRadius: '10px',
+        '&>div:nth-of-type(3)>div:nth-of-type(1)': {
+        margin:0,
+        height: '100% !important',
+        maxHeight: '100vh',
+        borderRadius: '0px',
+        },
+        [theme.breakpoints.up('sm')]: {
+            maxWidth: '620px',
+            height: '712px',
+            maxHeight:' calc(100% - 96px)',
+            borderRadius: '10px !important',
+            backgroundColor: '#fff',
+            display: 'flex',
+            margin: '30px auto',
+            display: 'flex',
+            justifyContent: 'center',
+            minHeight: '90vh',
+            border: 'none',
+            padding: '5px 0 5px 0',
+            '&>div:nth-of-type(1)': {
+                backgroundColor: '#000000c7 !important'
+            },
+          },
     },
     mainWrapper: {
         width: "30%",
@@ -29,6 +33,7 @@ export const styles = {
         alignItems: "center"
     },
     headerText: {
+        [theme.breakpoints.up('sm')]: {
         width: '292px',
         height: '28px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
@@ -39,6 +44,25 @@ export const styles = {
         lineHeight: 'normal',
         letterSpacing: 'normal',
         color: '#575553',
+    },
+    marginTop:25,
+    width: '100%',
+        height: '28px',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontSize: '20px',
+        fontWeight: '500',
+        fontStyle: 'normal',
+        fontStretch: 'normal',
+        lineHeight: '2.5',
+        letterSpacing: 'normal',
+        color: '#575553',
+        display:'flex',
+        flexDirection:'row'
+    },
+    back:{
+        [theme.breakpoints.up('sm')]: {
+            display:'none'
+        }
     },
     forgotTypo: {
         width: '130px',
@@ -56,8 +80,8 @@ export const styles = {
         width: '100%',
         height: '20px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '14px',
-        fontWeight: 'bold',
+        fontSize: '16px',
+        fontWeight: '500',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.25,
@@ -139,11 +163,21 @@ export const styles = {
         margin: '0 auto',
         paddingBottom: '35px'
     },
+    Header:{
+        width: '100%',
+        height: 40,
+        backgroundColor:' #e2e2e2',
+        [theme.breakpoints.up('sm')]: {
+            display:'none'
+        }
+    },
     closeIcon: {
+        display:'none',
+        [theme.breakpoints.up('sm')]: {
         display: 'flex', 
         justifyContent: 'flex-end',
         width: '50px',
-        alignSelf: 'flex-end' 
+        alignSelf: 'flex-end' }
     },
     icon: {
         width: '24px',
@@ -267,5 +301,5 @@ export const styles = {
         }
     },
 
-};
+});
   

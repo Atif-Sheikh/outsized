@@ -5,14 +5,15 @@ import TextField from "@material-ui/core/TextField";
 import Link from "next/link";
 import Paper from "@material-ui/core/Paper";
 import { withSnackbar } from "notistack";
+import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Back from '@material-ui/icons/ArrowBack';
 import { styles } from "@styles/clientComponents/SignUp.styles.js";
 import InputArea from '../../ReuseableComponents/InputArea'
 import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
-
 class SignUpFormComponent extends Component {
   state = {
     email: "",
@@ -53,30 +54,34 @@ class SignUpFormComponent extends Component {
 
   render() {
     let { email, password, emailValid, passwordValid, error } = this.state;
+    const {classes} = this.props
     return (
 
         <Dialog
-            style={styles.rectangle}
+            className={classes.paper}
             onClose={() => {}}
             open={true}
         >
-            <IconButton style={styles.closeIcon} aria-label="Close" onClick={() => {}}>
-                <CloseIcon style={styles.icon} />
+            <IconButton className={classes.closeIcon} aria-label="Close" onClick={() => {}}>
+                <CloseIcon className={classes.icon} />
             </IconButton>
-            {/* <Paper style={styles.inner}> */}
-            <div style={styles.FormContainer}>
-            <Typography style={styles.headerText}>
-                Welcome back to Outsized
+            <div className={classes.Header}></div>
+            {/* <Paper className={classes.inner}> */}
+            <div className={classes.FormContainer}>
+            <Typography className={classes.headerText}>
+            <IconButton className={classes.back} aria-label="Close" onClick={() => {}}>
+                <Back className={classes.icon} />
+            </IconButton> Welcome back to Outsized
             </Typography>
             {
                 error && error.length ? (
-                    <Typography style={styles.errorText}>
-                      rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span style={styles.signupTypo}> login.</span>
+                    <Typography className={classes.errorText}>
+                      rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span>
                     </Typography>
                 ) : null
             }
           <form
-            style={styles.container}
+            className={classes.container}
             noValidate
             autoComplete="off"
             onSubmit={event => this.formValidator(event)}
@@ -100,44 +105,44 @@ class SignUpFormComponent extends Component {
              onFocus={() => this.setState({ emailValid: true })}
              />
               <InputArea
-              styleprops={styles.textFieldPass}
+              styleprops={classes.textFieldPass}
              label = "LinkedIn profile Url" 
              name  = "LinkedIn profile Url"
              handleInputChange = {event => this.handleInputChange(event)}
               validation={true}
               />
-            <div style={styles.wrapper}>
+            <div className={classes.wrapper}>
               <Button
                 variant="contained"
                 color="primary"
                 type="submit"
-                style={styles.SignUpBtn}
+                className={classes.SignUpBtn}
                 onClick={() => this.setState({ error: "something went wrong" })}
               >
                 Continue
               </Button>
             </div>
-            <div style={styles.divider}>
-                <Divider light style={styles.dividerLine} />
-                <Typography style={styles.orOperator}>
+            <div className={classes.divider}>
+                <Divider light className={classes.dividerLine} />
+                <Typography className={classes.orOperator}>
                     or
                 </Typography>
-                <Divider light style={styles.dividerLine} />
+                <Divider light className={classes.dividerLine} />
             </div>
-            <div style={styles.wrapper}>
+            <div className={classes.wrapper}>
               <Button
                 variant="contained"
                 color="primary"
                 type="submit"
-                style={styles.SignUpBtnLinkedIn}
+                className={classes.SignUpBtnLinkedIn}
               >
                 Signup with LinkedIn
               </Button>
             </div>
           </form>
-            <div style={styles.modalFooter}>
-                <Typography style={styles.signupTypo}>
-                    <span style={styles.newHere}>Already a registered user?</span> login
+            <div className={classes.modalFooter}>
+                <Typography className={classes.signupTypo}>
+                    <span className={classes.newHere}>Already a registered user?</span> login
                 </Typography>
             </div>
           </div>
@@ -147,4 +152,4 @@ class SignUpFormComponent extends Component {
   }
 };
 
-export default withSnackbar(SignUpFormComponent);
+export default withSnackbar(withStyles(styles)(SignUpFormComponent));
