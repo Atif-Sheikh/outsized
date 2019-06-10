@@ -84,7 +84,7 @@ class LoginFormComponent extends Component {
               helperText={emailValid ? "" : "*Enter A Valid Email"}
               InputLabelProps={{
                 style: {
-                    width: '101px',
+                    width: '120px',
                     height: '24px',
                     fontFamily: 'Roboto',
                     fontSize: '16px',
@@ -94,6 +94,7 @@ class LoginFormComponent extends Component {
                     lineHeight: 1.5,
                     letterSpacing: 'normal',
                     color: 'rgba(0, 0, 0, 0.87)',
+                    fontFamily: 'Roboto Helvetica, Arial, sans-serif'
                 }
               }}
             />
@@ -109,7 +110,7 @@ class LoginFormComponent extends Component {
               onFocus={() => this.setState({ passwordValid: true })}
               InputLabelProps={{
                 style: {
-                    width: '101px',
+                    width: '120px',
                     height: '24px',
                     fontFamily: 'Roboto',
                     fontSize: '16px',
@@ -119,6 +120,7 @@ class LoginFormComponent extends Component {
                     lineHeight: 1.5,
                     letterSpacing: 'normal',
                     color: 'rgba(0, 0, 0, 0.87)',
+                    fontFamily: 'Roboto Helvetica, Arial, sans-serif'
                 }
               }}
             />
@@ -152,12 +154,16 @@ class LoginFormComponent extends Component {
             </div>
           </form>
             <div style={styles.modalFooter}>
+              <Link href="/forgot-password">
                 <Typography style={styles.forgotTypo}>
                     Forgot Password !
                 </Typography>
+              </Link>
+              <Link href="/signup">
                 <Typography style={styles.signupTypo}>
                     <span style={styles.newHere}>New Here ?</span> Signup
                 </Typography>
+              </Link>
             </div>
           </div>
         </Dialog>

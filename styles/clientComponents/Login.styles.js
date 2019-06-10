@@ -40,6 +40,7 @@ export const styles = {
         lineHeight: 1.25,
         letterSpacing: 'normal',
         color: '#2b35e0',
+        cursor: 'pointer'
     },
     signupTypo: {
         width: '133px',
@@ -52,6 +53,7 @@ export const styles = {
         lineHeight: 1.25,
         letterSpacing: 'normal',
         color: '#2b35e0',
+        cursor: 'pointer'
     },
     formWrapper: {
         textAlign: "center",
@@ -195,10 +197,12 @@ export const styles = {
         maxWidth: '300px'
     },
     textField: {
-        width: "100%"
+        width: "100%",
+        fontFamily: 'Roboto Helvetica, Arial, sans-serif'
     },
     textFieldPass: {
         width: "100%",
+        fontFamily: 'Roboto Helvetica, Arial, sans-serif',
         marginTop: "30px"
     },
     links: {
