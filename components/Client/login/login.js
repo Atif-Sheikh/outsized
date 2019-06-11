@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Link from "next/link";
-import Paper from "@material-ui/core/Paper";
+import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Router from "next/Router";
 import { styles } from "@styles/clientComponents/Login.styles.js";
 import InputArea from '../../ReuseableComponents/InputArea'
 import { withStyles } from '@material-ui/core/styles';
 import Back from '@material-ui/icons/ArrowBack';
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+
+import { clientLoginApi } from "@actions/client";
 
 class LoginFormComponent extends Component {
   state = {
@@ -42,7 +46,13 @@ class LoginFormComponent extends Component {
       });
     }
     if (this.state.emailValid && this.state.passwordValid) {
-
+      this.props.clientLoginApi(
+        this.state.email,
+        this.state.password,
+        this.props.enqueueSnackbar,
+        this.props.closeSnackbar,
+        Router
+      );
     }
   };
   
@@ -106,9 +116,13 @@ class LoginFormComponent extends Component {
                 color="primary"
                 type="submit"
                 className={classes.loginBtn}
-                onClick={() => this.setState({ error: "something went wrong" })}
               >
-                Login
+              {this.props.isLoading ? (
+                <CircularProgress size={28} style={styles.buttonProgress} />
+              )
+              :
+              'Login'
+              }
               </Button>
             </div>
             <div className={classes.divider}>
@@ -143,4 +157,25 @@ class LoginFormComponent extends Component {
   }
 };
 
-export default withSnackbar(withStyles(styles)(LoginFormComponent));
+const mapStateToProps = state => {
+  return {
+    token: state.clientLoginReducer.token,
+    isLoading: state.clientLoginReducer.isLoading
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    clientLoginApi: (email, password, enqueueSnackbar, closeSnackbar, Router) =>
+      dispatch(
+        clientLoginApi(email, password, enqueueSnackbar, closeSnackbar, Router)
+      )
+  };
+};
+
+export default withSnackbar(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )  
+  (withStyles(styles)(LoginFormComponent))
+);
