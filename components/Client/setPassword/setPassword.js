@@ -6,6 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
 import { styles } from "@styles/clientComponents/SetPassword.styles.js";
 import InputArea from '../../ReuseableComponents/InputArea'
 
@@ -41,27 +42,29 @@ class SetPasswordFormComponent extends Component {
 //   };
 
   render() {
+    const { classes } = this.props
     return (
-
         <Dialog
-            style={styles.rectangle}
+            // style={styles.rectangle}
+            className={classes.paper}
             onClose={() => {}}
             open={true}
         >
-            <div style={styles.headerContainer}>
-                <Typography style={styles.headerText}>
+            <div className={classes.Header}></div>
+            <div className={classes.headerContainer}>
+                <Typography className={classes.headerText}>
                     <i class="material-icons">
                         keyboard_backspace
                     </i> 
-                    <span style={styles.headerTextChild}>Set password</span>
+                    <span className={classes.headerTextChild}>Set password</span>
                 </Typography>
-                <IconButton style={styles.closeIcon} aria-label="Close" onClick={() => {}}>
-                    <CloseIcon style={styles.icon} />
+                <IconButton className={classes.closeIcon} aria-label="Close" onClick={() => {}}>
+                    <CloseIcon className={classes.icon} />
                 </IconButton>
             </div>
-            <div style={styles.FormContainer}>
+            <div className={classes.FormContainer}>
                 <form
-                    style={styles.container}
+                    className={classes.container}
                     noValidate
                     autoComplete="off"
                     // onSubmit={event => this.formValidator(event)}            
@@ -82,12 +85,12 @@ class SetPasswordFormComponent extends Component {
                         handleInputChange = {event => this.handleInputChange(event)}
                         validation={true}
                     />
-                    <div style={styles.wrapper}>
+                    <div className={classes.wrapper}>
                     <Button
                         variant="contained"
                         color="primary"
                         type="submit"
-                        style={styles.SignUpBtn}
+                        className={classes.SignUpBtn}
                         // onClick={() => this.setState({ error: "something went wrong" })}
                     >
                         Signup
@@ -100,4 +103,4 @@ class SetPasswordFormComponent extends Component {
   }
 };
 
-export default withSnackbar(SetPasswordFormComponent);
+export default withSnackbar(withStyles(styles)(SetPasswordFormComponent));

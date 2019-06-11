@@ -101,7 +101,7 @@ function MenuListComposition(props) {
         style={  {
             width: 36,
             height: 33,
-            marginTop: "30px",
+            marginTop: "0px",
             fontSize: 16,
             fontWeight: 'normal',
             fontStyle: 'normal',

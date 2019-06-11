@@ -67,20 +67,22 @@ class SignUpFormComponent extends Component {
             </IconButton>
             <div className={classes.Header}></div>
             {/* <Paper className={classes.inner}> */}
+            <div className={classes.FormContainerDup}>
+              <Typography className={classes.headerText}>
+              <IconButton className={classes.back} aria-label="Close" onClick={() => {}}>
+                  <Back className={classes.icon} />
+              </IconButton> Welcome back to Outsized
+              </Typography>
+              {
+                  error && error.length ? (
+                      <Typography className={classes.errorText}>
+                        rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span>
+                      </Typography>
+                  ) : null
+              }
+            </div>
             <div className={classes.FormContainer}>
-            <Typography className={classes.headerText}>
-            <IconButton className={classes.back} aria-label="Close" onClick={() => {}}>
-                <Back className={classes.icon} />
-            </IconButton> Welcome back to Outsized
-            </Typography>
-            {
-                error && error.length ? (
-                    <Typography className={classes.errorText}>
-                      rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span>
-                    </Typography>
-                ) : null
-            }
-          <form
+            <form
             className={classes.container}
             noValidate
             autoComplete="off"

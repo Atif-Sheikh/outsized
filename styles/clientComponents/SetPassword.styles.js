@@ -1,4 +1,32 @@
-export const styles = {
+export const styles =theme => ({
+    paper: {
+        borderRadius: '0px',
+        '&>div:nth-of-type(3)>div:nth-of-type(1)': {
+        margin:0,
+        height: '100% !important',
+        maxHeight: '100vh',
+        },
+        [theme.breakpoints.up('sm')]: {
+            maxWidth: '620px',
+            height: '350px',
+            borderRadius: '15px !important',
+            backgroundColor: '#fff',
+            display: 'flex',
+            margin: '60px auto',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '5px 0 5px 0',
+          },
+    },
+    Header:{
+        width: '100%',
+        height: 40,
+        backgroundColor:' #e2e2e2',
+        marginBottom:'10px',
+        [theme.breakpoints.up('sm')]: {
+            display:'none'
+        }
+    },
     rectangle: {
         maxWidth: '620px',
         height: '712px',
@@ -41,8 +69,8 @@ export const styles = {
         alignItems:'center',
         height: '28px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '24px',
-        fontWeight: '500',
+        fontSize: '20px',
+        fontWeight: '550',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 'normal',
@@ -103,7 +131,7 @@ export const styles = {
         boxShadow: "none"
     },
     SignUpBtn: {
-        width: '300px',
+        width: '85vw',
         height: '36px',
         borderRadius: '2px',
         boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)',
@@ -123,6 +151,10 @@ export const styles = {
         lineHeight: 'normal',
         letterSpacing: '0.5px',
         color: '#ffffff',
+        [theme.breakpoints.up('sm')]: {
+            width: '300px',
+
+        }
     },
     SignUpBtnLinkedIn: {
         width: '300px',
@@ -153,10 +185,12 @@ export const styles = {
         paddingBottom: '35px'
     },
     closeIcon: {
+        display:'none',
+        [theme.breakpoints.up('sm')]: {
         display: 'flex', 
         justifyContent: 'flex-end',
         width: '50px',
-        alignSelf: 'flex-end' 
+        alignSelf: 'flex-end' }
     },
     icon: {
         width: '24px',
@@ -280,5 +314,5 @@ export const styles = {
         }
     },
 
-};
+});
   

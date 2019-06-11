@@ -60,19 +60,21 @@ class LoginFormComponent extends Component {
                 <CloseIcon className={classes.icon} />
             </IconButton>
             <div className={classes.Header}></div>
+            <div className={classes.FormContainerDup}>
+              <Typography className={classes.headerText}>
+                <IconButton className={classes.back} aria-label="Close" onClick={() => {}}>
+                    <Back className={classes.icon} />
+                </IconButton>    Welcome back to Outsized!
+                </Typography>
+                {
+                    error && error.length ? (
+                        <Typography className={classes.errorText}>
+                            Incorrect email or password
+                        </Typography>
+                    ) : null
+                }
+            </div>
             <div className={classes.FormContainer}>
-            <Typography className={classes.headerText}>
-            <IconButton className={classes.back} aria-label="Close" onClick={() => {}}>
-                <Back className={classes.icon} />
-            </IconButton>    Welcome back to Outsized!
-            </Typography>
-            {
-                error && error.length ? (
-                    <Typography className={classes.errorText}>
-                        Incorrect email or password
-                    </Typography>
-                ) : null
-            }
           <form
             className={classes.container}
             noValidate

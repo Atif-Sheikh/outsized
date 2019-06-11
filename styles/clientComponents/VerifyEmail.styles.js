@@ -1,51 +1,15 @@
-export const styles = theme => ({
-    mainContainer: {
-        // flex: 1,
-        [theme.breakpoints.down('sm')]: {
-            height: '100vh',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-        }
-    },
+export const styles = {
     header: {
         width: '100%',
         height: '70px',
         backgroundColor: '#e2e2e2',
-        [theme.breakpoints.down('sm')]: {
-            height: '40px',
-            position: 'absolute',
-            top: 0,
-            width: '100%'
-        },
-    },
-    btnContainer: {
-        [theme.breakpoints.down('sm')]: {
-            position: 'absolute',
-            top: '40px',
-        }
     },
     backButton: {
-        color: '#000000',
-        [theme.breakpoints.only('sm')]: {
-            // marginLeft: '20px',
-        },
-    },
-    mobileDevice: {
-        [theme.breakpoints.down('sm')]: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-        }
+        color: '#000000'
     },
     circleIcon: {
         fontSize: '33.3px',
-        color: '#4caf50',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '19.6px',        
-        }
+        color: '#4caf50'
     },
     upperContainer: {
         display: 'flex',
@@ -53,10 +17,6 @@ export const styles = theme => ({
         justifyContent: 'flex-start',
         width: '80%',
         margin: '0 auto',
-        [theme.breakpoints.down('sm')]: {
-            width: '95%',
-            textAlign: 'left'
-        }
     },
     title: {
         width: '734px',
@@ -69,10 +29,6 @@ export const styles = theme => ({
         lineHeight: '1.5',
         letterSpacing: 'normal',
         color: '#000000',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '16px',
-            textAlign: 'left'
-        }
     },
     midSecTypo: {
         width: '1150px',
@@ -85,10 +41,6 @@ export const styles = theme => ({
         lineHeight: '1.5',
         letterSpacing: 'normal',
         color: '#000000',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '14px',
-            height: 'auto',
-        }
     },
     lowerContainer: {
         display: 'flex',
@@ -96,12 +48,6 @@ export const styles = theme => ({
         justifyContent: 'flex-start',
         width: '78%',
         margin: '0 auto',
-        [theme.breakpoints.down('sm')]: {
-            width: '85%',
-            textAlign: 'center',
-            marginTop: '33px',
-            height: 'auto'        
-        }
     },
     underlineTypo: {
         textDecoration: 'underline'
@@ -118,10 +64,6 @@ export const styles = theme => ({
         lineHeight: 1.25,
         letterSpacing: 'normal',
         color: '#383838',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '12px',
-            paddingTop: 20        
-        }
     },
     didntReceive: {
         minWidth: '328px',
@@ -134,9 +76,6 @@ export const styles = theme => ({
         lineHeight: 1.25,
         letterSpacing: 'normal',
         color: '#000000',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '12px',        
-        }
     },
     textStyle: {
         fontWeight: '500',
@@ -149,10 +88,7 @@ export const styles = theme => ({
         flexDirection: 'row',
         width: '78%',
         margin: '0 auto',
-        marginTop: '50px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'inline-block',
-            marginTop: '50px',
-        }
-    },
-});
+        marginTop: '30px',
+    }
+};
+  

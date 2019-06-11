@@ -1,21 +1,21 @@
 export const styles = theme => ({
     paper: {
-      
         borderRadius: '10px',
         '&>div:nth-of-type(3)>div:nth-of-type(1)': {
         margin:0,
         height: '100% !important',
         maxHeight: '100vh',
+        overflow:'auto',
         borderRadius: '0px',
         },
         [theme.breakpoints.up('sm')]: {
             maxWidth: '620px',
-            height: '712px',
-            maxHeight:' calc(100% - 96px)',
+            height: '98vh !important',
+            // maxHeight: '98vh',
             borderRadius: '10px !important',
             backgroundColor: '#fff',
             display: 'flex',
-            margin: '30px auto',
+            margin: '10px auto',
             display: 'flex',
             justifyContent: 'center',
             minHeight: '90vh',
@@ -34,30 +34,32 @@ export const styles = theme => ({
     },
     headerText: {
         [theme.breakpoints.up('sm')]: {
-        width: '292px',
+            width: '85%',
+            margin:'auto',
+            height: '12px',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+            fontSize: '24px',
+            fontWeight: '550',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: 'normal',
+            letterSpacing: 'normal',
+            color: '#575553',
+        },
+        marginTop:25,
+        width: '100%',
         height: '28px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '24px',
-        fontWeight: '500',
+        fontSize: '18px',
+        fontWeight: '550',
         fontStyle: 'normal',
         fontStretch: 'normal',
-        lineHeight: 'normal',
-        letterSpacing: 'normal',
-        color: '#575553',
-    },
-    marginTop:25,
-    width: '100%',
-        height: '28px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '20px',
-        fontWeight: '500',
-        fontStyle: 'normal',
-        fontStretch: 'normal',
-        lineHeight: '2.5',
+        lineHeight: '2.7',
         letterSpacing: 'normal',
         color: '#575553',
         display:'flex',
-        flexDirection:'row'
+        marginLeft:'12px',
+        flexDirection:'row' 
     },
     back:{
         [theme.breakpoints.up('sm')]: {
@@ -81,7 +83,7 @@ export const styles = theme => ({
         height: '20px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         fontSize: '16px',
-        fontWeight: '500',
+        fontWeight: '550',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.25,
@@ -97,9 +99,7 @@ export const styles = theme => ({
     newHere: {
         color: '#000'
     },
-    errorText: {
-        color: "Red"
-    },
+    
     emailField: {
         width: "inherit",
         marginBottom: "15px"
@@ -113,8 +113,14 @@ export const styles = theme => ({
         margin: "auto",
         boxShadow: "none"
     },
+    FormContainerDup: {
+        width: "100%",
+        // minHeight: "230px",
+        margin: '0 auto',
+        paddingBottom: '20px'
+    },
     SignUpBtn: {
-        width: '300px',
+        width: '85vw',
         height: '36px',
         borderRadius: '2px',
         boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)',
@@ -124,9 +130,12 @@ export const styles = theme => ({
         borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))',
         borderImageSlice: 1,
         backgroundImage: '#5e35b1, linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))',
-        marginTop: '30px',
+        marginTop: '20px',
         textTransform: 'capitalize',
+        [theme.breakpoints.up('sm')]: {
+            width: '300px',
 
+        },
         fontSize: '14px',
         fontWeight: '500',
         fontStyle: 'normal',
@@ -136,7 +145,7 @@ export const styles = theme => ({
         color: '#ffffff',
     },
     SignUpBtnLinkedIn: {
-        width: '300px',
+        width: '85vw',
         height: '36px',
         borderRadius: '2px',
         boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)',
@@ -146,9 +155,12 @@ export const styles = theme => ({
         borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))',
         borderImageSlice: 1,
         backgroundImage: '#5e35b1, linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))',
-        marginTop: '30px',
+        marginTop: '14px',
         textTransform: 'capitalize',
+        [theme.breakpoints.up('sm')]: {
+            width: '300px',
 
+        },
         fontSize: '14px',
         fontWeight: '500',
         fontStyle: 'normal',
@@ -212,7 +224,7 @@ export const styles = theme => ({
     divider: {
         width: '90%',
         alignItems: 'center',
-        marginTop: '30px',
+        marginTop: '14px',
         display: 'flex',
         justifyContent: 'space-between'
     },
@@ -244,7 +256,7 @@ export const styles = theme => ({
     },
     textFieldPass: {
         width: "100%",
-        marginTop: "15px",
+        marginTop: "5px",
         marginBottom:0,
     },
     links: {
@@ -267,14 +279,22 @@ export const styles = theme => ({
         width: '100%',
         height: '20px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '16px',
-        fontWeight: '500',
+        textAlign:'center !important',
+        fontSize: '14px',
+        fontWeight: '550',
         fontStyle: 'normal',
         fontStretch: 'normal',
-        lineHeight: 1.25,
+        // lineHeight: 0.25,
         letterSpacing: 'normal',
         color: '#e0383e',
-        paddingTop: '4px'
+        paddingTop: '14px',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '14px',
+            width: '85%',
+            margin:'auto',
+            textAlign:'left !important',
+
+        }
     },
     successText: {
         color: "green",
