@@ -6,6 +6,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import IconButton from '@material-ui/core/IconButton';
 import { styles } from "@styles/clientComponents/VerifyEmail.styles.js";
+import { withStyles } from '@material-ui/core/styles';
 
 class VerifyEmailAddress extends Component {
     state = {
@@ -13,32 +14,33 @@ class VerifyEmailAddress extends Component {
     };
 
     render() {
+        const { classes } = this.props;
         return (
-            <div style={{ flex: 1 }}>
-                <div style={styles.header} />
-                <div>
+            <div className={classes.mainContainer}>
+                <div className={classes.header} />
+                <div className={classes.btnContainer}>
                     <IconButton>
-                        <BackIcon style={styles.backButton} />
+                        <BackIcon className={classes.backButton} />
                     </IconButton>
                 </div>
-                <div style={styles.upperContainer}>
+                <div className={classes.upperContainer}>
                     <IconButton>
-                        <CheckCircle style={styles.circleIcon} />
+                        <CheckCircle className={classes.circleIcon} />
                     </IconButton>
-                    <Typography style={styles.title}>
+                    <Typography className={classes.title}>
                         A verification link has been sent to your email address
                     </Typography>
                 </div>
-                <div style={styles.lowerContainer}>
-                    <Typography style={styles.midSecTypo}>
-                        Please click on the link that has just been sent to <span style={styles.underlineTypo}>{'rohit.yadav@gmail.com'}</span> and verify your email account.
+                <div className={classes.lowerContainer}>
+                    <Typography className={classes.midSecTypo}>
+                        Please click on the link that has just been sent to <span className={classes.underlineTypo}>{'rohit.yadav@gmail.com'}</span> and verify your email account.
                     </Typography>
                 </div>
-                <div style={styles.lowerContainerTypo}>
-                    <Typography style={styles.didntReceive}>
-                        Didn't receive the link? <span style={styles.textStyle}>Resend verification link</span>
+                <div className={classes.lowerContainerTypo}>
+                    <Typography className={classes.didntReceive}>
+                        Didn't receive the link? <span className={classes.textStyle}>Resend verification link</span>
                     </Typography>
-                    <Typography style={styles.continueProfile}>
+                    <Typography className={classes.continueProfile}>
                         Continue to profile
                     </Typography>
                 </div>
@@ -47,4 +49,4 @@ class VerifyEmailAddress extends Component {
     };
 };
 
-export default withSnackbar(VerifyEmailAddress);
+export default withStyles(styles)(VerifyEmailAddress);
