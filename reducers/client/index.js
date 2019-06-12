@@ -1,5 +1,4 @@
-import { clientLoginReducer } from './clientLoginReducer';
+import { clientLoginReducer } from "./clientLoginReducer";
+import { clientSignUpReducer } from "./clientSignUpReducer";
 
-export { 
-    clientLoginReducer 
-};
+export { clientLoginReducer, clientSignUpReducer };

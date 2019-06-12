@@ -2,105 +2,198 @@ import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withSnackbar } from "notistack";
-import Dialog from '@material-ui/core/Dialog';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { withStyles } from '@material-ui/core/styles';
+import Dialog from "@material-ui/core/Dialog";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import { withStyles } from "@material-ui/core/styles";
 import { styles } from "@styles/clientComponents/SetPassword.styles.js";
-import InputArea from '../../ReuseableComponents/InputArea'
+import InputArea from "../../ReuseableComponents/InputArea";
+import { connect } from "react-redux";
+import { clientSignUpApi } from "@actions/client";
 
 class SetPasswordFormComponent extends Component {
   state = {
     password: "",
-    passwordValid: true,
-    error: '',
+    confirmPassword: "",
+    passwordValid: false,
+    match: true,
+    error: "",
+    userData: {}
   };
 
   handleInputChange = event => {
-    // console.log( [event.target.name],event.target.value)
-    // this.setState({
-    //   [event.target.name]: event.target.value
-    // });
+    console.log([event.target.name], event.target.value);
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   };
-//   formValidator = async event => {
-//     event.preventDefault();
-//     const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-//     if (!checkEmail.test(this.state.email)) {
-//       await this.setState({
-//         emailValid: false
-//       });
-//     }
-//     if (this.state.password.length === 0) {
-//       await this.setState({
-//         passwordValid: false
-//       });
-//     }
-//     if (this.state.emailValid && this.state.passwordValid) {
-
-//     }
-//   };
+  componentDidMount(props) {
+    if (this.props.userData) {
+      this.setState({ userData: this.props.userData });
+    }
+  }
+  formValidator = async event => {
+    event.preventDefault();
+    const {
+      password,
+      confirmPassword,
+      match,
+      passwordValid,
+      userData
+    } = this.state;
+    let checkPassword = /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&amp*-_])(?=.*[A-Z])(?!.*\s).*$/;
+    if (!checkPassword.test(password)) {
+      await this.setState({
+        passwordValid: false,
+        error:
+          "*Password must be atleast 6 characters with words, numbers and special characters"
+      });
+    } else if (!checkPassword.test(confirmPassword)) {
+      await this.setState({
+        passwordValid: false,
+        error:
+          "* Confirm password must be atleast 6 characters with words, numbers and special characters"
+      });
+    }
+    if (checkPassword.test(confirmPassword) && checkPassword.test(password)) {
+      await this.setState({
+        passwordValid: true
+      });
+    }
+    if (
+      password.toLowerCase() !== confirmPassword.toLowerCase() &&
+      password.length > 0 &&
+      confirmPassword.length > 0
+    ) {
+      this.setState({ match: false, error: "Password din`t match" });
+    } else if (
+      password.length > 0 &&
+      confirmPassword.length > 0 &&
+      password.toLowerCase() === confirmPassword.toLowerCase()
+    ) {
+      this.setState({ match: true, error: "" });
+      let user = {
+        password: password,
+        name: userData.name,
+        number: [userData.code, userData.number].join(""),
+        email: userData.email
+      };
+      this.props.clientSignUpApi(
+        user,
+        this.props.enqueueSnackbar,
+        this.props.closeSnackbar
+      );
+    }
+  };
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
+    const {
+      password,
+      confirmPassword,
+      match,
+      passwordValid,
+      error
+    } = this.state;
+
     return (
-        <Dialog
-            // style={styles.rectangle}
-            className={classes.paper}
-            onClose={() => {}}
-            open={true}
-        >
-            <div className={classes.Header}></div>
-            <div className={classes.headerContainer}>
-                <Typography className={classes.headerText}>
-                    <i class="material-icons">
-                        keyboard_backspace
-                    </i> 
-                    <span className={classes.headerTextChild}>Set password</span>
-                </Typography>
-                <IconButton className={classes.closeIcon} aria-label="Close" onClick={() => {}}>
-                    <CloseIcon className={classes.icon} />
-                </IconButton>
+      <Dialog
+        // style={styles.rectangle}
+        className={classes.paper}
+        onClose={() => {}}
+        open={true}
+      >
+        <div className={classes.Header} />
+        <div className={classes.headerContainer}>
+          <Typography className={classes.headerText}>
+            <i class="material-icons">keyboard_backspace</i>
+            <span className={classes.headerTextChild}>Set password</span>
+          </Typography>
+          <IconButton
+            className={classes.closeIcon}
+            aria-label="Close"
+            onClick={() => {}}
+          >
+            <CloseIcon className={classes.icon} />
+          </IconButton>
+        </div>
+        {error && error.length ? (
+          <Typography
+            style={{ color: !error ? "green" : "red" }}
+            className={classes.errorText}
+          >
+            {error}
+            {/* rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span> */}
+          </Typography>
+        ) : null}
+        <div className={classes.FormContainer}>
+          <form
+            className={classes.container}
+            noValidate
+            autoComplete="off"
+            onSubmit={event => this.formValidator(event)}
+          >
+            <InputArea
+              styleprops={styles.textFieldPass}
+              label="Password"
+              name="password"
+              type="password"
+              handleInputChange={event => this.handleInputChange(event)}
+              validation={passwordValid}
+              helperText={
+                passwordValid
+                  ? ""
+                  : "*Password must be atleast 6 characters with words, numbers and special characters"
+              }
+            />
+            <InputArea
+              styleprops={styles.textFieldPass}
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              handleInputChange={event => this.handleInputChange(event)}
+              validation={match}
+              helperText={match ? "" : "password didn`t match"}
+            />
+            <div className={classes.wrapper}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className={classes.SignUpBtn}
+                // onClick={() => this.setState({ error: "something went wrong" })}
+              >
+                Signup
+              </Button>
             </div>
-            <div className={classes.FormContainer}>
-                <form
-                    className={classes.container}
-                    noValidate
-                    autoComplete="off"
-                    // onSubmit={event => this.formValidator(event)}            
-                >
-                    <InputArea
-                        styleprops={styles.textFieldPass}
-                        label = "Password" 
-                        name  = "Password"
-                        type="password"
-                        handleInputChange = {event => this.handleInputChange(event)}
-                        validation={true}
-                    />
-                    <InputArea
-                        styleprops={styles.textFieldPass}
-                        label = "Confirm Password" 
-                        name  = "cPassword"
-                        type="password"
-                        handleInputChange = {event => this.handleInputChange(event)}
-                        validation={true}
-                    />
-                    <div className={classes.wrapper}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        className={classes.SignUpBtn}
-                        // onClick={() => this.setState({ error: "something went wrong" })}
-                    >
-                        Signup
-                    </Button>
-                    </div>
-                </form>
-            </div>
-        </Dialog>
+          </form>
+        </div>
+      </Dialog>
     );
   }
+}
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    token: state.clientSignUpReducer.token,
+    isLoading: state.clientSignUpReducer.isLoading,
+    userData: state.clientSignUpReducer.userData,
+    message: state.clientSignUpReducer.message,
+    error: state.clientSignUpReducer.error
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    clientSignUpApi: (data, snackShow, snackHide) =>
+      dispatch(clientSignUpApi(data, snackShow, snackHide))
+  };
 };
 
-export default withSnackbar(withStyles(styles)(SetPasswordFormComponent));
+export default withSnackbar(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(SetPasswordFormComponent))
+);
