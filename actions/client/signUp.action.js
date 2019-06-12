@@ -13,11 +13,12 @@ export const clientSignUpApi = (
   closeSnackbar,
   Router
 ) => dispatch => {
-  const { email, password, number, name } = userData;
+  const { email, password, number, name, linkedinUrl } = userData;
+  console.log("userData", userData);
   dispatch(signUpStarted());
   let queryString = `
     mutation {
-      freelancerRegister(email:"${email}",name:"${name}", linkedinUrl:"www.google.com", mobile:"${number}", password:"${password}"){
+      freelancerRegister(email:"${email}",name:"${name}", linkedinUrl:"${linkedinUrl}",, mobile:"${number}", password:"${password}"){
         token
       }
     }
@@ -41,6 +42,7 @@ export const clientSignUpApi = (
       setTimeout(() => {
         closeSnackbar(key);
       }, 2000);
+      Router.push("/verify-email");
       // Router.push("/");
     })
     .catch(err => {

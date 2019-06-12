@@ -17,10 +17,12 @@ class InputArea extends Component {
       label,
       name,
       value,
-      helperText = validation ? "" : `*Enter A ${label}`,
+      // helperText = ,
       handleInputChange,
       type = "text",
-      validation = true,
+      EmailApi,
+      checkEmailApi,
+      validation,
       styleprops
     } = this.props;
     return (
@@ -31,9 +33,10 @@ class InputArea extends Component {
         onChange={event => handleInputChange(event)}
         className={styleprops}
         margin="normal"
+        onBlur={EmailApi ? checkEmailApi : () => {}}
         type={type}
         fullWidth
-        helperText={helperText}
+        helperText={validation ? "" : `*Enter A ${label}`}
         InputLabelProps={{
           style: {
             height: "24px",

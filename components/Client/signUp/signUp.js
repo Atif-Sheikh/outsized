@@ -23,10 +23,15 @@ class SignUpFormComponent extends Component {
     email: "",
     password: "",
     emailValid: true,
+    name: "",
+    nameValid: true,
+    LinkedInUrl: "",
+    linkedInValid: true,
     message: "",
     search: "",
-    code: "code",
+    code: "+91",
     number: "",
+    numberValid: true,
     allow: false,
     error: true
   };
@@ -41,20 +46,24 @@ class SignUpFormComponent extends Component {
   }
   handleInputChange = async event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      linkedInValid: true,
+      nameValid: true,
+      numberValid: true,
+      emailValid: true
     });
-    if (event.target.name === "email") {
-      const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-      if (checkEmail.test(event.target.value)) {
-        await this.props.doCheckEmail(event.target.value);
-        this.setState({ message: "", allow: true });
-      } else if (event.target.name === "email" && event.target.value) {
-        this.setState({
-          message: "Worng email please enter a valid email",
-          allow: false,
-          error: true
-        });
-      }
+  };
+  checkEmailApi = async () => {
+    const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if (checkEmail.test(this.state.email)) {
+      await this.props.doCheckEmail(this.state.email);
+      this.setState({ message: "", allow: true });
+    } else if (event.target.name === "email" && event.target.value) {
+      this.setState({
+        message: "Worng email please enter a valid email",
+        allow: false,
+        error: true
+      });
     }
   };
   searching = e => {
@@ -70,10 +79,14 @@ class SignUpFormComponent extends Component {
         error: true
       });
     }
-    if (this.state.password.length === 0) {
+    if (this.state.name.length === 0) {
       await this.setState({
-        passwordValid: false,
-        error: true
+        nameValid: false
+      });
+    }
+    if (this.state.LinkedInUrl.length === 0) {
+      await this.setState({
+        linkedInValid: false
       });
     }
     if (this.state.code === "code" || !this.state.number.length > 0) {
@@ -95,12 +108,17 @@ class SignUpFormComponent extends Component {
     let {
       email,
       password,
+      name,
+      nameValid,
+      linkedInValid,
+      LinkedInUrl,
       emailValid,
       error,
       message,
       number,
       allow
     } = this.state;
+    console.log("this.props.error", this.props.error);
     const { classes } = this.props;
     return (
       <Dialog className={classes.paper} onClose={() => {}} open={true}>
@@ -130,7 +148,6 @@ class SignUpFormComponent extends Component {
               className={classes.errorText}
             >
               {message}
-              {/* rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span> */}
             </Typography>
           ) : null}
         </div>
@@ -145,8 +162,10 @@ class SignUpFormComponent extends Component {
               styleprops={styles.textFieldPass}
               label="Name"
               name="name"
+              value={name}
               handleInputChange={event => this.handleInputChange(event)}
-              validation={true}
+              validation={nameValid}
+              styleprops={styles.textFieldPass}
             />
             <MenuListComposition
               number={number}
@@ -161,6 +180,8 @@ class SignUpFormComponent extends Component {
               label="Email Address"
               name="email"
               value={email}
+              EmailApi={true}
+              checkEmailApi={this.checkEmailApi}
               handleInputChange={event => this.handleInputChange(event)}
               validation={emailValid}
               onFocus={() => this.setState({ emailValid: true })}
@@ -168,9 +189,11 @@ class SignUpFormComponent extends Component {
             <InputArea
               styleprops={classes.textFieldPass}
               label="LinkedIn profile Url"
-              name="LinkedInprofileUrl"
+              value={LinkedInUrl}
+              name="LinkedInUrl"
               handleInputChange={event => this.handleInputChange(event)}
-              validation={true}
+              validation={linkedInValid}
+              styleprops={styles.textFieldPass}
             />
             <div className={classes.wrapper}>
               <Button

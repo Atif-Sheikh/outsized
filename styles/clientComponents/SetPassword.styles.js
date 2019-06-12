@@ -114,9 +114,6 @@ export const styles = theme => ({
   newHere: {
     color: "#000"
   },
-  errorText: {
-    color: "Red"
-  },
   emailField: {
     width: "inherit",
     marginBottom: "15px"
@@ -281,17 +278,19 @@ export const styles = theme => ({
     }
   },
   errorText: {
-    width: "80%",
+    width: "85%",
     height: "20px",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    // textAlign:'center !important',
     fontSize: "16px",
-    fontWeight: "500",
+    margin: "0px auto",
+    fontWeight: "550",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: 1.25,
+    lineHeight: 0.25,
     letterSpacing: "normal",
     color: "#e0383e",
-    padding: "10px"
+    paddingTop: "4px"
   },
   successText: {
     color: "green",

@@ -16,7 +16,7 @@ class SetPasswordFormComponent extends Component {
   state = {
     password: "",
     confirmPassword: "",
-    passwordValid: false,
+    passwordValid: true,
     match: true,
     error: "",
     userData: {}
@@ -25,12 +25,15 @@ class SetPasswordFormComponent extends Component {
   handleInputChange = event => {
     console.log([event.target.name], event.target.value);
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      passwordValid: true,
+      match: true
     });
   };
   componentDidMount(props) {
     if (this.props.userData) {
       this.setState({ userData: this.props.userData });
+      console.log("setpassword", this.props.userData);
     }
   }
   formValidator = async event => {
@@ -45,15 +48,11 @@ class SetPasswordFormComponent extends Component {
     let checkPassword = /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&amp*-_])(?=.*[A-Z])(?!.*\s).*$/;
     if (!checkPassword.test(password)) {
       await this.setState({
-        passwordValid: false,
-        error:
-          "*Password must be atleast 6 characters with words, numbers and special characters"
+        passwordValid: false
       });
     } else if (!checkPassword.test(confirmPassword)) {
       await this.setState({
-        passwordValid: false,
-        error:
-          "* Confirm password must be atleast 6 characters with words, numbers and special characters"
+        match: false
       });
     }
     if (checkPassword.test(confirmPassword) && checkPassword.test(password)) {
@@ -66,7 +65,7 @@ class SetPasswordFormComponent extends Component {
       password.length > 0 &&
       confirmPassword.length > 0
     ) {
-      this.setState({ match: false, error: "Password din`t match" });
+      this.setState({ match: true, error: "Password does not match" });
     } else if (
       password.length > 0 &&
       confirmPassword.length > 0 &&
@@ -77,7 +76,8 @@ class SetPasswordFormComponent extends Component {
         password: password,
         name: userData.name,
         number: [userData.code, userData.number].join(""),
-        email: userData.email
+        email: userData.email,
+        linkedinUrl: userData.LinkedInUrl
       };
       this.props.clientSignUpApi(
         user,
@@ -154,7 +154,7 @@ class SetPasswordFormComponent extends Component {
               type="password"
               handleInputChange={event => this.handleInputChange(event)}
               validation={match}
-              helperText={match ? "" : "password didn`t match"}
+              helperText={match ? "" : "password does not match"}
             />
             <div className={classes.wrapper}>
               <Button
