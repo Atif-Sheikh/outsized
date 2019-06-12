@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from '@material-ui/core/styles';
 import { withSnackbar } from "notistack";
-import CloseIcon from '@material-ui/icons/Close';
+import { connect } from "react-redux";
 import BackIcon from '@material-ui/icons/ArrowBack';
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import IconButton from '@material-ui/core/IconButton';
@@ -31,7 +32,7 @@ class VerifyEmailAddress extends Component {
                 </div>
                 <div style={styles.lowerContainer}>
                     <Typography style={styles.midSecTypo}>
-                        Please click on the link that has just been sent to <span style={styles.underlineTypo}>{'rohit.yadav@gmail.com'}</span> and verify your email account.
+                        Please click on the link that has just been sent to <span style={styles.underlineTypo}>{this.props.email || ''}</span> and verify your email account.
                     </Typography>
                 </div>
                 <div style={styles.lowerContainerTypo}>
@@ -47,4 +48,16 @@ class VerifyEmailAddress extends Component {
     };
 };
 
-export default withSnackbar(VerifyEmailAddress);
+const mapStateToProps = state => {
+    return {
+      email: state.verifyEmail.email,
+    };
+};
+
+export default withSnackbar(
+    connect(
+      mapStateToProps,
+      null
+    )  
+    (withStyles(styles)(VerifyEmailAddress))
+);

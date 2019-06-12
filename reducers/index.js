@@ -10,7 +10,7 @@ import { allTemplateReducer } from "./allTemplatesReducer";
 import { emailTemplateReducer } from "./emailTemplateReducer";
 import { scaleRatingReducer } from "./scaleRatingReducer.js";
 import { allEmailsTemplateReducer } from "./allEmailsTemplateReducer.js";
-import { clientLoginReducer, clientSignUpReducer } from "./client";
+import { clientLoginReducer, clientSignUpReducer, verifyEmail } from "./client";
 export default combineReducers({
   loginReducer,
   registerReducer,
@@ -24,5 +24,6 @@ export default combineReducers({
   emailTemplateReducer,
   scaleRatingReducer,
   clientLoginReducer,
-  clientSignUpReducer
+  clientSignUpReducer,
+  verifyEmail
 });
