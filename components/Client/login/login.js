@@ -23,7 +23,8 @@ class LoginFormComponent extends Component {
     password: "",
     emailValid: true,
     passwordValid: true,
-    error: ""
+    error: "",
+    access: false
   };
 
   handleInputChange = event => {
@@ -33,19 +34,23 @@ class LoginFormComponent extends Component {
       passwordValid: true
     });
   };
-
+  componentWillReceiveProps(nextProps) {
+    this.setState({ error: nextProps.error, access: nextProps.access });
+  }
   formValidator = async event => {
     event.preventDefault();
     const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (!checkEmail.test(this.state.email)) {
       await this.setState({
-        emailValid: false
+        emailValid: false,
+        error: "Please Enter valid Email"
       });
     }
     let checkPassword = /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&amp*-_])(?=.*[A-Z])(?!.*\s).*$/;
     if (!checkPassword.test(this.state.password)) {
       await this.setState({
-        passwordValid: false
+        passwordValid: false,
+        error: "Please Enter valid Email and Password"
       });
     }
     if (this.state.emailValid && this.state.passwordValid) {
@@ -60,7 +65,14 @@ class LoginFormComponent extends Component {
   };
 
   render() {
-    let { email, password, emailValid, passwordValid, error } = this.state;
+    let {
+      email,
+      password,
+      emailValid,
+      passwordValid,
+      error,
+      access
+    } = this.state;
     const { classes } = this.props;
     return (
       <Dialog className={classes.paper} onClose={() => {}} open={true}>
@@ -84,8 +96,11 @@ class LoginFormComponent extends Component {
             Welcome back to Outsized!
           </Typography>
           {error && error.length ? (
-            <Typography className={classes.errorText}>
-              Incorrect email or password
+            <Typography
+              className={classes.errorText}
+              style={{ color: access ? "green" : "red" }}
+            >
+              {error}
             </Typography>
           ) : null}
         </div>
@@ -164,7 +179,9 @@ class LoginFormComponent extends Component {
 const mapStateToProps = state => {
   return {
     token: state.clientLoginReducer.token,
-    isLoading: state.clientLoginReducer.isLoading
+    isLoading: state.clientLoginReducer.isLoading,
+    error: state.clientLoginReducer.message,
+    access: state.clientLoginReducer.access
   };
 };
 const mapDispatchToProps = dispatch => {
