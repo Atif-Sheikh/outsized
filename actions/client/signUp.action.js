@@ -28,21 +28,13 @@ export const clientSignUpApi = (
     .post("/graphql", queryString)
     .then(res => {
       localStorage.setItem("token", res.data.freelancerRegister.token);
-      dispatch(signUpSuccess(res.data.freelancerRegister.token));
-      const key = enqueueSnackbar(
-        "You have successfully logged into your account",
-        {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right"
-          }
-        }
+      dispatch(
+        signUpSuccess({
+          token: res.data.freelancerRegister.token,
+          message: "You have successfully logged into your account"
+        })
       );
-      setTimeout(() => {
-        closeSnackbar(key);
-      }, 2000);
-      Router.push("/verify-email");
+
       // Router.push("/");
     })
     .catch(err => {
@@ -54,23 +46,14 @@ export const clientSignUpApi = (
           ? err.response.data.errors[0]
           : err.message;
       dispatch(signUpFailed(error));
-      const key = enqueueSnackbar(error, {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right"
-        }
-      });
-      setTimeout(() => {
-        closeSnackbar(key);
-      }, 2000);
     });
 };
 
 const signUpSuccess = token => ({
   type: DO_FREELANCER_SIGNUP_SUCCESS,
   payload: {
-    token
+    token,
+    message
   }
 });
 

@@ -81,6 +81,7 @@ export const styles = theme => ({
     color: "#2b35e0"
   },
   signupTypo: {
+    cursor: "pointer",
     width: "133px",
     height: "20px",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",

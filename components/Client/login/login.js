@@ -166,9 +166,12 @@ class LoginFormComponent extends Component {
                 <a>Forgot Password !</a>
               </Typography>
             </Link>
-            <Typography className={classes.signupTypo}>
-              <span className={classes.newHere}>New Here ?</span> Signup
-            </Typography>
+            <Link href="/signup">
+              <Typography className={classes.signupTypo}>
+                <span className={classes.newHere}>New Here ?</span>{" "}
+                <a>Signup</a>
+              </Typography>
+            </Link>
           </div>
         </div>
       </Dialog>

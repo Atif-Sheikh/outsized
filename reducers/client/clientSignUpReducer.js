@@ -58,7 +58,7 @@ export const clientSignUpReducer = (state = initialState, action) => {
         ...state,
         error: false,
         token: action.payload.token,
-        message: "Sign Up Success",
+        message: action.payload.message,
         isLoading: false
       };
     case DO_FREELANCER_SIGNUP_FAILED:

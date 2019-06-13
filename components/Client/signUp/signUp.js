@@ -224,12 +224,14 @@ class SignUpFormComponent extends Component {
             </div>
           </form>
           <div className={classes.modalFooter}>
-            <Typography className={classes.signupTypo}>
-              <span className={classes.newHere}>
-                Already a registered user?
-              </span>{" "}
-              login
-            </Typography>
+            <Link href="/login">
+              <Typography className={classes.signupTypo}>
+                <span className={classes.newHere}>
+                  Already a registered user?
+                </span>{" "}
+                <a>login</a>
+              </Typography>
+            </Link>
           </div>
         </div>
         {/* </Paper> */}

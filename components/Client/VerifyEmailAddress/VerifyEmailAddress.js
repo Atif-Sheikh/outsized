@@ -1,63 +1,69 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import { withSnackbar } from "notistack";
 import { connect } from "react-redux";
-import BackIcon from '@material-ui/icons/ArrowBack';
-import CheckCircle from '@material-ui/icons/CheckCircle'
-import IconButton from '@material-ui/core/IconButton';
+import BackIcon from "@material-ui/icons/ArrowBack";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import IconButton from "@material-ui/core/IconButton";
 import { styles } from "@styles/clientComponents/VerifyEmail.styles.js";
+import Link from "next/link";
 
 class VerifyEmailAddress extends Component {
-    state = {
+  state = {};
 
-    };
-
-    render() {
-        return (
-            <div style={{ flex: 1 }}>
-                <div style={styles.header} />
-                <div>
-                    <IconButton>
-                        <BackIcon style={styles.backButton} />
-                    </IconButton>
-                </div>
-                <div style={styles.upperContainer}>
-                    <IconButton>
-                        <CheckCircle style={styles.circleIcon} />
-                    </IconButton>
-                    <Typography style={styles.title}>
-                        A verification link has been sent to your email address
-                    </Typography>
-                </div>
-                <div style={styles.lowerContainer}>
-                    <Typography style={styles.midSecTypo}>
-                        Please click on the link that has just been sent to <span style={styles.underlineTypo}>{this.props.email || ''}</span> and verify your email account.
-                    </Typography>
-                </div>
-                <div style={styles.lowerContainerTypo}>
-                    <Typography style={styles.didntReceive}>
-                        Didn't receive the link? <span style={styles.textStyle}>Resend verification link</span>
-                    </Typography>
-                    <Typography style={styles.continueProfile}>
-                        Continue to profile
-                    </Typography>
-                </div>
-            </div>
-        );
-    };
-};
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.paper}>
+        <div className={classes.header} />
+        <div>
+          <IconButton>
+            <BackIcon className={classes.backButton} />
+          </IconButton>
+        </div>
+        <div className={classes.upperContainer}>
+          <IconButton>
+            <CheckCircle className={classes.circleIcon} />
+          </IconButton>
+          <Typography className={classes.title}>
+            A verification link has been sent to your email address
+          </Typography>
+        </div>
+        <div className={classes.lowerContainer}>
+          <Typography className={classes.midSecTypo}>
+            {/* Please click on the link that has just been sent to <span className={classes.underlineTypo}>{this.props.email || ''}</span> and verify your email account. */}
+            Please click on the link that has just been sent to
+            rohit.yadav@gmail.com and verify your email account.
+          </Typography>
+        </div>
+        <div className={classes.lowerContainerTypo}>
+          <Typography className={classes.didntReceive}>
+            Didn't receive the link?{" "}
+            <span className={classes.textStyle}>
+              <Link href="/add-email">
+                <a className={classes.anchorStyle}>Resend verification link</a>
+              </Link>
+            </span>
+          </Typography>
+          <Typography className={classes.continueProfile}>
+            Continue to profile
+          </Typography>
+        </div>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => {
-    return {
-      email: state.verifyEmail.email,
-    };
+  return {
+    email: state.verifyEmail.email
+  };
 };
 
 export default withSnackbar(
-    connect(
-      mapStateToProps,
-      null
-    )  
-    (withStyles(styles)(VerifyEmailAddress))
+  connect(
+    mapStateToProps,
+    null
+  )(withStyles(styles)(VerifyEmailAddress))
 );
