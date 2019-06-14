@@ -20,7 +20,14 @@ export const doCheckEmail = email => dispatch => {
       dispatch(validEmailSuccess(res.data.checkEmail.message));
     })
     .catch(err => {
-      dispatch(validEmailFailed(err.message));
+      const error =
+        err.response &&
+        err.response &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(validEmailFailed(error));
     });
 };
 

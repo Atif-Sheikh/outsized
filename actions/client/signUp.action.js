@@ -49,7 +49,7 @@ export const clientSignUpApi = (
     });
 };
 
-const signUpSuccess = token => ({
+const signUpSuccess = (token, message) => ({
   type: DO_FREELANCER_SIGNUP_SUCCESS,
   payload: {
     token,

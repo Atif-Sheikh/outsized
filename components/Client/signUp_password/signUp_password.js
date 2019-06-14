@@ -12,16 +12,15 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Back from "@material-ui/icons/ArrowBack";
-import { styles } from "@styles/clientComponents/SignUp.styles.js";
+import { styles } from "@styles/clientComponents/SignUp_Password.styles.js";
 import InputArea from "../../ReuseableComponents/InputArea";
 import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
 import { storeUser, doCheckEmail } from "@actions/client";
 import Router from "next/Router";
 
-class SignUpFormComponent extends Component {
+class SignUp_PasswordFormComponent extends Component {
   state = {
     email: "",
-    password: "",
     emailValid: true,
     name: "",
     nameValid: true,
@@ -33,7 +32,11 @@ class SignUpFormComponent extends Component {
     number: "",
     numberValid: true,
     allow: false,
-    error: true
+    error: true,
+    password: "",
+    confirmPassword: "",
+    passwordValid: true,
+    match: true
   };
   componentWillReceiveProps(nextProps) {
     if (nextProps.isValidEmail) {
@@ -72,7 +75,7 @@ class SignUpFormComponent extends Component {
   };
   formValidator = async event => {
     event.preventDefault();
-    const { email, number, name, code } = this.state;
+    const { email, number, name, code, password, confirmPassword } = this.state;
     const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (!checkEmail.test(this.state.email)) {
       await this.setState({
@@ -96,7 +99,32 @@ class SignUpFormComponent extends Component {
         allow: true,
         error: true
       });
+    }
+    let checkPassword = /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&amp*-_])(?=.*[A-Z])(?!.*\s).*$/;
+    if (!checkPassword.test(password)) {
+      await this.setState({
+        passwordValid: false
+      });
+    } else if (!checkPassword.test(confirmPassword)) {
+      await this.setState({
+        match: false
+      });
+    }
+    if (checkPassword.test(confirmPassword) && checkPassword.test(password)) {
+      await this.setState({
+        passwordValid: true
+      });
+    }
+    if (
+      password.toLowerCase() !== confirmPassword.toLowerCase() &&
+      password.length > 0 &&
+      confirmPassword.length > 0
+    ) {
+      this.setState({ match: true, message: "Password does not match" });
     } else if (
+      password.length > 0 &&
+      confirmPassword.length > 0 &&
+      password.toLowerCase() === confirmPassword.toLowerCase() &&
       this.state.emailValid &&
       this.state.name.trim() !== "" &&
       this.state.number.trim() !== "" &&
@@ -128,7 +156,9 @@ class SignUpFormComponent extends Component {
       error,
       message,
       number,
-      allow
+      allow,
+      match,
+      passwordValid
     } = this.state;
     console.log("this.props.error", this.props.error);
     const { classes } = this.props;
@@ -207,6 +237,28 @@ class SignUpFormComponent extends Component {
               validation={linkedInValid}
               styleprops={styles.textFieldPass}
             />
+            <InputArea
+              styleprops={styles.textFieldPass}
+              label="Password"
+              name="password"
+              type="password"
+              handleInputChange={event => this.handleInputChange(event)}
+              validation={passwordValid}
+              helperText={
+                passwordValid
+                  ? ""
+                  : "*Password must be atleast 6 characters with words, numbers and special characters"
+              }
+            />
+            <InputArea
+              styleprops={styles.textFieldPass}
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              handleInputChange={event => this.handleInputChange(event)}
+              validation={match}
+              helperText={match ? "" : "password does not match"}
+            />
             <div className={classes.wrapper}>
               <Button
                 variant="contained"
@@ -253,6 +305,7 @@ class SignUpFormComponent extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     token: state.clientSignUpReducer.token,
     isLoading: state.clientSignUpReducer.isLoading,
@@ -272,5 +325,5 @@ export default withSnackbar(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(withStyles(styles)(SignUpFormComponent))
+  )(withStyles(styles)(SignUp_PasswordFormComponent))
 );

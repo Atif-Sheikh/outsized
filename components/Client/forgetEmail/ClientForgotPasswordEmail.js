@@ -11,7 +11,7 @@ import { callForgotPasswordApi } from "@actions/client";
 class ClientForgotPassword extends Component {
   state = {
     email: "",
-    emailValid: false,
+    emailValid: true,
     error: "",
     success: false
   };

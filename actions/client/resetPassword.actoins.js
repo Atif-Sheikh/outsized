@@ -7,7 +7,7 @@ import {
 
 import axios from "../../config/axios";
 
-export const clientResetPasswordApi = (password, code) => dispatch => {
+export const clientResetPasswordApi = (password, code, goto) => dispatch => {
   dispatch(resetPasswordStarted());
 
   let queryString = `
@@ -22,6 +22,7 @@ export const clientResetPasswordApi = (password, code) => dispatch => {
     .post("/graphql", queryString)
     .then(res => {
       dispatch(resetPasswordSuccess(res.resetPasswordWithCode.message));
+      goto.push("/verify-email");
     })
     .catch(err => {
       const error =

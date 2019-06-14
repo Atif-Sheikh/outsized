@@ -54,7 +54,7 @@ class ClientResetPass extends Component {
     ) {
       const qs = Router.router.query;
       const code = qs.code;
-      this.props.clientResetPassword(password, code);
+      this.props.clientResetPassword(password, code, Router);
     }
   };
   componentWillReceiveProps(nextProps) {
@@ -152,8 +152,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    clientResetPassword: (password, code) =>
-      dispatch(clientResetPasswordApi(password, code))
+    clientResetPassword: (password, code, go) =>
+      dispatch(clientResetPasswordApi(password, code, go))
   };
 };
 

@@ -18,7 +18,7 @@ class SetPasswordFormComponent extends Component {
     confirmPassword: "",
     passwordValid: true,
     match: true,
-    error: "",
+    message: "",
     userData: {}
   };
 
@@ -65,13 +65,13 @@ class SetPasswordFormComponent extends Component {
       password.length > 0 &&
       confirmPassword.length > 0
     ) {
-      this.setState({ match: true, error: "Password does not match" });
+      this.setState({ match: true, message: "Password does not match" });
     } else if (
       password.length > 0 &&
       confirmPassword.length > 0 &&
       password.toLowerCase() === confirmPassword.toLowerCase()
     ) {
-      this.setState({ match: true, error: "" });
+      this.setState({ match: true, message: "" });
       let user = {
         password: password,
         name: userData.name,
@@ -86,7 +86,9 @@ class SetPasswordFormComponent extends Component {
       );
     }
   };
-
+  componentWillReceiveProps(nextProps) {
+    this.setState({ message: nextProps.message, error: nextProps.message });
+  }
   render() {
     const { classes } = this.props;
     const {
@@ -94,7 +96,7 @@ class SetPasswordFormComponent extends Component {
       confirmPassword,
       match,
       passwordValid,
-      error
+      message
     } = this.state;
 
     return (
@@ -118,12 +120,12 @@ class SetPasswordFormComponent extends Component {
             <CloseIcon className={classes.icon} />
           </IconButton>
         </div>
-        {error && error.length ? (
+        {message && message.length ? (
           <Typography
-            style={{ color: !error ? "green" : "red" }}
-            className={classes.errorText}
+            style={{ color: !message ? "green" : "red", paddingLeft: 20 }}
+            className={classes.messageText}
           >
-            {error}
+            {message}
             {/* rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span> */}
           </Typography>
         ) : null}

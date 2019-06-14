@@ -69,40 +69,42 @@ class ContinueSignUpComponent extends Component {
         </div>
         <div className={classes.paraText}>
           Last step, please provide the following details to continue.
-        </div>
-        <div className={classes.FormContainer}>
-          <form
-            className={classes.container}
-            noValidate
-            autoComplete="off"
-            onSubmit={event => this.formValidator(event)}
-          >
-            <MenuListComposition
-              code={this.state.code}
-              counterCode={code => this.setState({ code: code })}
-              search={this.state.search}
-              searching={this.searching}
-            />
-            <InputArea
-              styleprops={styles.textFieldPass}
-              label="Email address"
-              name="email"
-              type="email"
-              handleInputChange={event => this.handleInputChange(event)}
-              validation={true}
-            />
-            <div className={classes.wrapper}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                className={classes.SignUpBtn}
-                onClick={() => this.setState({ error: "something went wrong" })}
-              >
-                Continue Signup
-              </Button>
-            </div>
-          </form>
+          <div className={classes.FormContainer}>
+            <form
+              className={classes.container}
+              noValidate
+              autoComplete="off"
+              onSubmit={event => this.formValidator(event)}
+            >
+              <MenuListComposition
+                code={this.state.code}
+                counterCode={code => this.setState({ code: code })}
+                search={this.state.search}
+                searching={this.searching}
+              />
+              <InputArea
+                styleprops={styles.textFieldPass}
+                label="Email address"
+                name="email"
+                type="email"
+                handleInputChange={event => this.handleInputChange(event)}
+                validation={true}
+              />
+              <div className={classes.wrapper}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  className={classes.SignUpBtn}
+                  onClick={() =>
+                    this.setState({ error: "something went wrong" })
+                  }
+                >
+                  Continue Signup
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </Dialog>
     );
