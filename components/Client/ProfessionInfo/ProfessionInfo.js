@@ -12,6 +12,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
 
 class ProfileComponent extends Component {
   state = {
@@ -22,12 +23,52 @@ class ProfileComponent extends Component {
     currencyValue: ["₹ (Indian Rupee)", "$ (Dollor)"],
     typeValue: ["Full time", "Part time"],
     roleValue: ["Employee Full time", "Employee Part time"],
-    relocationValue: ["Open to relocation"]
+    relocationValue: ["Open to relocation"],
+    search: "",
+    searchValid: true
   };
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
+  };
+  chipContainer = (
+    search,
+    searchValid,
+    textFieldPass,
+    chipText,
+    chipMain,
+    chipsBox,
+    chip
+  ) => {
+    return (
+      <div className={chipMain}>
+        <Typography className={chipText}>
+          Sectors you have worked in?
+        </Typography>
+        <div className={chipsBox}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(() => {
+            return (
+              <Chip
+                label="Finance"
+                onClick={() => {}}
+                onDelete={() => {}}
+                className={chip}
+              />
+            );
+          })}
+        </div>
+        <InputArea
+          styleprops={textFieldPass}
+          label="Search for sector"
+          name="search"
+          value={search}
+          handleInputChange={event => this.handleChange(event)}
+          validation={searchValid}
+          styleprops={textFieldPass}
+        />
+      </div>
+    );
   };
   contractInfo = (
     minHrs,
@@ -129,7 +170,9 @@ class ProfileComponent extends Component {
       typeValue,
       currencyValue,
       roleValue,
-      relocationValue
+      relocationValue,
+      search,
+      searchValid
     } = this.state;
     const {
       roots,
@@ -145,7 +188,12 @@ class ProfileComponent extends Component {
       descriptionText,
       ExpectedText,
       ratesText,
-      paymentContent
+      paymentContent,
+      chipText,
+      chipMain,
+      chipsBox,
+      chip,
+      textFieldPass
     } = classes;
     return (
       <div className={classes.paper}>
@@ -253,6 +301,42 @@ class ProfileComponent extends Component {
           ExpectedText,
           ratesText,
           paymentContent
+        )}
+        {this.chipContainer(
+          search,
+          searchValid,
+          textFieldPass,
+          chipText,
+          chipMain,
+          chipsBox,
+          chip
+        )}
+        {this.chipContainer(
+          search,
+          searchValid,
+          textFieldPass,
+          chipText,
+          chipMain,
+          chipsBox,
+          chip
+        )}
+        {this.chipContainer(
+          search,
+          searchValid,
+          textFieldPass,
+          chipText,
+          chipMain,
+          chipsBox,
+          chip
+        )}
+        {this.chipContainer(
+          search,
+          searchValid,
+          textFieldPass,
+          chipText,
+          chipMain,
+          chipsBox,
+          chip
         )}
       </div>
     );

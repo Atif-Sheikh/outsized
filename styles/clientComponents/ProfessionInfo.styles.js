@@ -143,5 +143,29 @@ export const styles = theme => ({
     display: "flex",
     width: "92px",
     borderBottom: "solid 2px rgba(0, 0, 0, 0.32);"
+  },
+  chipText: {
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "14px",
+    color: "rgba(0, 0, 0, 1)",
+    opacity: 0.7
+  },
+  chipMain: {
+    marginTop: "20px"
+  },
+  chipsBox: {
+    width: "100%"
+  },
+  chip: {
+    fontSize: "11px",
+    fontWeight: "bold",
+    margin: "3px 5px",
+    fontSize: "0.78em",
+    height: "25px"
+  },
+  textFieldPass: {
+    width: "100%",
+    marginTop: "-1px",
+    marginBottom: 0
   }
 });
