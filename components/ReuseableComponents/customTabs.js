@@ -63,13 +63,15 @@ class Tabs extends Component {
               selectedTab === 3 ? classes.listItemSelected : classes.listItems
             }
           >
-            <Typography
-              className={
-                selectedTab === 3 ? classes.selectedTypo : classes.typos
-              }
-            >
-              Experience
-            </Typography>
+            <Link href="/experience">
+                <Typography
+                    className={
+                        selectedTab === 3 ? classes.selectedTypo : classes.typos
+                    }
+                >
+                    Experience
+                </Typography>
+            </Link>
           </li>
           <li
             onClick={() => setTab(4)}
@@ -77,13 +79,15 @@ class Tabs extends Component {
               selectedTab === 4 ? classes.listItemSelected : classes.listItems
             }
           >
-            <Typography
-              className={
-                selectedTab === 4 ? classes.selectedTypo : classes.typos
-              }
-            >
-              Education
-            </Typography>
+            <Link href="/education">
+                <Typography
+                className={
+                    selectedTab === 4 ? classes.selectedTypo : classes.typos
+                }
+                >
+                Education
+                </Typography>
+            </Link>
           </li>
         </ul>
       </div>

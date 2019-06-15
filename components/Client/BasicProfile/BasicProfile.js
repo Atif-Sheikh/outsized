@@ -19,7 +19,6 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     const { selectedTab } = this.state;
-    let comps = [null, null, null, <Experience />, null];
 
     return (
       <div className={classes.paper}>

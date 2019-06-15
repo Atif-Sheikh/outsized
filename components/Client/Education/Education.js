@@ -5,11 +5,11 @@ import { styles } from "@styles/clientComponents/BasicProfile.styles.js";
 import CustomHeader from "@components/ReuseableComponents/header";
 import CustomTabs from "@components/ReuseableComponents/customTabs";
 import Experience from "@components/Client/Experience/Experience";
-import ExperienceComponent from "@components/Client/ExperienceComp/ExperienceComp.js";
+import EducationComp from "@components/Client/EducationComp/EducationComp.js";
 
 class Home extends Component {
   state = {
-    selectedTab: 3
+    selectedTab: 4
   };
 
   setTab = tabNo => {
@@ -27,7 +27,7 @@ class Home extends Component {
         <div className={classes.midContainer}>
           <CustomTabs setTab={this.setTab} selectedTab={selectedTab} />
           <div className={classes.mainContainer}>
-            <ExperienceComponent />
+            <EducationComp />
           </div>
         </div>
       </div>
