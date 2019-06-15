@@ -45,12 +45,18 @@ class SignUpFormComponent extends Component {
     }
   }
   handleInputChange = async event => {
+    //  if (
+    //   !this.state.emailValid ||
+    //   this.state.name.trim() === "" ||
+    //   this.state.number.trim() === "" ||
+    //   this.state.name.trim() === ""
+    // ) {
+    //   this.setState({
+    //     allow: false
+    //   });
+    // }
     this.setState({
-      [event.target.name]: event.target.value,
-      linkedInValid: true,
-      nameValid: true,
-      numberValid: true,
-      emailValid: true
+      [event.target.name]: event.target.value
     });
   };
   checkEmailApi = async () => {
@@ -85,11 +91,11 @@ class SignUpFormComponent extends Component {
         nameValid: false
       });
     }
-    if (this.state.LinkedInUrl.length === 0) {
-      await this.setState({
-        linkedInValid: false
-      });
-    }
+    // if (this.state.LinkedInUrl.length === 0) {
+    //   await this.setState({
+    //     linkedInValid: false
+    //   });
+    // }
     if (this.state.code === "code" || !this.state.number.length > 0) {
       this.setState({
         message: "Please select country code & enter phone number",
@@ -132,6 +138,14 @@ class SignUpFormComponent extends Component {
     } = this.state;
     console.log("this.props.error", this.props.error);
     const { classes } = this.props;
+    let condition =
+      this.state.name.trim() === "" ||
+      this.state.number.trim() === "" ||
+      this.state.email.trim() === ""
+        ? false
+        : this.state.allow
+        ? this.state.allow
+        : false;
     return (
       <Dialog className={classes.paper} onClose={() => {}} open={true}>
         <IconButton
@@ -213,7 +227,7 @@ class SignUpFormComponent extends Component {
                 color="primary"
                 type="submit"
                 className={classes.SignUpBtn}
-                disabled={!allow}
+                disabled={!condition}
                 // onClick={() => this.setState({ message: "something went wrong" })}
               >
                 Continue

@@ -34,7 +34,9 @@ export const clientSignUpApi = (
           message: "You have successfully logged into your account"
         })
       );
-      console.log("Router", Router);
+      setTimeout(() => {
+        Router.push("/verify-email");
+      }, 2000);
     })
     .catch(err => {
       const error =
@@ -48,11 +50,11 @@ export const clientSignUpApi = (
     });
 };
 
-const signUpSuccess = (token, message) => ({
+const signUpSuccess = data => ({
   type: DO_FREELANCER_SIGNUP_SUCCESS,
   payload: {
-    token,
-    message
+    token: data.token,
+    message: data.message
   }
 });
 

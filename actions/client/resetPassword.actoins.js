@@ -22,7 +22,7 @@ export const clientResetPasswordApi = (password, code, goto) => dispatch => {
     .post("/graphql", queryString)
     .then(res => {
       dispatch(resetPasswordSuccess(res.resetPasswordWithCode.message));
-      goto.push("/verify-email");
+      goto.push("/forgot");
     })
     .catch(err => {
       const error =

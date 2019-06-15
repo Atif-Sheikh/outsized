@@ -33,7 +33,7 @@ export const doCheckEmail = email => dispatch => {
 
 const validEmailSuccess = message => ({
   type: VALID_EMAIL_CHECK_SUCCESS,
-  payload: message
+  payload: ""
 });
 
 const validEmailStarted = () => ({

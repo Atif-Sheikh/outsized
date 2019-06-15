@@ -115,7 +115,7 @@ export const styles = theme => ({
       alignItems: "center",
       justifyContent: "flex-start",
       width: "78%",
-      margin: "0 auto"
+      margin: "40px auto"
     }
   },
   underlineTypo: {

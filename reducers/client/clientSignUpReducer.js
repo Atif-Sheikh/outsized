@@ -19,6 +19,7 @@ const initialState = {
 };
 
 export const clientSignUpReducer = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case ADDED_USER_DATA:
       return {
@@ -52,7 +53,7 @@ export const clientSignUpReducer = (state = initialState, action) => {
         isValidEmail: false
       };
     case DO_FREELANCER_SIGNUP_STARTED:
-      return { ...state, isLoading: true, error: false };
+      return { ...state, isLoading: true, error: false, message: "" };
     case DO_FREELANCER_SIGNUP_SUCCESS:
       return {
         ...state,

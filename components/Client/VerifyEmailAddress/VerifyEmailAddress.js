@@ -8,6 +8,7 @@ import CheckCircle from "@material-ui/icons/CheckCircle";
 import IconButton from "@material-ui/core/IconButton";
 import { styles } from "@styles/clientComponents/VerifyEmail.styles.js";
 import Link from "next/link";
+import Router from "next/Router";
 
 class VerifyEmailAddress extends Component {
   state = {};
@@ -18,7 +19,7 @@ class VerifyEmailAddress extends Component {
       <div className={classes.paper}>
         <div className={classes.header} />
         <div>
-          <IconButton>
+          <IconButton onClick={() => Router.push("/login")}>
             <BackIcon className={classes.backButton} />
           </IconButton>
         </div>

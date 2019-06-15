@@ -1,13 +1,13 @@
-import ResetPassword from "@components/Client/resetPassword/ClientResetPass.js";
+import ResetPassword from "@components/Client/ResetPassword/ClientResetPassword.js";
 
-function RestPassowrd() {
-    return (
-      <div>
-        <div style={{ display: "flex" }}>
-            <ResetPassword />
-        </div>
+function ResetPasswords() {
+  return (
+    <div>
+      <div style={{ display: "flex" }}>
+        <ResetPassword />
       </div>
-    );
+    </div>
+  );
 }
 
-export default RestPassowrd;
+export default ResetPasswords;

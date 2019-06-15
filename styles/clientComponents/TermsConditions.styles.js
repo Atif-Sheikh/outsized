@@ -1,105 +1,295 @@
 export const styles = theme => ({
-  mainContainer: {
-    [theme.breakpoints.down("sm")]: {
-      height: "100vh",
-      width: "100%",
+  paper: {
+    borderRadius: "0px",
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      margin: 0,
+      height: "100% !important",
+      maxHeight: "100vh"
+    },
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "620px",
+      height: "590px",
+      borderRadius: "15px !important",
+      backgroundColor: "#fff",
       display: "flex",
-      flexDirection: "column",
-      justifyContent: "center"
+      margin: "60px auto",
+      display: "flex",
+      justifyContent: "center",
+      padding: "5px 0 5px 0"
     }
   },
-  header: {
+  Header: {
     width: "100%",
-    height: "70px",
-    backgroundColor: "#e2e2e2",
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      flex: "1",
-      minHeight: "40px",
-      background: "#e2e2e2"
+    height: 40,
+    backgroundColor: " #e2e2e2",
+    marginBottom: "10px",
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
     }
   },
-  temsConditions: {
-    fontSize: "18px",
-    fontWeight: "550",
-    color: "#575553 !important"
-  },
-  restContainer: {
+  rectangle: {
+    maxWidth: "620px",
+    height: "712px",
+    borderRadius: "5px",
+    backgroundColor: "#fff",
     display: "flex",
-    flex: "14",
+    margin: "-30px auto",
+    display: "flex",
+    justifyContent: "center",
+    minHeight: "90vh",
+    border: "none",
+    padding: "5px 0 5px 0",
+    "&>div:nth-of-type(1)": {
+      backgroundColor: "#000000c7 !important"
+    }
+  },
+  inner: {
+    maxWidth: "620px",
+    height: "712px",
+    borderRadius: "5px",
+    backgroundColor: "#fff",
+    display: "flex"
+  },
+  mainWrapper: {
+    width: "30%",
+    display: "flex",
     flexDirection: "column",
-    background: "white"
-  },
-  topSection: {
-    display: "flex",
-    width: "85%",
-    flex: "0.8",
-    margin: "0 auto",
     alignItems: "center"
   },
-  termsConditions: {
-    width: "177px",
-    height: "24px",
-    fontFamily: "Roboto Helvetica, Arial, sans-serif",
+  headerContainer: {
+    display: "flex",
+    flexDirection: "",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "6px 10px 0px 20px"
+  },
+  headerText: {
+    width: "292px",
+    display: "flex",
+    alignItems: "center",
+    height: "28px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     fontSize: "20px",
-    fontWeight: "600 !important",
+    fontWeight: "550",
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal",
     color: "#575553"
   },
-  errorContainer: {
-    height: "60px",
-    opacity: 0.9,
-    borderRadius: "5px",
-    border: "solid 3px #e0383e",
-    backgroundColor: "#e0383e",
-    width: "85%",
-    margin: "0 auto",
-    textAlign: "center"
-  },
-  error: {
+  headerTextChild: {
+    display: "inline-block",
     width: "100%",
-    height: "40px",
-    opacity: 0.9,
-    fontFamily: "Roboto Helvetica, Arial, sans-serif",
+    display: "flex",
+    alignItems: "center",
+    height: "105px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "24px",
+    fontWeight: "550",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
+    color: "#575553",
+    padding: " 30px 0px 0px 26px"
+  },
+  forgotTypo: {
+    width: "130px",
+    height: "20px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "16px",
+    fontWeight: "500",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: 1.25,
+    letterSpacing: "normal",
+    color: "#2b35e0"
+  },
+
+  formWrapper: {
+    textAlign: "center",
+    marginBottom: "5px",
+    width: "80%"
+  },
+  newHere: {
+    color: "#000"
+  },
+  emailField: {
+    width: "inherit",
+    marginBottom: "15px"
+  },
+  fpLink: {
+    margin: "10px"
+  },
+  agreeBtn: {
+    width: "85vw",
+    height: "36px",
+    borderRadius: "2px",
+    boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    backgroundColor: "#5e35b1",
+    borderImageSource:
+      "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))",
+    borderImageSlice: 1,
+    backgroundImage:
+      "#5e35b1, linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))",
+    marginTop: "30px",
+    textTransform: "capitalize",
+
     fontSize: "14px",
     fontWeight: "500",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: 1.43,
-    letterSpacing: "normal",
-    textAlign: "center",
-    color: "#ffffff"
+    lineHeight: "normal",
+    letterSpacing: "0.5px",
+    color: "#ffffff",
+    marginLeft: "0px",
+    [theme.breakpoints.up("sm")]: {
+      width: "182px",
+      marginLeft: " 320px"
+    }
   },
-  midSection: {
-    display: "flex",
-    flex: "5",
+
+  FormContainer: {
     width: "85%",
+    //   minHeight: "230px",S
     margin: "0 auto",
-    overflow: "scroll",
-    paddingTop: "10px"
+    paddingBottom: "35px"
   },
-  midSecData: {
-    width: "300px",
-    fontFamily: "Roboto Helvetica, Arial, sans-serif",
-    fontSize: "12px",
-    fontWeight: "normal",
+  closeIcon: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex",
+      justifyContent: "flex-end",
+      width: "50px",
+      alignSelf: "flex-end"
+    }
+  },
+  icon: {
+    width: "24px",
+    height: "24px",
+    color: "#000"
+  },
+  grow: {
+    fontWeight: "bold",
+    fontSize: "35px",
+    width: "50%",
+    textAlign: "center",
+    margin: "auto",
+    padding: "20px",
+    color: "#6161ffed"
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    margin: 0
+  },
+  orOperator: {
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "18px",
+    fontWeight: "500",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: 1.57,
+    lineHeight: "normal",
     letterSpacing: "normal",
-    color: "rgba(0, 0, 0, 0.87)"
+    color: "#000000"
   },
-  lowerSection: {
-    display: "flex",
-    flex: "1",
-    width: "85%",
-    margin: "0 auto",
+  divider: {
+    width: "90%",
     alignItems: "center",
-    justifyContent: "center"
+    marginTop: "30px",
+    display: "flex",
+    justifyContent: "space-between"
   },
+  dividerLine: {
+    width: "40%",
+    background: "#4c4444",
+    height: "1.1px"
+  },
+  margin: {
+    backgroundColor: "#6161ffed",
+    marginTop: "20px",
+    fontSize: "11px",
+    fontFamily: "arial",
+    fontWeight: "bold",
+    padding: "11px 35px"
+  },
+  modalFooter: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: "20px"
+  },
+  footerTypo: {
+    maxWidth: "300px"
+  },
+  textField: {
+    width: "100%"
+  },
+  textFieldPass: {
+    width: "100%",
+    marginTop: "15px",
+    marginBottom: 0
+  },
+  links: {
+    textDecoration: "none",
+    color: "#6161ffed",
+    fontWeight: "bold",
+    fontSize: "12px",
+    paddingTop: "10px",
+    fontFamilt: "arial"
+  },
+  suggestionLink: {
+    "&:active": {
+      backgroundColor: "white"
+    },
+    "&:hover": {
+      backgroundColor: "white"
+    }
+  },
+  errorText: {
+    width: "85%",
+    height: "20px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    // textAlign:'center !important',
+    fontSize: "16px",
+    margin: "0px auto",
+    fontWeight: "550",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: 0.25,
+    letterSpacing: "normal",
+    color: "#e0383e",
+    paddingTop: "4px"
+  },
+  successText: {
+    color: "green",
+    fontSize: "14px",
+    paddingLeft: "9px",
+    height: "10px",
+    width: "100%"
+  },
+  buttonProgress: {
+    color: "green",
+    position: "absolute",
+    top: "70%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12
+  },
+  wrapper: {
+    position: "relative"
+  },
+  buttonSuccess: {
+    backgroundColor: "green",
+    "&:hover": {
+      backgroundColor: "green"
+    }
+  },
+
   acceptBtn: {
     width: "100%",
     height: "36px",
@@ -116,5 +306,21 @@ export const styles = theme => ({
     backgroundClip: "border-box",
     textTransform: "capitalize",
     background: "#5e35b1"
+  },
+  midSecData: {
+    width: "100%",
+    fontFamily: "Roboto Helvetica, Arial, sans-serif",
+    fontSize: "12px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: 1.57,
+    letterSpacing: "normal",
+    color: "rgba(0, 0, 0, 0.87)",
+    overflowY: "auto",
+    [theme.breakpoints.up("sm")]: {
+      width: "520px",
+      height: "345px"
+    }
   }
 });

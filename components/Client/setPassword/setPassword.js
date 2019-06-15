@@ -20,7 +20,8 @@ class SetPasswordFormComponent extends Component {
     passwordValid: true,
     match: true,
     message: "",
-    userData: {}
+    userData: {},
+    error: false
   };
 
   handleInputChange = event => {
@@ -66,7 +67,11 @@ class SetPasswordFormComponent extends Component {
       password.length > 0 &&
       confirmPassword.length > 0
     ) {
-      this.setState({ match: true, message: "Password does not match" });
+      this.setState({
+        match: true,
+        message: "Password does not match",
+        error: true
+      });
     } else if (
       password.length > 0 &&
       confirmPassword.length > 0 &&
@@ -86,11 +91,10 @@ class SetPasswordFormComponent extends Component {
         this.props.closeSnackbar,
         Router
       );
-      Router.push("/verify-email");
     }
   };
   componentWillReceiveProps(nextProps) {
-    this.setState({ message: nextProps.message, error: nextProps.message });
+    this.setState({ message: nextProps.message, error: nextProps.error });
   }
   render() {
     const { classes } = this.props;
@@ -99,7 +103,8 @@ class SetPasswordFormComponent extends Component {
       confirmPassword,
       match,
       passwordValid,
-      message
+      message,
+      error
     } = this.state;
 
     return (
@@ -132,7 +137,7 @@ class SetPasswordFormComponent extends Component {
         </div>
         {message && message.length ? (
           <Typography
-            style={{ color: !message ? "green" : "red", paddingLeft: 20 }}
+            style={{ color: !error ? "green" : "red", paddingLeft: 20 }}
             className={classes.messageText}
           >
             {message}
@@ -198,8 +203,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    clientSignUpApi: (data, snackShow, snackHide) =>
-      dispatch(clientSignUpApi(data, snackShow, snackHide))
+    clientSignUpApi: (data, snackShow, snackHide, goto) =>
+      dispatch(clientSignUpApi(data, snackShow, snackHide, goto))
   };
 };
 
