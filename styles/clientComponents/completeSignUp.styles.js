@@ -25,8 +25,8 @@ export const styles = theme => ({
     },
     [theme.breakpoints.up("sm")]: {
       maxWidth: "620px",
-      height: "570px",
-      borderRadius: "5px",
+      height: "400px",
+      borderRadius: "15px",
       backgroundColor: "#fff",
       display: "flex",
       margin: "30px auto",
@@ -39,6 +39,7 @@ export const styles = theme => ({
     width: "100%",
     height: 40,
     backgroundColor: " #e2e2e2",
+    marginBottom: "20px",
     [theme.breakpoints.up("sm")]: {
       display: "none"
     }
@@ -62,7 +63,7 @@ export const styles = theme => ({
     flexDirection: "",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "6px 10px 0px 20px"
+    padding: "6px 10px 20px 20px"
   },
   headerText: {
     width: "292px",
@@ -83,7 +84,7 @@ export const styles = theme => ({
     marginLeft: "15px"
   },
   paraText: {
-    width: "77%",
+    width: "87%",
     margin: "auto",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     marginTop: "-5px",
@@ -188,7 +189,7 @@ export const styles = theme => ({
     color: "#ffffff"
   },
   FormContainer: {
-    width: "85%",
+    width: "95% !important",
     minHeight: "230px",
     margin: "0 auto",
     paddingBottom: "35px"

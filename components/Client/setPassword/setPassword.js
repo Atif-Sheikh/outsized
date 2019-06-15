@@ -11,6 +11,7 @@ import { styles } from "@styles/clientComponents/SetPassword.styles.js";
 import InputArea from "../../ReuseableComponents/InputArea";
 import { connect } from "react-redux";
 import { clientSignUpApi } from "@actions/client";
+import Router from "next/Router";
 
 class SetPasswordFormComponent extends Component {
   state = {
@@ -82,8 +83,10 @@ class SetPasswordFormComponent extends Component {
       this.props.clientSignUpApi(
         user,
         this.props.enqueueSnackbar,
-        this.props.closeSnackbar
+        this.props.closeSnackbar,
+        Router
       );
+      Router.push("/verify-email");
     }
   };
   componentWillReceiveProps(nextProps) {
@@ -109,7 +112,14 @@ class SetPasswordFormComponent extends Component {
         <div className={classes.Header} />
         <div className={classes.headerContainer}>
           <Typography className={classes.headerText}>
-            <i class="material-icons">keyboard_backspace</i>
+            <i
+              class="material-icons"
+              onClick={() => {
+                Router.push("/signup");
+              }}
+            >
+              keyboard_backspace
+            </i>
             <span className={classes.headerTextChild}>Set password</span>
           </Typography>
           <IconButton

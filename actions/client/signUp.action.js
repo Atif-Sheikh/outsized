@@ -34,8 +34,7 @@ export const clientSignUpApi = (
           message: "You have successfully logged into your account"
         })
       );
-
-      // Router.push("/");
+      console.log("Router", Router);
     })
     .catch(err => {
       const error =
