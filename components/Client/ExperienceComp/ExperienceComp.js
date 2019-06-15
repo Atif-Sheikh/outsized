@@ -41,9 +41,9 @@ class Experience extends Component {
             <Typography className={classes.title}>
                 {title}
                 <span className={classes.iconContainer}>
-                    <EditIcon className={classes.icon} />
+                    <EditIcon className={classes.smallIcon} />
                     <span className={classes.line} />
-                    <DeleteIcon className={classes.icon} />
+                    <DeleteIcon className={classes.smallIcon} />
                 </span>
             </Typography>
             <Typography className={classes.housingcom}>
@@ -146,7 +146,7 @@ class Experience extends Component {
                     onClose={() => this.setState({ open: false })}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-                    style={{ minWidth: '600px' }}
+                    style={{ minWidth: '600px !important' }}
                 >
                     <IconButton
                         className={classes.closeIcon}

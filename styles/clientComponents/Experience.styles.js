@@ -30,7 +30,7 @@ export const styles = theme => ({
         justifyContent: 'flex-end'
     },
     iconContainer: {
-        minWidth: '60px',
+        minWidth: '46px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -40,12 +40,6 @@ export const styles = theme => ({
         width: '1px',
         height: '20px',
         border: 'solid 1px #383838',
-    },
-    icon: {
-        width: '16px',
-        height: '16px',
-        color: '#383838',
-        cursor: 'pointer'
     },
     addIcon: {
         width: '20.5px',
@@ -181,11 +175,6 @@ export const styles = theme => ({
             display: "none"
         }
     },
-    icon: {
-        width: "24px",
-        height: "24px",
-        color: "#000"
-    },
     FormContainer: {
         width: "85%",
         minHeight: "230px",
@@ -294,4 +283,10 @@ export const styles = theme => ({
     formControlSelect: {
         width: "200px !importance"
     },
+    smallIcon: {
+        width: '17px',
+        height: '17px',
+        color: '#383838',
+        cursor: 'pointer'
+    }
 });
