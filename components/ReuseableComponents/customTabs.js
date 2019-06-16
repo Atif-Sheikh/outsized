@@ -49,13 +49,15 @@ class Tabs extends Component {
               selectedTab === 2 ? classes.listItemSelected : classes.listItems
             }
           >
-            <Typography
-              className={
-                selectedTab === 2 ? classes.selectedTypo : classes.typos
-              }
-            >
-              Portfolio
-            </Typography>
+            <Link href="/portfolio">
+              <Typography
+                  className={
+                    selectedTab === 2 ? classes.selectedTypo : classes.typos
+                  }
+                >
+                  Portfolio
+              </Typography>
+            </Link>
           </li>
           <li
             onClick={() => setTab(3)}

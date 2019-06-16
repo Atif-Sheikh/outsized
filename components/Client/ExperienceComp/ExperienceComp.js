@@ -163,7 +163,9 @@ class Experience extends Component {
                         >
                             <Back className={classes.icon} />
                         </IconButton>{" "}
-                        Add Work Experience
+                            <Typography>
+                                Add Work Experience
+                            </Typography>
                         </Typography></DialogTitle>
                     <DialogContent className={classes.modal}>
                         <DialogContentText id="alert-dialog-description">
