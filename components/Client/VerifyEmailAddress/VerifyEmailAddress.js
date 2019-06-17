@@ -32,6 +32,7 @@ class VerifyEmailAddress extends Component {
   componentWillReceiveProps(NewProps) {
     console.log(NewProps.email);
     if (NewProps.email.valid) {
+        Router.push("/basic-profile");
       this.setState({ linkVerification: false, valided: true });
     }
   }

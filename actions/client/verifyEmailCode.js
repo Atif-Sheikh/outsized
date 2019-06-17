@@ -1,7 +1,8 @@
 import {
   SEND_EMAIL_VERIFICATION_SUCCESS,
   SEND_EMAIL_VERIFICATION_FAILED,
-  SEND_EMAIL_VERIFICATION
+  SEND_EMAIL_VERIFICATION,
+  CLEAR_TERMS_MODAL
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -23,7 +24,7 @@ export const clientVerifyEmailCode = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(loginSuccess({ res, valid: true }));
+      dispatch(loginSuccess({ res, valid: true,  }));
       const key = enqueueSnackbar(
         res.data.freelancerEmailVerification.message,
         {
@@ -56,7 +57,8 @@ export const clientVerifyEmailCode = (
 const loginSuccess = email => ({
   type: SEND_EMAIL_VERIFICATION_SUCCESS,
   payload: {
-    email
+    email,
+    showVerifyScreen: true
   }
 });
 
@@ -68,5 +70,13 @@ const loginFailed = error => ({
   type: SEND_EMAIL_VERIFICATION_FAILED,
   payload: {
     error
+  }
+});
+
+
+export const clearTermsModalComp = () => ({
+  type: CLEAR_TERMS_MODAL,
+  payload: {
+    showVerifyScreen: true
   }
 });
