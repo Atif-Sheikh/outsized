@@ -6,16 +6,15 @@ import {
 
 import axios from "../../config/axios";
 
-export const clientVerifyEmail = (
-  email,
+export const clientVerifyEmailCode = (
+  code,
   enqueueSnackbar,
-  closeSnackbar,
-  Router
+  closeSnackbar
 ) => dispatch => {
   dispatch(loginStarted());
   let queryString = `
         mutation {
-          sendVerificationEmail(email:"${email}"){
+            freelancerEmailVerification(code:"${code}"){
                 message
             }
         }
@@ -24,18 +23,20 @@ export const clientVerifyEmail = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(loginSuccess({ email, res, valid: false }));
-      const key = enqueueSnackbar(res.data.sendVerificationEmail.message, {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right"
+      dispatch(loginSuccess({ res, valid: true }));
+      const key = enqueueSnackbar(
+        res.data.freelancerEmailVerification.message,
+        {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          }
         }
-      });
+      );
       setTimeout(() => {
         closeSnackbar(key);
       }, 2000);
-      Router.push("/verify-email");
     })
     .catch(err => {
       // dispatch(loginFailed(err.message));
