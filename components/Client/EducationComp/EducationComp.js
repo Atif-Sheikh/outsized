@@ -103,7 +103,7 @@ class Education extends Component {
           >
             <CloseIcon className={classes.closee} />
           </IconButton>
-          <DialogTitle id="alert-dialog-title">
+          <DialogTitle className={classes.educationModalTitle} id="alert-dialog-title">
             <Typography className={classes.headerText}>
               <IconButton
                 className={classes.back}
@@ -115,7 +115,7 @@ class Education extends Component {
               Add Education
             </Typography>
           </DialogTitle>
-          <DialogContent className={classes.modal}>
+          <DialogContent className={classes.addEducationModal}>
             <DialogContentText id="alert-dialog-description">
               <div className={classes.FormContainer}>
                 <InputArea
@@ -160,15 +160,15 @@ class Education extends Component {
                   </div>
                 </div>
               </div>
+              <div className={classes.btnContainer}>
+                <Button
+                  onClick={() => this.setState({ open: false })}
+                  className={classes.saveBtn}
+                >
+                  Save
+                </Button>
+              </div>
             </DialogContentText>
-            <div className={classes.btnContainer}>
-              <Button
-                onClick={() => this.setState({ open: false })}
-                className={classes.saveBtn}
-              >
-                Save
-              </Button>
-            </div>
           </DialogContent>
         </Dialog>
       </div>

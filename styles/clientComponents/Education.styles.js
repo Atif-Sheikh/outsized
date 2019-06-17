@@ -22,6 +22,9 @@ export const styles = theme => ({
             visibility: 'visible'
         }
     },
+    addEducationModal: {
+        overflow: 'hidden'
+    },
     btnContainer: {
         display: 'flex',
         alignItems: 'center',
@@ -32,13 +35,17 @@ export const styles = theme => ({
         height: "24px",
         color: "#000"
     },
+    educationModalTitle: {
+        paddingTop: '0 !important',
+        paddingBottom: '0 !important'
+    },
     headerText: {
         width: "85%",
         margin: "auto",
         height: '28px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         fontSize: '24px',
-        fontWeight: '500',
+        fontWeight: '600',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 'normal',
@@ -54,12 +61,13 @@ export const styles = theme => ({
         width: "85%",
         minHeight: "230px",
         margin: "0 auto",
-        paddingBottom: "35px"
+        paddingBottom: "20px"
     },
     btnContainer: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        width: '93%'
     },
     saveBtn: {
         width: '66px',
@@ -76,7 +84,7 @@ export const styles = theme => ({
         height: '24px',
         fontFamily: "Roboto, Helvetica, Arial, sans-serif",
         fontSize: '16px',
-        fontWeight: 'normal',
+        fontWeight: 500,
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.5,
@@ -88,7 +96,7 @@ export const styles = theme => ({
         height: '72px',
         fontFamily: "Roboto, Helvetica, Arial, sans-serif",
         fontSize: '16px',
-        fontWeight: '500',
+        fontWeight: '600',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.5,

@@ -42,7 +42,7 @@ class InputArea extends Component {
             height: "24px",
             fontFamily: "Roboto, Helvetica, Arial, sans-serif",
             fontSize: "16px",
-            fontWeight: "normal",
+            fontWeight: "600",
             fontStyle: "normal",
             fontStretch: "normal",
             lineHeight: 1.5,

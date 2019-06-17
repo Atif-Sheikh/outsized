@@ -22,6 +22,18 @@ export const styles = theme => ({
             visibility: 'visible'
         }
     },
+    experienceTitle: {
+        minWidth: '229px',
+        height: '28px',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontSize: '24px',
+        fontWeight: '600',
+        fontStyle: 'normal',
+        fontStretch: 'normal',
+        lineHeight: 'normal',
+        letterSpacing: 'normal',
+        color: '#575553',
+    },
     iconBtnDiv: {
         width: '100%',
         height: '30px',
@@ -116,10 +128,13 @@ export const styles = theme => ({
         letterSpacing: 'normal',
         color: '#3d3d3d',
     },
-    modal: {
+    expModal: {
         maxWidth: '620px',
         maxHeight: '573px',
         borderRadius: '5px',
+        paddingBottom: 20,
+        overflow: 'hidden',
+        minWidth: '600px',
         "&>div:nth-of-type(3)>div:nth-of-type(1)": {
             margin: 0,
             borderRadius: "0px",
@@ -150,7 +165,8 @@ export const styles = theme => ({
     btnContainer: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        width: '92%'
     },
     icon: {
         width: "24px",
@@ -214,12 +230,11 @@ export const styles = theme => ({
         marginTop: "0px !important",
         marginBottom: "10px !important"
     },
-    checkBoxContainer: {},
     roots: {
         display: "flex",
         alignItems: 'center',
         justifyContent: 'space-between',
-        minWidth: '20%'
+        minWidth: '22%'
         // flexWrap: "wrap"
     },
     dropDownContainer: {
@@ -235,11 +250,11 @@ export const styles = theme => ({
         backgroundColor: "white"
     },
     working: {
-        width: '195px',
+        minWidth: '195px',
         height: '19px',
         fontFamily: "Roboto, Helvetica, Arial, sans-serif",
         fontSize: '16px',
-        fontWeight: '500',
+        fontWeight: '600',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 'normal',
@@ -254,8 +269,11 @@ export const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
+        '&>:nth-of-type(1)': {
+            color: '#000'
+        }
     },
-    descr: {
+    experienceDescr: {
         width: '81px',
         height: '24px',
         fontFamily: "Roboto, Helvetica, Arial, sans-serif",
@@ -272,16 +290,27 @@ export const styles = theme => ({
         height: '72px',
         fontFamily: "Roboto, Helvetica, Arial, sans-serif",
         fontSize: '16px',
-        fontWeight: '500',
+        fontWeight: '600',
         fontStyle: 'normal',
         fontStretch: 'normal',
         lineHeight: 1.5,
         letterSpacing: 'normal',
         color: 'rgba(0, 0, 0, 0.87)',
     },
-    formControlText: {},
+    formControlText: {
+        height: '24px',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontSize: '16px',
+        fontWeight: '600',
+        fontStyle: 'normal',
+        fontStretch: 'normal',
+        lineHeight: 1.5,
+        letterSpacing: 'normal',
+        color: 'rgba(0, 0, 0, 0.87)',
+    },
     formControlSelect: {
-        width: "200px !importance"
+        width: "200px !importance",
+        fontWeight: 600
     },
     smallIcon: {
         width: '17px',

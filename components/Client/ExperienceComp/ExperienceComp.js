@@ -146,7 +146,7 @@ class Experience extends Component {
                     onClose={() => this.setState({ open: false })}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-                    style={{ minWidth: '600px !important' }}
+                    style={{ maxWidth: '650px !important' }}
                 >
                     <IconButton
                         className={classes.closeIcon}
@@ -163,11 +163,11 @@ class Experience extends Component {
                         >
                             <Back className={classes.icon} />
                         </IconButton>{" "}
-                            <Typography>
+                            <Typography className={classes.experienceTitle}>
                                 Add Work Experience
                             </Typography>
                         </Typography></DialogTitle>
-                    <DialogContent className={classes.modal}>
+                    <DialogContent className={classes.expModal}>
                         <DialogContentText id="alert-dialog-description">
 
                             <div className={classes.FormContainer}>
@@ -241,7 +241,7 @@ class Experience extends Component {
                                         <Typography className={classes.working}>I am currently working here</Typography>
                                     </div>
                                     <div>
-                                        <Typography className={classes.descr}>
+                                        <Typography className={classes.experienceDescr}>
                                             Description
                                     </Typography>
                                         <Typography className={classes.typos}>
