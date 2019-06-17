@@ -25,7 +25,10 @@ import {
   DELETE_EDUCATION_FAILED,
   DELETE_EXPERIENCE_STARTED,
   DELETE_EXPERIENCE_SUCCESS,
-  DELETE_EXPERIENCE_FAILED
+  DELETE_EXPERIENCE_FAILED,
+  EDIT_PROFILE_STARTED,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAILED
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -615,5 +618,73 @@ const deleteExperienceStarted = () => ({
 
 const deleteExperienceFailed = error => ({
   type: DELETE_EXPERIENCE_FAILED,
+  payload: error
+});
+
+// edit profile
+
+export const clientEditProfileApi = (
+  gender,
+  name,
+  mobile,
+  currentLocation,
+  email
+) => dispatch => {
+  dispatch(editProfileStarted());
+  let queryString = `
+        mutation {
+          editBasicProfile(
+            gender: "${gender}",
+            name: "${name}",
+            mobile: "${mobile}",
+            currentLocation: "${currentLocation}",
+            email: "${email}",
+            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+              freelancerProfile{
+                id,
+                name,
+                email,
+                gender,
+                mobile,
+                currentLocation,
+                alternateEmails{
+                  email,
+                  verified
+                }
+              }
+            }
+        }
+    `;
+
+  axios
+    .post("/graphql", queryString)
+    .then(res => {
+      dispatch(editProfileSuccess(res.data));
+    })
+    .catch(err => {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(editProfileFailed(error));
+    });
+};
+
+const editProfileSuccess = editExperience => ({
+  type: EDIT_PROFILE_SUCCESS,
+  payload: {
+    editExperience
+  }
+});
+
+const editProfileStarted = () => ({
+  type: EDIT_PROFILE_STARTED
+});
+
+const editProfileFailed = error => ({
+  type: EDIT_PROFILE_FAILED,
   payload: error
 });

@@ -15,5 +15,6 @@ export {
   clientDeleteEducationApi,
   clientAddExperienceApi,
   clientEditExperienceApi,
-  clientDeleteExperienceApi
+  clientDeleteExperienceApi,
+  clientEditProfileApi
 } from "./basicProfile.action";

@@ -19,6 +19,7 @@ import {
   retrieveFreelancerProfile,
   clientAddNumberApi,
   clientAddEmailApi,
+  clientEditProfileApi,
   clearTermsModalComp
 } from "@actions/client";
 
@@ -120,7 +121,12 @@ class BasicComponent extends Component {
       [event.target.name]: event.target.value,
       addNewEmailValid: true,
       addNewNumberValid: true,
-      phoneNumberError: false
+      phoneNumberError: false,
+      nameValid: true,
+      genderValid: true,
+      numberValid: true,
+      locationValid: true,
+      emailValid: true
     });
   };
   searching = e => {
@@ -257,6 +263,46 @@ class BasicComponent extends Component {
       this.setState({ phoneNumberError: false, showText: true });
     } else {
       this.setState({ phoneNumberError: true, showText: true });
+    }
+  };
+
+  editChagesInProfile = () => {
+    let { name, gender, number, location, email } = this.state;
+    if (!gender.length) {
+      this.setState({
+        genderValid: false
+      });
+    }
+    if (!name.length) {
+      this.setState({
+        nameValid: false
+      });
+    }
+    if (!number.length) {
+      this.setState({
+        numberValid: false
+      });
+    }
+
+    if (!location.length) {
+      this.setState({
+        locationValid: false
+      });
+    }
+    const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if (!checkEmail.test(email)) {
+      this.setState({
+        emailValid: false
+      });
+    }
+    if (
+      name.length &&
+      gender.length &&
+      number.length &&
+      location.length &&
+      email.length
+    ) {
+      this.props.clientEditProfileApi(gender, name, number, location, email);
     }
   };
   addAlternateEmailModal = () => {
@@ -572,6 +618,7 @@ class BasicComponent extends Component {
           color="primary"
           type="submit"
           className={loginBtn}
+          onClick={this.editChagesInProfile}
         >
           Save
         </Button>
@@ -646,6 +693,7 @@ const mapStateToProps = state => {
   console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
+    showVerifyScreen: state.verifyEmail.showVerifyScreen,
     error: state.clientBasicProfileReducer.message,
     access: state.clientBasicProfileReducer.access,
     freelancerProfile: state.clientBasicProfileReducer.freelancerProfile,
@@ -653,7 +701,7 @@ const mapStateToProps = state => {
     hasError: state.clientBasicProfileReducer.hasError,
     newEmailData: state.clientBasicProfileReducer.newEmailData,
     newNumberData: state.clientBasicProfileReducer.newNumberData,
-    showVerifyScreen: state.verifyEmail.showVerifyScreen
+    editProfile: state.clientBasicProfileReducer.editProfile
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -661,14 +709,16 @@ const mapDispatchToProps = dispatch => {
     retrieveFreelancerProfile: () => {
       dispatch(retrieveFreelancerProfile());
     },
+    clearTermsModal: () => {
+      dispatch(clearTermsModalComp()},
     clientAddNumberApi: number => {
       dispatch(clientAddNumberApi(number));
     },
     clientAddEmailApi: email => {
       dispatch(clientAddEmailApi(email));
     },
-    clearTermsModal: () => {
-      dispatch(clearTermsModalComp())
+    clientEditProfileApi: (gender, name, number, location, email) => {
+      dispatch(clientEditProfileApi(gender, name, number, location, email));
     }
   };
 };
