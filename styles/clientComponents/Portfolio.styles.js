@@ -157,5 +157,45 @@ export const styles = theme => ({
         lineHeight: 'normal',
         letterSpacing: 'normal',
         color: '#575553',
+    },
+    deleteModal: {
+        width: '500px',
+        height: '80px',
+        borderRadius: '5px',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        bottom: '20%'
+    },
+    dialogTitle: {
+        paddingTop: '0 !important'
+    },
+    deleteTitle: {
+        minWidth: '355px',
+        paddingLeft: 20,
+        height: '28px',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontSize: '24px',
+        fontWeight: '600',
+        fontStyle: 'normal',
+        fontStretch: 'normal',
+        lineHeight: 'normal',
+        letterSpacing: 'normal',
+        color: '#575553',
+    },
+    deleteBtnsContainer: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        width: '55%',
+    },
+    yesOrNoBtn: {
+        width: '80px',
+        height: '36px',
+        borderRadius: '2px',
+        boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)',
+        backgroundColor: '#5e35b1',
+        color: '#fff',
+        textTransform: 'capitalize'
     }
 });

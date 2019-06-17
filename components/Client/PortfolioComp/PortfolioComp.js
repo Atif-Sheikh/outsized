@@ -19,7 +19,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 class Portfolio extends Component {
     state = {
         uploadFile: false,
-        saveFile: false
+        saveFile: false,
+        openDeleteModal: false
     };
 
     FileContainer = (fileName) => {
@@ -37,12 +38,52 @@ class Portfolio extends Component {
                 <IconButton
                     className={classes.closeIcon}
                     aria-label="Close"
-                    onClick={() => {}}
+                    onClick={() => this.setState({ openDeleteModal: true })}
                 >
                     <CloseIcon className={classes.icon} />
                 </IconButton>
             </div>
         </div>
+    };
+
+    deleteModal = () => {
+        const { openDeleteModal } = this.state;
+        const { classes } = this.props;
+
+        return (
+            <Dialog
+                open={openDeleteModal}
+                onClose={() => this.setState({ openDeleteModal: false })}
+                style={{ minWidth: '500px', minHeight: '250px', borderRadius: '5px' }}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <IconButton
+                    className={classes.closeIcon}
+                    aria-label="Close"
+                    onClick={() => this.setState({ openDeleteModal: false })}
+                >
+                    <CloseIcon className={classes.icon} />
+                </IconButton>
+                <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">
+                    <Typography className={classes.deleteTitle}>
+                        Are you sure you want to delete ?
+                    </Typography>
+                    </DialogTitle>
+                <DialogContent>
+                    <div className={classes.deleteModal}>
+                        <div className={classes.deleteBtnsContainer}>
+                            <Button className={classes.yesOrNoBtn}>
+                                No
+                            </Button>
+                            <Button className={classes.yesOrNoBtn} autoFocus>
+                                Yes
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+        );
     };
 
     saveBeforeLeaving = () => {
@@ -118,7 +159,7 @@ class Portfolio extends Component {
                             <IconButton
                                 className={classes.closeIcon}
                                 aria-label="Close"
-                                onClick={() => {}}
+                                onClick={() => this.setState({ openDeleteModal: true })}
                             >
                                 <CloseIcon className={classes.icon} />
                             </IconButton>
@@ -168,6 +209,7 @@ class Portfolio extends Component {
                     { this.FileContainer('Saphora_case_Study.pdf') }
                     { this.uploadFileModal('kayla_life_case_study.pdf') }
                     { this.saveBeforeLeaving() }
+                    { this.deleteModal() }
                     <div className={classes.uploadBtnContainer}>
                         <Button className={classes.uploadFiles}>
                             Upload Files
