@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 function MenuListComposition(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { search, searching, counterCode, code } = props;
+  const { search, searching, counterCode, code, alternateNumber } = props;
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
@@ -132,9 +132,9 @@ function MenuListComposition(props) {
           )}
         </Button>
         <InputArea
-          label="Phone number"
+          label={alternateNumber ? "Alternate Phone Number" : "Phone number"}
           styleprops={styles.textFieldPass}
-          name="number"
+          name={props.numberName ? props.numberName: "number"}
           value={props.number}
           handleInputChange={event => props.handleInputChange(event)}
           validation={true}

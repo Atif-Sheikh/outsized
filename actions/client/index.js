@@ -4,3 +4,8 @@ export { doCheckEmail } from "./checkEmail.action";
 export { clientVerifyEmail } from "./verifyEmail";
 export { clientResetPasswordApi } from "./resetPassword.actoins";
 export { callForgotPasswordApi } from "./forgotPassword";
+export {
+  retrieveFreelancerProfile,
+  clientAddEmailApi,
+  clientAddNumberApi
+} from "./basicProfile.action";

@@ -15,7 +15,8 @@ import {
   clientSignUpReducer,
   verifyEmail,
   clientResetPassword,
-  clientForgotPassword
+  clientForgotPassword,
+  clientBasicProfileReducer
 } from "./client";
 export default combineReducers({
   loginReducer,
@@ -33,5 +34,6 @@ export default combineReducers({
   clientSignUpReducer,
   verifyEmail,
   clientResetPassword,
-  clientForgotPassword
+  clientForgotPassword,
+  clientBasicProfileReducer
 });
