@@ -28,7 +28,7 @@ export const clientLoginApi = (
     .then(res => {
       localStorage.setItem("token", res.data.freelancerLogin.token);
       dispatch(loginSuccess(res.data.freelancerLogin.token));
-      Router.push("/");
+      Router.push("/basic-profile");
     })
     .catch(err => {
       const error =
