@@ -48,7 +48,7 @@ class LoginFormComponent extends Component {
     }
     let checkPassword = /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&amp*-_])(?=.*[A-Z])(?!.*\s).*$/;
     if (!checkPassword.test(this.state.password)) {
-""      await this.setState({
+      await this.setState({
         passwordValid: false,
         error: "Please Enter valid Email and Password"
       });

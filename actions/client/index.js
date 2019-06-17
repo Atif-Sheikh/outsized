@@ -7,5 +7,11 @@ export { callForgotPasswordApi } from "./forgotPassword";
 export {
   retrieveFreelancerProfile,
   clientAddEmailApi,
-  clientAddNumberApi
+  clientAddNumberApi,
+  clientAddEducationApi,
+  clientEditEducationApi,
+  clientDeleteEducationApi,
+  clientAddExperienceApi,
+  clientEditExperienceApi,
+  clientDeleteExperienceApi
 } from "./basicProfile.action";
