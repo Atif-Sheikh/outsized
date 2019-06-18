@@ -486,5 +486,96 @@ export const styles = theme => ({
       width: "520px",
       height: "345px"
     }
-  }
+  },
+
+
+
+  paperzzzz: {
+    borderRadius: "0px",
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      margin: 0,
+      height: "100% !important",
+      maxHeight: "100vh"
+    },
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "620px",
+      height: "590px",
+      borderRadius: "15px !important",
+      backgroundColor: "#fff",
+      display: "flex",
+      margin: "60px auto",
+      display: "flex",
+      justifyContent: "center",
+      padding: "5px 0 5px 0"
+    }
+  },
+  headerContainerss: {
+    display: "flex",
+    flexDirection: "",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "6px 10px 0px 20px"
+  },
+  headerTextChi: {
+    display: "inline-block",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    height: "50px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "24px",
+    fontWeight: "550",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
+    color: "#575553",
+    padding: "0 0px 0px 26px"
+  },
+  errorContainerss: {
+      width: "85%",
+      height: "30px",
+      fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+      // textAlign:'center !important',
+      fontSize: "16px",
+      margin: "0px auto",
+      fontWeight: "550",
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: 0.25,
+      letterSpacing: "normal",
+      color: "#e0383e",
+      paddingTop: "4px"
+  },
+  FormContainerss: {
+    width: "85%",
+    //   minHeight: "230px",S
+    margin: "0 auto",
+    paddingBottom: "35px"
+  },
+  containerss: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      margin: 0
+  },
+  midSecDatass: {
+    width: "100%",
+    fontFamily: "Roboto Helvetica, Arial, sans-serif",
+    fontSize: "16px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: 1.57,
+    letterSpacing: "normal",
+    color: "rgba(0, 0, 0, 0.87)",
+    overflowY: "auto",
+    [theme.breakpoints.up("sm")]: {
+      width: "520px",
+      height: "345px"
+    }
+  },
+  wrapperss: {
+    position: "relative"
+  },
 });

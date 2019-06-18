@@ -19,7 +19,8 @@ import {
   clientAddNumberApi,
   clientAddEmailApi,
   clientEditProfileApi,
-  clientVerifyEmail
+  clientVerifyEmail,
+  clearTermsModalComp
 } from "@actions/client";
 
 class BasicComponent extends Component {
@@ -53,7 +54,9 @@ class BasicComponent extends Component {
     numberModal: false,
     showText: false,
     phoneNumberError: false,
-    submitText: "Submit"
+    submitText: "Submit",
+    showTermsModal: false,
+    termsError: false
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
@@ -106,7 +109,92 @@ class BasicComponent extends Component {
         ? basicNumberData
         : basicData && basicData.alternateMobiles
     });
+    if(nextProps.showVerifyScreen) {
+      setTimeout(() => {
+        this.setState({ showTermsModal: true }, () => {
+          this.props.clearTermsModal();
+        });
+      }, 1000);
+    }
   }
+
+  termsAndConditionsModal = () => {
+    const { classes } = this.props;
+    const { showTermsModal, termsError } = this.state;
+    return (
+        <Dialog
+          // style={styles.rectangle}
+          className={classes.paperzzzz}
+          onClose={() => {}}
+          open={showTermsModal}
+        >
+          <IconButton
+            className={classes.closeIcon}
+            aria-label="Close"
+            onClick={() => this.setState({ termsError: true })}
+          >
+            <CloseIcon className={classes.icon} />
+          </IconButton>
+          <div className={classes.headerContainerss}>
+            <Typography className={classes.headerTextChi}>
+              Terms &amp; Conditions
+            </Typography>
+          </div>
+          {termsError && (
+            <div className={classes.errorContainerss}>
+              <Typography className={classes.errorsss}>
+                Please accpet the the Terms &amp; Conditions to proceed.
+              </Typography>
+            </div>
+          )}
+          <div className={classes.FormContainerss}>
+            <form className={classes.containerss} noValidate autoComplete="off">
+              <Typography className={classes.midSecDatass}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                consectetur condimentum nunc, vel ultrices ante elementum in.
+                Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
+                purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
+                tempus quam eget egestas pellentesque. Praesent vehicula varius
+                lectus, vel maximus turpis rhoncus a. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Nam consectetur condimentum nunc, vel
+                ultrices ante elementum in. Aliquam bibendum egestas nunc. Morbi a
+                urna arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
+                interdum tortor. Sed tempus quam eget egestas pellentesque.
+                Praesent vehicula varius lectus, vel maximus turpis rhoncus a.
+                <br />
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                consectetur condimentum nunc, vel ultrices ante elementum in.
+                Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
+                purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
+                tempus quam eget egestas pellentesque. Praesent vehicula varius
+                lectus, vel maximus turpis rhoncus a.
+                <br />
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                consectetur condimentum nunc, vel ultrices ante elementum in.
+                Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
+                purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
+                tempus quam eget Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Nam consectetur condimentum nunc, vel ultrices
+                ante elementum in. Aliquam bibendum egestas nunc. Morbi a urna
+                arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
+                interdum tortor. Sed tempus quam eget
+              </Typography>
+              <div className={classes.wrapperss}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.setState({ showTermsModal: false })}
+                  className={classes.agreeBtn}
+                >
+                  Accept and Continue
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Dialog>
+    );
+  };
+
   handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -282,7 +370,7 @@ class BasicComponent extends Component {
               value={this.state.addNewEmail}
               handleInputChange={event => this.handleInputChange(event)}
               // onFocus={() => this.setState({ emailValid: true })}
-              styleprops={styles.textFieldPass}
+              styleprops={classes.textFieldPass}
               validation={this.state.addNewEmailValid}
             />
             <div className={classes.wrapper}>
@@ -629,6 +717,7 @@ class BasicComponent extends Component {
         )}
         {this.addAlternateEmailModal()}
         {this.addAlternateNumberModal()}
+        {this.termsAndConditionsModal()}
       </div>
     );
   }
@@ -645,7 +734,8 @@ const mapStateToProps = state => {
     hasError: state.clientBasicProfileReducer.hasError,
     newEmailData: state.clientBasicProfileReducer.newEmailData,
     newNumberData: state.clientBasicProfileReducer.newNumberData,
-    editProfile: state.clientBasicProfileReducer.editProfile
+    editProfile: state.clientBasicProfileReducer.editProfile,
+    showVerifyScreen: state.verifyEmail.showVerifyScreen
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -666,6 +756,9 @@ const mapDispatchToProps = dispatch => {
     },
     clientEditProfileApi: (gender, name, number, location, email) => {
       dispatch(clientEditProfileApi(gender, name, number, location, email));
+    },
+    clearTermsModal: () => {
+      dispatch(clearTermsModalComp())
     }
   };
 };

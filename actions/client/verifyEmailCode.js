@@ -76,6 +76,6 @@ const loginFailed = error => ({
 export const clearTermsModalComp = () => ({
   type: CLEAR_TERMS_MODAL,
   payload: {
-    showVerifyScreen: true
+    showVerifyScreen: false
   }
 });
