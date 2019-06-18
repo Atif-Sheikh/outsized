@@ -21,7 +21,7 @@ export const clientResetPasswordApi = (password, code, goto) => dispatch => {
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(resetPasswordSuccess(res.resetPasswordWithCode.message));
+      dispatch(resetPasswordSuccess(res.data.resetPasswordWithCode.message));
       goto.push("/forgot");
     })
     .catch(err => {
