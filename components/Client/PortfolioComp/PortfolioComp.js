@@ -20,7 +20,8 @@ class Portfolio extends Component {
   state = {
     uploadFile: false,
     saveFile: false,
-    openDeleteModal: false
+    openDeleteModal: false,
+    file: {}
   };
 
   deleteModal = () => {
@@ -104,28 +105,27 @@ class Portfolio extends Component {
     var input = document.getElementById("file-upload");
     // var infoArea = document.getElementById( 'file-upload-filename' );
 
-    input.addEventListener("change", showFileName);
-    // async function getImageBlob(imageUrl) {
-    //   const response = await fetch(imageUrl)
-    //   return response.blob()
-    // }
-    function showFileName(event) {
-      // the change event gives us the input it occurred in
-      var input = event.srcElement;
+    input.addEventListener("change", this.showFileName);
+  };
+  showFileName = event => {
+    // the change event gives us the input it occurred in
+    var inputs = event.target.result;
 
-      // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-      var fileName = input.files[0].name;
-
-      // const blob = await getImageBlob("http://path.to.image.com")
-      // use fileName however fits your app best, i.e. add it into a div
-      // infoArea.textContent = 'File name: ' + fileName;
-      console.log("sssss", input.files[0]);
-    }
+    // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+    // var file = input.files[0];
+    // this.setState({uploadFile:true,file:file})
+    console.log(inputs);
+  };
+  nameChanger = e => {
+    let { file } = this.state;
+    var addFile = file;
+    addFile.name = e.target.value;
+    console.log(addFile);
   };
   uploadFileModal = fileName => {
-    const { uploadFile } = this.state;
+    const { uploadFile, file } = this.state;
     const { classes } = this.props;
-
+    console.log(file);
     return (
       <Dialog
         open={uploadFile}
@@ -150,7 +150,7 @@ class Portfolio extends Component {
               <div className={classes.nameSectionUploaded}>
                 <CheckIcon className={classes.check} />
                 <PdfFile />
-                <Typography>{fileName}</Typography>
+                <Typography>{file.addEventListener}</Typography>
               </div>
               <div className={classes.iconSection}>
                 <IconButton
@@ -163,11 +163,11 @@ class Portfolio extends Component {
               </div>
             </div>
             <InputArea
-              label="File Name"
-              name="fileName"
               validation={true}
               styleprops={classes.textField}
-              handleInputChange={() => {}}
+              name={"name"}
+              value={file.name}
+              handleInputChange={this.nameChanger}
             />
           </div>
         </DialogContent>

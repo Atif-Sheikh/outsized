@@ -58,7 +58,7 @@ class ClientResetPass extends Component {
     }
   };
   componentWillReceiveProps(nextProps) {
-    this.setState({ error: nextProps.message, sucsess: nextProps.sucsess });
+    this.setState({ error: nextProps.error, sucsess: nextProps.sucsess });
   }
   handleInputChange = event => {
     console.log([event.target.name], event.target.value);
