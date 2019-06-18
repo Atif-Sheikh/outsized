@@ -32,7 +32,7 @@ class VerifyEmailAddress extends Component {
   componentWillReceiveProps(NewProps) {
     console.log(NewProps.email);
     if (NewProps.email.valid) {
-        Router.push("/basic-profile");
+      Router.push("/basic-profile");
       this.setState({ linkVerification: false, valided: true });
     }
   }
@@ -43,9 +43,11 @@ class VerifyEmailAddress extends Component {
       <div className={classes.paper}>
         <div className={classes.header} />
         <div>
-          <IconButton onClick={() => Router.push("/basic-profile")}>
-            <BackIcon className={classes.backButton} />
-          </IconButton>
+          <Link href="/basic-profile">
+            <IconButton onClick={() => Router.push("/basic-profile")}>
+              <BackIcon className={classes.backButton} />
+            </IconButton>
+          </Link>
         </div>
         <div className={classes.upperContainer}>
           <IconButton>
@@ -76,18 +78,22 @@ class VerifyEmailAddress extends Component {
               </Link>
             </span>
           </Typography>
-          <Typography
-            onClick={() => {
-              valided ? Router.push("/basic-profile") : {};
-            }}
-            className={!valided ? classes.continueProfile : classes.anchorStyle}
-          >
-            {valided
-              ? "Continue to profile"
-              : !linkVerification
-              ? "Continue to profile"
-              : "Please wait..."}
-          </Typography>
+          <Link href="/basic-profile">
+            <a
+              onClick={() => {
+                valided ? Router.push("/basic-profile") : {};
+              }}
+              className={
+                !valided ? classes.continueProfile : classes.anchorStyle
+              }
+            >
+              {valided
+                ? "Continue to profile"
+                : !linkVerification
+                ? "Continue to profile"
+                : "Please wait..."}
+            </a>
+          </Link>
         </div>
       </div>
     );

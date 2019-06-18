@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import InputArea from "../../ReuseableComponents/InputArea";
 import Router from "next/Router";
 import { callForgotPasswordApi } from "@actions/client";
+import Link from "next/link";
 
 class ClientForgotPassword extends Component {
   state = {
@@ -84,7 +85,9 @@ class ClientForgotPassword extends Component {
           }}
         />
         <div style={styles.btnContainer}>
-          <Typography style={styles.backToLogin}>Back to Login</Typography>
+          <Link href="/login">
+            <a style={styles.backToLogin}>Back to Login</a>
+          </Link>
           <Button
             variant="contained"
             color="primary"
