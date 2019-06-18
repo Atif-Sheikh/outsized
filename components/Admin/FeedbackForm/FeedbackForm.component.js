@@ -6,7 +6,7 @@ import { styles } from "@styles/adminComponents/components/FeedbackForm.styles";
 import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 import Table from "../Table/FeedbackFormTemplateTable.component";
-import Router from "next/Router";
+import Router from "next/router";
 import classNames from "classnames";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";

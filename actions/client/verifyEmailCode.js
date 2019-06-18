@@ -24,7 +24,7 @@ export const clientVerifyEmailCode = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(loginSuccess({ res, valid: true,  }));
+      dispatch(loginSuccess({ res, valid: true }));
       const key = enqueueSnackbar(
         res.data.freelancerEmailVerification.message,
         {
@@ -72,7 +72,6 @@ const loginFailed = error => ({
     error
   }
 });
-
 
 export const clearTermsModalComp = () => ({
   type: CLEAR_TERMS_MODAL,

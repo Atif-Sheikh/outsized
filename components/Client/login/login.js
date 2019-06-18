@@ -7,7 +7,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import Router from "next/Router";
+import Router from "next/router";
 import { styles } from "@styles/clientComponents/Login.styles.js";
 import InputArea from "../../ReuseableComponents/InputArea";
 import { withStyles } from "@material-ui/core/styles";

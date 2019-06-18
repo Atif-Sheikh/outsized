@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import InputArea from "../../ReuseableComponents/InputArea";
-import Router from "next/Router";
+import Router from "next/router";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import Dialog from "@material-ui/core/Dialog";

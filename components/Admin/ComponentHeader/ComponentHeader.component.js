@@ -136,11 +136,15 @@ class ComponentHeader extends Component {
       <div
         className={componentHeader}
         style={{
-          borderBottom: this.props.bottomColor ? "2px solid  #bec7ce" : "none",
+          borderBottom: this.props.bottomColor ? "2px solid  #bec7ce" : "none"
         }}
       >
-        <Typography className={title} variant="h6" color="inherit" noWrap 
-          style={{marginLeft:this.props.marginLeft ? '0px' : '32px'}}
+        <Typography
+          className={title}
+          variant="h6"
+          color="inherit"
+          noWrap
+          style={{ marginLeft: this.props.marginLeft ? "0px" : "32px" }}
         >
           {this.props.headerText}
         </Typography>
@@ -161,14 +165,13 @@ class ComponentHeader extends Component {
             <Button
               variant="contained"
               className={button1}
-              style={{marginRight:this.props.marginLeft ? '40px' : '0px'}}
+              style={{ marginRight: this.props.marginLeft ? "40px" : "0px" }}
               onClick={
-                this.props.emailTemplate ? 
-                  this.props.redirectFunction
-                  :
-                  this.props.bottomColor
-                    ? this.props.redirectFunction
-                    : this.props.modalOpen
+                this.props.emailTemplate
+                  ? this.props.redirectFunction
+                  : this.props.bottomColor
+                  ? this.props.redirectFunction
+                  : this.props.modalOpen
               }
             >
               <i className={addIcon1}>add</i>

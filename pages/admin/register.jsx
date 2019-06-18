@@ -5,13 +5,12 @@ import NavbarComponent from "@components/Admin/Navbar/Navbar.component";
 import { styles } from "@styles/adminComponents/pages/register.styles";
 
 export default class Register extends Component {
- 
   render() {
     return (
       <div>
         <NavbarComponent />
         <div style={styles.mainWrapper}>
-            <RegisterFormComponent />
+          <RegisterFormComponent />
         </div>
       </div>
     );

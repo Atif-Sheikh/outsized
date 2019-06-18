@@ -14,7 +14,7 @@ var ValidProps = {};
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps;
-  console.log(ValidProps)
+  console.log(ValidProps);
   return (
     <TextField
       fullWidth

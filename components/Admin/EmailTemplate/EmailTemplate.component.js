@@ -6,45 +6,58 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
-import { addEmailTemplateApi,getRetreiveEmailTemplate } from "@actions/admin/emailTemplate.actions.js";
+import {
+  addEmailTemplateApi,
+  getRetreiveEmailTemplate
+} from "@actions/admin/emailTemplate.actions.js";
 import Router from "next/router";
 
 import { styles } from "@styles/adminComponents/components/EmailTemplate.styles";
 
 class EmailTemplate extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-    name: "",
-    description: "",
-    subject: "",
-    body: "",
-    nameValid: true,
-    descriptionValid: true,
-    subjectValid: true,
-    bodyValid: true,
-    editiorBody: ""
-  };  
-}
-componentDidMount(){
-  if(Router.router.query&&Router.router.query.email_id)
-  this.props.getRetreiveEmailTemplate(Router.router.query.email_id)
-}
-componentWillReceiveProps(nextProps){
-  if(Router.router.query&&Router.router.query.email_id&&nextProps.getRetreiveEmail){
-    const {body,description,id,name,subject }= nextProps.getRetreiveEmail
-    this.setState({
-      name:name,
-      description:description,
-      body:body,
-      subject:subject,
-      editiorBody:body
-    })
+      name: "",
+      description: "",
+      subject: "",
+      body: "",
+      nameValid: true,
+      descriptionValid: true,
+      subjectValid: true,
+      bodyValid: true,
+      editiorBody: ""
+    };
   }
-  if(nextProps.success){
-    Router.push("/admin/all-emails")
+  componentDidMount() {
+    if (Router.router.query && Router.router.query.email_id)
+      this.props.getRetreiveEmailTemplate(Router.router.query.email_id);
   }
-}
+  componentWillReceiveProps(nextProps) {
+    if (
+      Router.router.query &&
+      Router.router.query.email_id &&
+      nextProps.getRetreiveEmail
+    ) {
+      const {
+        body,
+        description,
+        id,
+        name,
+        subject
+      } = nextProps.getRetreiveEmail;
+      this.setState({
+        name: name,
+        description: description,
+        body: body,
+        subject: subject,
+        editiorBody: body
+      });
+    }
+    if (nextProps.success) {
+      Router.push("/admin/all-emails");
+    }
+  }
   inputField = (
     fieldContainer,
     contentTitleInput,
@@ -123,7 +136,13 @@ componentWillReceiveProps(nextProps){
     } else {
       this.setState({ bodyValid: false });
     }
-    if (nameIs && descriptionIs && subjectIs && bodyIs && !Router.router.query.email_id) {
+    if (
+      nameIs &&
+      descriptionIs &&
+      subjectIs &&
+      bodyIs &&
+      !Router.router.query.email_id
+    ) {
       this.props.addEmailTemplateApi(
         "AddNew",
         name,
@@ -133,9 +152,8 @@ componentWillReceiveProps(nextProps){
         this.props.enqueueSnackbar,
         this.props.closeSnackbar
       );
-    }
-    else if(Router.router.query.email_id){
-      var id =  Router.router.query.email_id
+    } else if (Router.router.query.email_id) {
+      var id = Router.router.query.email_id;
       this.props.addEmailTemplateApi(
         "Update",
         name,
@@ -228,7 +246,6 @@ componentWillReceiveProps(nextProps){
             e => this.setState({ name: e.target.value, nameValid: true }),
             nameValid,
             "*Please enter valid template name"
-            
           )}
           {this.inputField(
             fieldContainer,
@@ -304,16 +321,35 @@ EmailTemplate.propTypes = {
 const mapStateToProps = state => {
   return {
     isLoading: state.emailTemplateReducer.isLoading,
-    getRetreiveEmail:state.emailTemplateReducer.getRetreiveEmail,
-    success:state.emailTemplateReducer.success
-
+    getRetreiveEmail: state.emailTemplateReducer.getRetreiveEmail,
+    success: state.emailTemplateReducer.success
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-      addEmailTemplateApi: (type,name,subject,description,body,enqueueSnackbar,closeSnackbar,id) =>
-      dispatch(addEmailTemplateApi(type,name,subject,description,body,enqueueSnackbar,closeSnackbar,id)),
-      getRetreiveEmailTemplate:(id)=>  dispatch( getRetreiveEmailTemplate(id) ),
+    addEmailTemplateApi: (
+      type,
+      name,
+      subject,
+      description,
+      body,
+      enqueueSnackbar,
+      closeSnackbar,
+      id
+    ) =>
+      dispatch(
+        addEmailTemplateApi(
+          type,
+          name,
+          subject,
+          description,
+          body,
+          enqueueSnackbar,
+          closeSnackbar,
+          id
+        )
+      ),
+    getRetreiveEmailTemplate: id => dispatch(getRetreiveEmailTemplate(id))
   };
 };
 

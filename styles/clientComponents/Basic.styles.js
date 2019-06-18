@@ -28,7 +28,7 @@ export const styles = theme => ({
     color: "#ffffff",
     marginLeft: "0px",
     [theme.breakpoints.up("sm")]: {
-      width: "182px",
+      width: "182px"
     }
   },
   papers: {
@@ -37,7 +37,7 @@ export const styles = theme => ({
       margin: 0,
       height: "70% !important",
       maxHeight: "70vh",
-      width:"640px"
+      width: "640px"
     },
     [theme.breakpoints.up("sm")]: {
       maxWidth: "720px",
@@ -51,9 +51,9 @@ export const styles = theme => ({
     }
   },
   wrapper: {
-    display:'flex',
-    justifyContent:'flex-end',
-    width:'100%',
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%"
   },
   container: {
     display: "flex",
@@ -119,8 +119,8 @@ export const styles = theme => ({
     textTransform: "capitalize",
     [theme.breakpoints.up("sm")]: {
       width: "500px",
-      margin:'30px auto',
-      display:'block'
+      margin: "30px auto",
+      display: "block"
     },
     fontSize: "14px",
     fontWeight: "500",
@@ -156,7 +156,8 @@ export const styles = theme => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "6px 10px 0px 20px"
-  },headerText: {
+  },
+  headerText: {
     width: "592px",
     display: "flex",
     alignItems: "center",

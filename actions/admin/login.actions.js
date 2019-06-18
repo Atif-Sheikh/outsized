@@ -26,31 +26,37 @@ export const callLoginApi = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      localStorage.setItem('token', res.data.login.token)
+      localStorage.setItem("token", res.data.login.token);
       dispatch(loginSuccess(res.data.login.token));
-      const key = enqueueSnackbar("You have successfully logged into your account", {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right"
+      const key = enqueueSnackbar(
+        "You have successfully logged into your account",
+        {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          }
         }
-      });
+      );
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
       Router.push("/admin/hiring-process");
     })
     .catch(err => {
       dispatch(loginFailed(err.message));
-      const key = enqueueSnackbar("Please check your credentials and try again", {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right"
+      const key = enqueueSnackbar(
+        "Please check your credentials and try again",
+        {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          }
         }
-      });
+      );
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     });
 };

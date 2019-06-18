@@ -44,7 +44,7 @@ function getModalStyle() {
   };
 }
 var check = false;
-var paramCheck = true
+var paramCheck = true;
 class HiringStages extends Component {
   state = {
     stage: "",
@@ -57,7 +57,7 @@ class HiringStages extends Component {
     detect: false
   };
   componentWillReceiveProps = nextProps => {
-    console.log(nextProps)
+    console.log(nextProps);
 
     const {
       retrevieTemplates,
@@ -83,16 +83,21 @@ class HiringStages extends Component {
       this.setState({ allTemplate: allTemplate });
       check = false;
     }
-    if(Router.router.query && Router.router.query.id && paramCheck ){
-      var id =  Router.router.query.id
+    if (Router.router.query && Router.router.query.id && paramCheck) {
+      var id = Router.router.query.id;
       this.props.getRetreiveTemplate(
         id,
         this.props.enqueueSnackbar,
         this.props.closeSnackbar
-        );
-        paramCheck=false
-      }if(Router.router.query &&nextProps.retrevieTemplates && Number(nextProps.retrevieTemplates.id) === Number(Router.router.query.id)){
-      this.setState({template:nextProps.retrevieTemplates.name})
+      );
+      paramCheck = false;
+    }
+    if (
+      Router.router.query &&
+      nextProps.retrevieTemplates &&
+      Number(nextProps.retrevieTemplates.id) === Number(Router.router.query.id)
+    ) {
+      this.setState({ template: nextProps.retrevieTemplates.name });
     }
   };
   componentDidMount() {
@@ -106,8 +111,8 @@ class HiringStages extends Component {
       this.props.closeSnackbar
     );
   }
-  componentWillUnmount(){
-    paramCheck = true
+  componentWillUnmount() {
+    paramCheck = true;
   }
   handleOpen = () => {
     this.props.openHiringStageModal();
@@ -398,7 +403,13 @@ class HiringStages extends Component {
                 ? retrevieTemplates.stages
                 : []
             }
-            editStage={(stages)=>this.props.editStageApi(stages, this.props.enqueueSnackbar, this.props.closeSnackbar)}
+            editStage={stages =>
+              this.props.editStageApi(
+                stages,
+                this.props.enqueueSnackbar,
+                this.props.closeSnackbar
+              )
+            }
           />
           {this.modal(
             paper,
@@ -439,11 +450,25 @@ const mapDispatchToProps = dispatch => {
   return {
     addHiringTemplateApi: (template, enqueueSnackbar, closeSnackbar) =>
       dispatch(addHiringTemplateApi(template, enqueueSnackbar, closeSnackbar)),
-    addHiringStageApi: (stage,templateId,categoryId,enqueueSnackbar,closeSnackbar) =>
-      dispatch(addHiringStageApi(  stage,  templateId,  categoryId,  enqueueSnackbar,  closeSnackbar ) ),
-      editStageApi: (stage,enqueueSnackbar,closeSnackbar) =>
-      dispatch(editStageApi(  stage, enqueueSnackbar,  closeSnackbar ) ),
-    
+    addHiringStageApi: (
+      stage,
+      templateId,
+      categoryId,
+      enqueueSnackbar,
+      closeSnackbar
+    ) =>
+      dispatch(
+        addHiringStageApi(
+          stage,
+          templateId,
+          categoryId,
+          enqueueSnackbar,
+          closeSnackbar
+        )
+      ),
+    editStageApi: (stage, enqueueSnackbar, closeSnackbar) =>
+      dispatch(editStageApi(stage, enqueueSnackbar, closeSnackbar)),
+
     getHiringStageCategories: (enqueueSnackbar, closeSnackbar) =>
       dispatch(getHiringStageCategories(enqueueSnackbar, closeSnackbar)),
     getHiringStages: (enqueueSnackbar, closeSnackbar) =>

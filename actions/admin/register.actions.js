@@ -28,7 +28,7 @@ export const callRegisterApi = (
     .post("/graphql", queryString)
     .then(res => {
       dispatch(registerSuccess());
-      localStorage.setItem('token', res.data.register.token)
+      localStorage.setItem("token", res.data.register.token);
       dispatch(loginSuccess(res.data.register.token));
       const key = enqueueSnackbar("You have been successfully registered", {
         variant: "success",
@@ -38,7 +38,7 @@ export const callRegisterApi = (
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
       Router.push("/admin/hiring-process");
     })
@@ -52,7 +52,7 @@ export const callRegisterApi = (
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     });
 };

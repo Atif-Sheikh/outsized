@@ -9,20 +9,20 @@ import Router from "next/router";
 class AllEmail extends Component {
   render() {
     const { classes } = this.props;
-    const {
-      mainContainer,
-    } = classes;
+    const { mainContainer } = classes;
     return (
       <div className={mainContainer}>
         <ComponentHeader
-            headerText="Email Template"
-            text="Add Template"
-            marginLeft={true}
-            addButton={false}
-            addButtonFeedback={true}
-            emailTemplate={true}
-            redirectFunction={()=>{Router.push("/admin/email-template")}}
-            bottomColor={false}
+          headerText="Email Template"
+          text="Add Template"
+          marginLeft={true}
+          addButton={false}
+          addButtonFeedback={true}
+          emailTemplate={true}
+          redirectFunction={() => {
+            Router.push("/admin/email-template");
+          }}
+          bottomColor={false}
         />
         <Table />
       </div>

@@ -134,7 +134,7 @@ function MenuListComposition(props) {
         <InputArea
           label={alternateNumber ? "Alternate Phone Number" : "Phone number"}
           styleprops={styles.textFieldPass}
-          name={props.numberName ? props.numberName: "number"}
+          name={props.numberName ? props.numberName : "number"}
           value={props.number}
           handleInputChange={event => props.handleInputChange(event)}
           validation={true}

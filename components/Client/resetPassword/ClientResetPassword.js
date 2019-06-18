@@ -4,7 +4,7 @@ import { Typography, Dialog, Button, TextField } from "@material-ui/core";
 import { styles } from "@styles/clientComponents/clientNewPassword.styles.js";
 import { connect } from "react-redux";
 import InputArea from "../../ReuseableComponents/InputArea";
-import Router from "next/Router";
+import Router from "next/router";
 import { clientResetPasswordApi } from "@actions/client";
 
 class ClientResetPass extends Component {

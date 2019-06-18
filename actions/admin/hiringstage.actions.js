@@ -3,8 +3,8 @@ import {
   ADD_HIRING_STAGE_FAILED,
   ADD_HIRING_STAGE_STARTED,
   EDIT_HIRING_STAGE_SUCCESS,
-   EDIT_HIRING_STAGE_FAILED,
-   EDIT_HIRING_STAGE_STARTED,
+  EDIT_HIRING_STAGE_FAILED,
+  EDIT_HIRING_STAGE_STARTED,
   OPEN_HIRING_STAGE_MODAL,
   CLOSE_HIRING_STAGE_MODAL,
   GET_HIRING_STAGES_CATEGORIES_SUCCESS,
@@ -153,8 +153,15 @@ export const editStageApi = (
   closeSnackbar
 ) => dispatch => {
   dispatch(editStageStarted());
-  var send = []
-  stages && stages.map((a)=>send.push(`/admin/{id:${a.id},name:"${a.name}",order:1,categoryId:${a.category.id}}`))
+  var send = [];
+  stages &&
+    stages.map(a =>
+      send.push(
+        `/admin/{id:${a.id},name:"${a.name}",order:1,categoryId:${
+          a.category.id
+        }}`
+      )
+    );
   let queryString = `
   mutation {
     editStages(
@@ -170,15 +177,13 @@ export const editStageApi = (
     .post("/graphql", queryString)
     .then(res => {
       dispatch(editStageSuccess(res.data.editStages));
-      const key = enqueueSnackbar(res.data.editStages.message,
-        {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right"
-          }
+      const key = enqueueSnackbar(res.data.editStages.message, {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
         }
-      );
+      });
       setTimeout(() => {
         closeSnackbar(key);
       }, 2000);
@@ -186,7 +191,8 @@ export const editStageApi = (
     .catch(err => {
       dispatch(editStageFailed(err.reponse.data.errors[0]));
 
-      const key = enqueueSnackbar( "some issue happened .. Please try again later",
+      const key = enqueueSnackbar(
+        "some issue happened .. Please try again later",
         {
           variant: "error",
           anchorOrigin: {
@@ -223,12 +229,11 @@ const editStageStarted = () => ({
 });
 const editStageSuccess = addStage => ({
   type: EDIT_HIRING_STAGE_SUCCESS,
-  payload:  addStage
-  
+  payload: addStage
 });
 const editStageFailed = error => ({
   type: EDIT_HIRING_STAGE_FAILED,
-  payload:  error
+  payload: error
 });
 export const closeHiringStageModal = () => ({
   type: CLOSE_HIRING_STAGE_MODAL

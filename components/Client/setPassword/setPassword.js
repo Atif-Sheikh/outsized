@@ -11,7 +11,7 @@ import { styles } from "@styles/clientComponents/SetPassword.styles.js";
 import InputArea from "../../ReuseableComponents/InputArea";
 import { connect } from "react-redux";
 import { clientSignUpApi } from "@actions/client";
-import Router from "next/Router";
+import Router from "next/router";
 
 class SetPasswordFormComponent extends Component {
   state = {

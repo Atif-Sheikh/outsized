@@ -12,7 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import Router from "next/Router";
+import Router from "next/router";
 import { withSnackbar } from "notistack";
 import ComponentHeader from "@components/ComponentHeader/ComponentHeader.component";
 import { postScaleRating } from "../../../actions/admin/scaleRating.action.js";
@@ -261,15 +261,16 @@ class RatingScales extends Component {
     } = this.state;
     let value = event;
     if (value === "icons") {
-      duplicateIconRating = this.state.order === 'htl'?iconsReverseRating :iconsRating;
+      duplicateIconRating =
+        this.state.order === "htl" ? iconsReverseRating : iconsRating;
       scaleValue = "icons";
       iconsShow = true;
     } else if (value === "numbers") {
-      duplicateIconRating = this.state.order === 'htl'? numberReverseRating:numberRating;
+      duplicateIconRating =
+        this.state.order === "htl" ? numberReverseRating : numberRating;
       scaleValue = "numbers";
       iconsShow = false;
-    } 
-    else if (value === "lth") {
+    } else if (value === "lth") {
       if (scaleValue === "icons") {
         duplicateIconRating = iconsRating;
       } else if (scaleValue === "numbers") {
@@ -283,7 +284,7 @@ class RatingScales extends Component {
       }
     }
     // this.showNeutral(duplicateIconRating)
-    this.setState( {
+    this.setState({
       customArray: ["", "", "", "", ""],
       customArrayObject: [{}, {}, {}, {}, {}],
       actualCustomArray: [],
@@ -378,7 +379,7 @@ class RatingScales extends Component {
           value: "Strong positive"
         }
       ],
-  
+
       numberReverseRating: [
         {
           icon: "5",
@@ -402,7 +403,7 @@ class RatingScales extends Component {
         }
       ],
       serverSendJSON: {}
-    })
+    });
     if (number === 1) {
       this.setState({
         duplicateIconRating,
@@ -420,12 +421,13 @@ class RatingScales extends Component {
         selectValue: event
       });
     }
-    document.getElementById("outlined-name,guideline0").value = ''
-    document.getElementById("outlined-name,guideline1").value = ''
-    document.getElementById("outlined-name,guideline3").value = ''
-    document.getElementById("outlined-name,guideline4").value = ''
-    if(document.getElementById("outlined-name,guideline2")){
-    document.getElementById("outlined-name,guideline2").value = ''}
+    document.getElementById("outlined-name,guideline0").value = "";
+    document.getElementById("outlined-name,guideline1").value = "";
+    document.getElementById("outlined-name,guideline3").value = "";
+    document.getElementById("outlined-name,guideline4").value = "";
+    if (document.getElementById("outlined-name,guideline2")) {
+      document.getElementById("outlined-name,guideline2").value = "";
+    }
   };
 
   customChange = (value, id, type) => {
@@ -434,7 +436,7 @@ class RatingScales extends Component {
     compalied[id][type] = value.target.value;
     console.log(compalied);
     customArray[id] = value.target.value;
-    this.setState({ customArray ,serverSendJSON:compalied});
+    this.setState({ customArray, serverSendJSON: compalied });
   };
   customChangeTitle = (value, id, type) => {
     let { customArray, customArrayObject } = this.state;
@@ -443,7 +445,7 @@ class RatingScales extends Component {
     console.log(compalied);
     this.setState({
       actualCustomArray: compalied,
-      serverSendJSON:compalied
+      serverSendJSON: compalied
     });
   };
 
@@ -649,7 +651,7 @@ class RatingScales extends Component {
           </Typography>
         )}
         <TextField
-          id={["outlined-name","guideline"+id]}
+          id={["outlined-name", "guideline" + id]}
           // label="Name"
           className={textField}
           onChange={e => this.handleChange(e, id)}
@@ -679,19 +681,19 @@ class RatingScales extends Component {
 
     serverSendJSON.length &&
       serverSendJSON.map((a, i) => {
-        if(selectValue !== "custom"){
-        if (
-          !(a.icon && a.icon.length) ||
-          !(a.value && a.value.length) ||
-          !(a.guideline && a.guideline.length)
-        ) {
-          if (!includeNutral && i == 2) {
-            addFiled = ""
-          } else {
-            addFiled = "Please check some filed is missing";
+        if (selectValue !== "custom") {
+          if (
+            !(a.icon && a.icon.length) ||
+            !(a.value && a.value.length) ||
+            !(a.guideline && a.guideline.length)
+          ) {
+            if (!includeNutral && i == 2) {
+              addFiled = "";
+            } else {
+              addFiled = "Please check some filed is missing";
+            }
           }
-        }}
-        else  {
+        } else {
           if (
             !(a.buttonText && a.buttonText.length) ||
             !(a.labelText && a.labelText.length) ||
@@ -720,73 +722,73 @@ class RatingScales extends Component {
         }
       });
     if (name && name.length > 0 && submitValid) {
-   
-          var data = {
-            name: name,
-            scaleType: ratingScales,
-            includeNuetral: includeNutral,
-            orderIncreasing:
-              selectValue.trim() === "" || selectValue === "lth" ? true : false
-          };
-          var item = [];
-          if (ratingScales === "icons" || ratingScales === "numbers") {
-            serverSendJSON.length > 0 &&
-              serverSendJSON.map((info, index) => {
-                item.push({
-                  rank: index + 1,
-                  buttonText: info.icon,
-                  labelText: info.value,
-                  guideline: info.guideline ? info.guideline : ""
-                });
-              });
-          } else if(ratingScales === "custom") {
-            serverSendJSON.length > 0 &&
-              serverSendJSON.map((info, index) => {
-                item.push({
-                  rank: index + 1,
-                  buttonText:  actualCustomArray[index] && actualCustomArray[index].buttonText
-                    ? actualCustomArray[index].buttonText
-                    : " ",
-                  labelText:  actualCustomArray[index] && actualCustomArray[index].labelText
-                    ? actualCustomArray[index].labelText
-                    : " ",
-                  guideline: info.guideline ? info.guideline : ""
-                });
-              });
-          }
-          data[`items`] = item;
-          // console.log( event,id)
-          console.log(data);
-          if (data.items.length > 0) {
-            postScaleRating(data, enqueueSnackbar, closeSnackbar);
-            setTimeout(() => {
-              Router.push("/admin/feedback-form");
-            }, 2000);
-          } else {
-            const key = enqueueSnackbar("Please Check All filed", {
-              variant: "error",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right"
-              }
+      var data = {
+        name: name,
+        scaleType: ratingScales,
+        includeNuetral: includeNutral,
+        orderIncreasing:
+          selectValue.trim() === "" || selectValue === "lth" ? true : false
+      };
+      var item = [];
+      if (ratingScales === "icons" || ratingScales === "numbers") {
+        serverSendJSON.length > 0 &&
+          serverSendJSON.map((info, index) => {
+            item.push({
+              rank: index + 1,
+              buttonText: info.icon,
+              labelText: info.value,
+              guideline: info.guideline ? info.guideline : ""
             });
-            setTimeout(() => {
-              closeSnackbar(key);
-            }, 2000);
-          }
-        } else {
-          const key = enqueueSnackbar("Please Check All filed", {
-            variant: "error",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right"
-            }
           });
-          setTimeout(() => {
-            closeSnackbar(key);
-          }, 2000);
+      } else if (ratingScales === "custom") {
+        serverSendJSON.length > 0 &&
+          serverSendJSON.map((info, index) => {
+            item.push({
+              rank: index + 1,
+              buttonText:
+                actualCustomArray[index] && actualCustomArray[index].buttonText
+                  ? actualCustomArray[index].buttonText
+                  : " ",
+              labelText:
+                actualCustomArray[index] && actualCustomArray[index].labelText
+                  ? actualCustomArray[index].labelText
+                  : " ",
+              guideline: info.guideline ? info.guideline : ""
+            });
+          });
+      }
+      data[`items`] = item;
+      // console.log( event,id)
+      console.log(data);
+      if (data.items.length > 0) {
+        postScaleRating(data, enqueueSnackbar, closeSnackbar);
+        setTimeout(() => {
+          Router.push("/admin/feedback-form");
+        }, 2000);
+      } else {
+        const key = enqueueSnackbar("Please Check All filed", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          }
+        });
+        setTimeout(() => {
+          closeSnackbar(key);
+        }, 2000);
+      }
+    } else {
+      const key = enqueueSnackbar("Please Check All filed", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
         }
-      
+      });
+      setTimeout(() => {
+        closeSnackbar(key);
+      }, 2000);
+    }
   };
 
   render() {

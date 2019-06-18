@@ -82,7 +82,12 @@ class HiringProcessTable extends Component {
                   </TableCell>
                   <TableCell align="left" className={tableCell}>
                     <button className={tableBtn}>
-                      <EditIcon  onClick={()=>Router.push(`/admin/hiring-stages?id=${row.id}`)} className={icon} />
+                      <EditIcon
+                        onClick={() =>
+                          Router.push(`/admin/hiring-stages?id=${row.id}`)
+                        }
+                        className={icon}
+                      />
                     </button>
                     <button className={tableBtn}>
                       <DeleteIcon className={icon} />

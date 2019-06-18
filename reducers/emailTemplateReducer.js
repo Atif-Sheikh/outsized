@@ -14,7 +14,7 @@ const initialState = {
   hasError: false,
   addEmailTemplate: "",
   openStageModal: false,
-  getRetreiveEmail:{}
+  getRetreiveEmail: {}
 };
 
 export const emailTemplateReducer = (state = initialState, action) => {
@@ -27,24 +27,29 @@ export const emailTemplateReducer = (state = initialState, action) => {
         addEmailTemplate: action.payload.addEmailTemplate.message,
         isLoading: false,
         success: true,
-        openStageModal: false,
+        openStageModal: false
       };
     case ADD_EMAIL_TEMPLATE_FAILED:
       return { ...state, hasError: true, isLoading: false };
-      case GET_RETREIVE_EMAIL_TEMPLATE_STARTED:
-        return { ...state, isLoading: true };
-      case GET_RETREIVE_EMAIL_TEMPLATE_SUCCESS:
-        return {
-          ...state,
-          getRetreiveEmail: action.payload,
-          isLoading: false,
-          success: false,
-          openStageModal: false
-        };
-      case GET_RETREIVE_EMAIL_TEMPLATE_FAILED:
-        return { ...state, hasError: true,getRetreiveEmail:{} ,isLoading: false };
-      case CLEAR_MESSAGE:
-        return { ...state, hasError: true ,isLoading: false,success: false };
+    case GET_RETREIVE_EMAIL_TEMPLATE_STARTED:
+      return { ...state, isLoading: true };
+    case GET_RETREIVE_EMAIL_TEMPLATE_SUCCESS:
+      return {
+        ...state,
+        getRetreiveEmail: action.payload,
+        isLoading: false,
+        success: false,
+        openStageModal: false
+      };
+    case GET_RETREIVE_EMAIL_TEMPLATE_FAILED:
+      return {
+        ...state,
+        hasError: true,
+        getRetreiveEmail: {},
+        isLoading: false
+      };
+    case CLEAR_MESSAGE:
+      return { ...state, hasError: true, isLoading: false, success: false };
     default:
       return state;
   }

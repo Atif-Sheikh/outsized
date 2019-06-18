@@ -2,10 +2,10 @@ import {
   ADD_EMAIL_TEMPLATE_SUCCESS,
   ADD_EMAIL_TEMPLATE_FAILED,
   ADD_EMAIL_TEMPLATE_STARTED,
- GET_RETREIVE_EMAIL_TEMPLATE_SUCCESS,
- GET_RETREIVE_EMAIL_TEMPLATE_FAILED,
- GET_RETREIVE_EMAIL_TEMPLATE_STARTED,
- CLEAR_MESSAGE
+  GET_RETREIVE_EMAIL_TEMPLATE_SUCCESS,
+  GET_RETREIVE_EMAIL_TEMPLATE_FAILED,
+  GET_RETREIVE_EMAIL_TEMPLATE_STARTED,
+  CLEAR_MESSAGE
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -25,33 +25,43 @@ export const addEmailTemplateApi = (
   let queryString = `
             mutation {
                 addEmailTemplate(name:"${name}", subject:"${subject}", description:"${description}", body:"${body}",
-                 token:"${localStorage.getItem("token" )}") {
+                 token:"${localStorage.getItem("token")}") {
                     message,
                 }
             }
     `;
-    let queryUpdateString = `
+  let queryUpdateString = `
     mutation {
       updateEmailTemplate(
         id: ${id},name:"${name}", subject:"${subject}", description:"${description}", body:"${body}",
-         token:"${localStorage.getItem("token" )}") {
+         token:"${localStorage.getItem("token")}") {
             message,
         }
     }
 `;
   axios
-    .post("/graphql",type === "AddNew" ?queryString:queryUpdateString)
+    .post("/graphql", type === "AddNew" ? queryString : queryUpdateString)
     .then(res => {
-      dispatch(addEmailTemplateSuccess(res.data[type === "AddNew" ?'addEmailTemplate':'updateEmailTemplate']));
-      const key = enqueueSnackbar(res.data[type === "AddNew" ?'addEmailTemplate':'updateEmailTemplate'].message, {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right"
+      dispatch(
+        addEmailTemplateSuccess(
+          res.data[
+            type === "AddNew" ? "addEmailTemplate" : "updateEmailTemplate"
+          ]
+        )
+      );
+      const key = enqueueSnackbar(
+        res.data[type === "AddNew" ? "addEmailTemplate" : "updateEmailTemplate"]
+          .message,
+        {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          }
         }
-      });
+      );
       setTimeout(() => {
-        dispatch(clearMessage())
+        dispatch(clearMessage());
         closeSnackbar(key);
       }, 2000);
     })
@@ -65,16 +75,16 @@ export const addEmailTemplateApi = (
         }
       });
       setTimeout(() => {
-        dispatch(clearMessage())
+        dispatch(clearMessage());
         closeSnackbar(key);
       }, 2000);
     });
 };
-export const getRetreiveEmailTemplate = (id) => dispatch => {
+export const getRetreiveEmailTemplate = id => dispatch => {
   dispatch(getRetreiveEmailTemplateStarted());
   let queryString = `
   query {
-    emailTemplate(id:${id}, token:"${localStorage.getItem("token" )}"){
+    emailTemplate(id:${id}, token:"${localStorage.getItem("token")}"){
       name,
       id,
       subject,
@@ -113,10 +123,9 @@ const addEmailTemplateFailed = error => ({
   }
 });
 
-
 const getRetreiveEmailTemplateSuccess = getRetreiveEmailTemplate => ({
   type: GET_RETREIVE_EMAIL_TEMPLATE_SUCCESS,
-  payload:  getRetreiveEmailTemplate
+  payload: getRetreiveEmailTemplate
 });
 
 const getRetreiveEmailTemplateStarted = () => ({
@@ -124,7 +133,7 @@ const getRetreiveEmailTemplateStarted = () => ({
 });
 
 const getRetreiveEmailTemplateFailed = error => ({
-  type: GET_RETREIVE_EMAIL_TEMPLATE_FAILED,
+  type: GET_RETREIVE_EMAIL_TEMPLATE_FAILED
 });
 
 const clearMessage = () => ({

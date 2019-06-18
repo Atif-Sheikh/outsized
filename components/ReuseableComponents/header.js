@@ -12,16 +12,21 @@ class Header extends Component {
     return (
       <div className={classes.header}>
         <div className={classes.leftArea}>
-            <div className={classes.circle} />
-            <Typography className={classes.title}>OUTSIZED</Typography>
+          <div className={classes.circle} />
+          <Typography className={classes.title}>OUTSIZED</Typography>
         </div>
         <div className={classes.rightArea}>
-            <Typography className={classes.userName}>Rohit Yadav</Typography>
-            <Avatar title="Rohit Yadar" alt="Rohit Yadar" src="https://cdn3.iconfinder.com/data/icons/professions-1-4/132/32-512.png" className={classes.avatar}></Avatar>
-        </div>        
+          <Typography className={classes.userName}>Rohit Yadav</Typography>
+          <Avatar
+            title="Rohit Yadar"
+            alt="Rohit Yadar"
+            src="https://cdn3.iconfinder.com/data/icons/professions-1-4/132/32-512.png"
+            className={classes.avatar}
+          />
+        </div>
       </div>
     );
-  };
-};
+  }
+}
 
-export default withSnackbar((withStyles(styles)(Header)));
+export default withSnackbar(withStyles(styles)(Header));

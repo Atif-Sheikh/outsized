@@ -7,7 +7,11 @@ import {
 
 import axios from "../../config/axios";
 
-export const callForgotPasswordApi = (email, enqueueSnackbar, closeSnackbar) => dispatch => {
+export const callForgotPasswordApi = (
+  email,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   dispatch(forgotPasswordStarted());
 
   let queryString = `
@@ -30,21 +34,24 @@ export const callForgotPasswordApi = (email, enqueueSnackbar, closeSnackbar) => 
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     })
     .catch(err => {
       if (err.response.status === 400) {
         dispatch(emailDoesNotExists());
-        const key = enqueueSnackbar("This email does not exist in our records", {
-          variant: "error",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right"
+        const key = enqueueSnackbar(
+          "This email does not exist in our records",
+          {
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right"
+            }
           }
-        });
+        );
         setTimeout(() => {
-          closeSnackbar(key)
+          closeSnackbar(key);
         }, 2000);
       } else {
         dispatch(forgotPasswordFailed(err.message));
@@ -59,7 +66,7 @@ export const callForgotPasswordApi = (email, enqueueSnackbar, closeSnackbar) => 
           }
         );
         setTimeout(() => {
-          closeSnackbar(key)
+          closeSnackbar(key);
         }, 2000);
       }
     });

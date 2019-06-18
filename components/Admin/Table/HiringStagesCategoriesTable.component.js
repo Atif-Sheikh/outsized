@@ -46,7 +46,11 @@ class HiringStagesCategoriesTable extends Component {
   hidSubmite = () => {
     const { addCategoray } = this.state;
     if (addCategoray.trim() !== "") {
-      this.props.addStageCategory(addCategoray, this.props.enqueueSnackbar, this.props.closeSnackbar);
+      this.props.addStageCategory(
+        addCategoray,
+        this.props.enqueueSnackbar,
+        this.props.closeSnackbar
+      );
       this.setState({ addCategoray: "" });
       this.props.getAllStageCategory(this.props.closeSnackbar);
     }
@@ -83,7 +87,7 @@ class HiringStagesCategoriesTable extends Component {
       buttonProgress,
       wrapper
     } = classes;
-  
+
     return (
       <Paper className={rootPaper}>
         <Table className={table}>
@@ -191,7 +195,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(addStageCategory(value, enqueueSnackbar, closeSnackbar)),
     updateCategory: (id, value, enqueueSnackbar, closeSnackbar) =>
       dispatch(updateCategory(id, value, enqueueSnackbar, closeSnackbar)),
-    getAllStageCategory: (closeSnackbar) => dispatch(getAllStageCategory(closeSnackbar))
+    getAllStageCategory: closeSnackbar =>
+      dispatch(getAllStageCategory(closeSnackbar))
   };
 };
 const HiringStages = withStyles(styles)(HiringStagesCategoriesTable);

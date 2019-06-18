@@ -8,12 +8,10 @@ import { styles } from "@styles/adminComponents/components/HiringStagesCategorie
 class HiringStagesCategories extends Component {
   render() {
     const { classes } = this.props;
-    const {
-      mainContainer,
-    } = classes;
+    const { mainContainer } = classes;
     return (
       <div className={mainContainer}>
-          <HiringStagesCategoriesTable />
+        <HiringStagesCategoriesTable />
       </div>
     );
   }

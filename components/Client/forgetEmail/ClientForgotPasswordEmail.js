@@ -5,7 +5,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { styles } from "@styles/clientComponents/clientForgotPassEmail.styles.js";
 import { connect } from "react-redux";
 import InputArea from "../../ReuseableComponents/InputArea";
-import Router from "next/Router";
+import Router from "next/router";
 import { callForgotPasswordApi } from "@actions/client";
 import Link from "next/link";
 

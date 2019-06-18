@@ -12,9 +12,7 @@ import { withSnackbar } from "notistack";
 import { styles } from "@styles/adminComponents/components/HiringStagesTemplateTable.styles";
 var trackingId;
 class HiringStagesTemplateTable extends Component {
-  state = {
-    
-  };
+  state = {};
   componentWillReceiveProps(nextProps) {
     const categoriesObj = {};
     let categoriesArray = [];
@@ -90,9 +88,10 @@ class HiringStagesTemplateTable extends Component {
       data[replaceArrID][1][findReplaceIndex] = findCurrent;
       this.setState({ newData: data });
     }
-    var reArange = []
-    var sorted =data && data.map((arr)=>arr[1].map((arryObj)=>reArange.push(arryObj)))
-    this.props.editStage(reArange)
+    var reArange = [];
+    var sorted =
+      data && data.map(arr => arr[1].map(arryObj => reArange.push(arryObj)));
+    this.props.editStage(reArange);
   }
   dragOver(e) {
     if (e.target.id) {

@@ -7,10 +7,14 @@ import {
 
 import axios from "../../config/axios";
 
-export const addStageCategory = (value, enqueueSnackbar, closeSnackbar) => dispatch => {
+export const addStageCategory = (
+  value,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   const queryString = `
     mutation {
-        addCategory(name:"${value}", token:"${localStorage.getItem('token')}"){
+        addCategory(name:"${value}", token:"${localStorage.getItem("token")}"){
             message
         }
     }
@@ -28,7 +32,7 @@ export const addStageCategory = (value, enqueueSnackbar, closeSnackbar) => dispa
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     })
     .catch(err => {
@@ -41,16 +45,18 @@ export const addStageCategory = (value, enqueueSnackbar, closeSnackbar) => dispa
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     });
 };
 
-export const getAllStageCategory = (enqueueSnackbar, closeSnackbar) => dispatch => {
-  
+export const getAllStageCategory = (
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   const queryString = `
     query {
-        categories(token:"${localStorage.getItem('token')}"){
+        categories(token:"${localStorage.getItem("token")}"){
             name,
             id
         }
@@ -69,7 +75,7 @@ export const getAllStageCategory = (enqueueSnackbar, closeSnackbar) => dispatch 
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     })
     .catch(err => {
@@ -82,13 +88,17 @@ export const getAllStageCategory = (enqueueSnackbar, closeSnackbar) => dispatch 
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     });
 };
 
-export const updateCategory = (id, value, enqueueSnackbar, closeSnackbar) => dispatch => {
-
+export const updateCategory = (
+  id,
+  value,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   const queryString = `
     mutation {
         updateCategory(id:${Number(
@@ -115,7 +125,7 @@ export const updateCategory = (id, value, enqueueSnackbar, closeSnackbar) => dis
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     })
     .catch(err => {
@@ -127,7 +137,7 @@ export const updateCategory = (id, value, enqueueSnackbar, closeSnackbar) => dis
         }
       });
       setTimeout(() => {
-        closeSnackbar(key)
+        closeSnackbar(key);
       }, 2000);
     });
 };

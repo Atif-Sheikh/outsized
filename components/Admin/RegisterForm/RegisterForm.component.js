@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Link from "next/link";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
-import Router from "next/Router";
+import Router from "next/router";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { callRegisterApi } from "@actions/admin/register.actions";
@@ -64,7 +64,7 @@ class RegisterFormComponent extends Component {
 
   render() {
     const { emailValid, email, password, passwordValid } = this.state;
-    
+
     return (
       <Paper style={styles.RegisterContainer}>
         <Typography variant="h4" gutterBottom style={styles.grow}>

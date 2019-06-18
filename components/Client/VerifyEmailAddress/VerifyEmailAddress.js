@@ -8,7 +8,7 @@ import CheckCircle from "@material-ui/icons/CheckCircle";
 import IconButton from "@material-ui/core/IconButton";
 import { styles } from "@styles/clientComponents/VerifyEmail.styles.js";
 import Link from "next/link";
-import Router from "next/Router";
+import Router from "next/router";
 import { clientVerifyEmailCode } from "@actions/client";
 import { Button } from "@material-ui/core";
 

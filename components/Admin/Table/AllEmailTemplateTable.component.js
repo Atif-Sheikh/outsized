@@ -16,18 +16,18 @@ import { connect } from "react-redux";
 import { getAllEmailTemplate } from "../../../actions/admin/allEmailsTemplate.action.js";
 import Router from "next/router";
 class AllEmailTable extends Component {
-  constructor(props){
-    super(props)
-    this.state={
-      rows:[]
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: []
+    };
   }
-  componentDidMount(){
-    this.props.getAllEmails()
+  componentDidMount() {
+    this.props.getAllEmails();
   }
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps)
-    this.setState({rows:nextProps.allEmails})
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({ rows: nextProps.allEmails });
   }
   render() {
     const { classes } = this.props;
@@ -42,7 +42,7 @@ class AllEmailTable extends Component {
       tableCellss,
       checkbox
     } = classes;
-    const { rows} = this.state
+    const { rows } = this.state;
     // function createData(templateName, description) {
     //   return { templateName, description };
     // }
@@ -76,7 +76,12 @@ class AllEmailTable extends Component {
                     {row.description}
                   </TableCell>
                   <TableCell align="left" className={tableCellss}>
-                    <button onClick={()=>Router.push(`/admin/email-template?email_id=${row.id}`)}  className={tableBtn}>
+                    <button
+                      onClick={() =>
+                        Router.push(`/admin/email-template?email_id=${row.id}`)
+                      }
+                      className={tableBtn}
+                    >
                       <EditIcon className={icon} />
                     </button>
                     <button className={tableBtn}>
@@ -96,18 +101,21 @@ AllEmailTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 const mapStateToProps = state => {
-  console.log(state)
+  console.log(state);
   return {
     isLoading: state.emailTemplateReducer.isLoading,
-    allEmails:state.allEmailsTemplateReducer.allEmailsTemplate
+    allEmails: state.allEmailsTemplateReducer.allEmailsTemplate
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getAllEmails: () => dispatch(getAllEmailTemplate())
-  };}
-export default withSnackbar( connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(AllEmailTable)));
+  };
+};
+export default withSnackbar(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(AllEmailTable))
+);
 // export default withStyles(styles)(AllEmailTable);

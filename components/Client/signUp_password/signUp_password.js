@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Link from "next/link";
-import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import Divider from "@material-ui/core/Divider";
@@ -13,10 +10,12 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Back from "@material-ui/icons/ArrowBack";
 import { styles } from "@styles/clientComponents/SignUp_Password.styles.js";
-import InputArea from "../../ReuseableComponents/InputArea";
-import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
+import InputArea from "@components/ReuseableComponents/InputArea";
+import MenuListComposition from "@components/ReuseableComponents/NumberSelectoin";
 import { storeUser, doCheckEmail } from "@actions/client";
-import Router from "next/Router";
+import Router from "next/router";
+
+import withSignup from "@components/Client/ClientBaseClassComponent";
 
 class SignUp_PasswordFormComponent extends Component {
   state = {
@@ -73,27 +72,37 @@ class SignUp_PasswordFormComponent extends Component {
   searching = e => {
     this.setState({ search: e });
   };
+
   formValidator = async event => {
     event.preventDefault();
-    const { email, number, name, code, password, confirmPassword } = this.state;
+    const {
+      email,
+      number,
+      name,
+      code,
+      password,
+      confirmPassword,
+      LinkedInUrl,
+      emailValid
+    } = this.state;
     const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    if (!checkEmail.test(this.state.email)) {
+    if (!checkEmail.test(email)) {
       await this.setState({
         emailValid: false,
         error: true
       });
     }
-    if (this.state.name.length === 0) {
+    if (name.length === 0) {
       await this.setState({
         nameValid: false
       });
     }
-    if (this.state.LinkedInUrl.length === 0) {
+    if (LinkedInUrl.length === 0) {
       await this.setState({
         linkedInValid: false
       });
     }
-    if (this.state.code === "code" || !this.state.number.length > 0) {
+    if (code === "code" || !number.length > 0) {
       this.setState({
         message: "Please select country code & enter phone number",
         allow: true,
@@ -125,10 +134,9 @@ class SignUp_PasswordFormComponent extends Component {
       password.length > 0 &&
       confirmPassword.length > 0 &&
       password.toLowerCase() === confirmPassword.toLowerCase() &&
-      this.state.emailValid &&
-      this.state.name.trim() !== "" &&
-      this.state.number.trim() !== "" &&
-      this.state.name.trim() !== ""
+      emailValid &&
+      name.trim() !== "" &&
+      number.trim() !== ""
     ) {
       this.props.storeUser(this.state, Router);
     } else {
@@ -137,17 +145,10 @@ class SignUp_PasswordFormComponent extends Component {
       });
     }
   };
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      error: nextProps.error,
-      message: nextProps.message,
-      allow: !nextProps.error
-    });
-  }
+
   render() {
     let {
       email,
-      password,
       name,
       nameValid,
       linkedInValid,
@@ -160,7 +161,7 @@ class SignUp_PasswordFormComponent extends Component {
       match,
       passwordValid
     } = this.state;
-    console.log("this.props.error", this.props.error);
+
     const { classes } = this.props;
     return (
       <Dialog className={classes.paper} onClose={() => {}} open={true}>
@@ -321,9 +322,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withSnackbar(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withStyles(styles)(SignUp_PasswordFormComponent))
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(withSignup(SignUp_PasswordFormComponent)));

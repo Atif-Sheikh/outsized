@@ -51,11 +51,11 @@ class Tabs extends Component {
           >
             <Link href="/portfolio">
               <Typography
-                  className={
-                    selectedTab === 2 ? classes.selectedTypo : classes.typos
-                  }
-                >
-                  Portfolio
+                className={
+                  selectedTab === 2 ? classes.selectedTypo : classes.typos
+                }
+              >
+                Portfolio
               </Typography>
             </Link>
           </li>
@@ -66,13 +66,13 @@ class Tabs extends Component {
             }
           >
             <Link href="/experience">
-                <Typography
-                    className={
-                        selectedTab === 3 ? classes.selectedTypo : classes.typos
-                    }
-                >
-                    Experience
-                </Typography>
+              <Typography
+                className={
+                  selectedTab === 3 ? classes.selectedTypo : classes.typos
+                }
+              >
+                Experience
+              </Typography>
             </Link>
           </li>
           <li
@@ -82,13 +82,13 @@ class Tabs extends Component {
             }
           >
             <Link href="/education">
-                <Typography
+              <Typography
                 className={
-                    selectedTab === 4 ? classes.selectedTypo : classes.typos
+                  selectedTab === 4 ? classes.selectedTypo : classes.typos
                 }
-                >
+              >
                 Education
-                </Typography>
+              </Typography>
             </Link>
           </li>
         </ul>

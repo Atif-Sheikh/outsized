@@ -6,7 +6,7 @@ import Link from "next/link";
 import Paper from "@material-ui/core/Paper";
 import { withSnackbar } from "notistack";
 import { connect } from "react-redux";
-import Router from "next/Router";
+import Router from "next/router";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { callLoginApi } from "@actions/admin";

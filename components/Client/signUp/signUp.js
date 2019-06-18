@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Link from "next/link";
-import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import Divider from "@material-ui/core/Divider";
@@ -13,10 +10,12 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Back from "@material-ui/icons/ArrowBack";
 import { styles } from "@styles/clientComponents/SignUp.styles.js";
-import InputArea from "../../ReuseableComponents/InputArea";
-import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
+import InputArea from "@components/ReuseableComponents/InputArea";
+import MenuListComposition from "@components/ReuseableComponents/NumberSelectoin";
 import { storeUser, doCheckEmail } from "@actions/client";
-import Router from "next/Router";
+import Router from "next/router";
+
+import withSignup from "@components/Client/ClientBaseClassComponent";
 
 class SignUpFormComponent extends Component {
   state = {
@@ -60,9 +59,11 @@ class SignUpFormComponent extends Component {
     });
   };
   checkEmailApi = async () => {
+    const { email } = this.state;
+
     const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    if (checkEmail.test(this.state.email)) {
-      await this.props.doCheckEmail(this.state.email);
+    if (checkEmail.test(email)) {
+      await this.props.doCheckEmail(email);
       this.setState({ message: "", allow: true });
     } else if (event.target.name === "email" && event.target.value) {
       this.setState({
@@ -76,17 +77,19 @@ class SignUpFormComponent extends Component {
   searching = e => {
     this.setState({ search: e });
   };
+
   formValidator = async event => {
     event.preventDefault();
-    const { email, number, name, code } = this.state;
+    const { email, number, name, code, LinkedInUrl, emailValid } = this.state;
+
     const checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    if (!checkEmail.test(this.state.email)) {
+    if (!checkEmail.test(email)) {
       await this.setState({
         emailValid: false,
         error: true
       });
     }
-    if (this.state.name.length === 0) {
+    if (name.length === 0) {
       await this.setState({
         nameValid: false
       });
@@ -102,12 +105,7 @@ class SignUpFormComponent extends Component {
         allow: true,
         error: true
       });
-    } else if (
-      this.state.emailValid &&
-      this.state.name.trim() !== "" &&
-      this.state.number.trim() !== "" &&
-      this.state.name.trim() !== ""
-    ) {
+    } else if (emailValid && name.trim() !== "" && number.trim() !== "") {
       this.props.storeUser(this.state, Router);
     } else {
       this.setState({
@@ -115,17 +113,20 @@ class SignUpFormComponent extends Component {
       });
     }
   };
-  componentWillReceiveProps(nextProps) {
+
+  handleInputChange = event => {
     this.setState({
-      error: nextProps.error,
-      message: nextProps.message,
-      allow: !nextProps.error
+      [event.target.name]: event.target.value,
+      linkedInValid: true,
+      nameValid: true,
+      numberValid: true,
+      emailValid: true
     });
-  }
+  };
+
   render() {
     let {
       email,
-      password,
       name,
       nameValid,
       linkedInValid,
@@ -134,9 +135,11 @@ class SignUpFormComponent extends Component {
       error,
       message,
       number,
-      allow
+      allow,
+      search,
+      code
     } = this.state;
-    console.log("this.props.error", this.props.error);
+
     const { classes } = this.props;
     let condition =
       this.state.name.trim() === "" ||
@@ -156,7 +159,6 @@ class SignUpFormComponent extends Component {
           <CloseIcon className={classes.icon} />
         </IconButton>
         <div className={classes.Header} />
-        {/* <Paper className={classes.inner}> */}
         <div className={classes.FormContainerDup}>
           <Typography className={classes.headerText}>
             <IconButton
@@ -196,9 +198,9 @@ class SignUpFormComponent extends Component {
             <MenuListComposition
               number={number}
               handleInputChange={event => this.handleInputChange(event)}
-              code={this.state.code}
+              code={code}
               counterCode={code => this.setState({ code: code })}
-              search={this.state.search}
+              search={search}
               searching={this.searching}
             />
             <InputArea
@@ -260,7 +262,6 @@ class SignUpFormComponent extends Component {
             </Link>
           </div>
         </div>
-        {/* </Paper> */}
       </Dialog>
     );
   }
@@ -275,6 +276,7 @@ const mapStateToProps = state => {
     error: state.clientSignUpReducer.error
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     storeUser: (data, Router) => dispatch(storeUser(data, Router)),
@@ -282,9 +284,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withSnackbar(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withStyles(styles)(SignUpFormComponent))
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(withSignup(SignUpFormComponent)));
