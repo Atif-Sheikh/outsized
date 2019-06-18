@@ -336,11 +336,8 @@ class Education extends Component {
                 />
               </div>
               <div className={classes.btnContainer}>
-                <Button
-                  onClick={this.Education}
-                  className={classes.saveBtn}
-                >
-                  Save
+                <Button onClick={this.Education} className={classes.saveBtn}>
+                  {this.state.buttonText}
                 </Button>
               </div>
             </DialogContentText>

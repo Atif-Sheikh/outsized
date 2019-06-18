@@ -19,8 +19,7 @@ import {
   retrieveFreelancerProfile,
   clientAddNumberApi,
   clientAddEmailApi,
-  clientEditProfileApi,
-  clearTermsModalComp
+  clientEditProfileApi
 } from "@actions/client";
 
 class BasicComponent extends Component {
@@ -53,9 +52,7 @@ class BasicComponent extends Component {
     emailModal: false,
     numberModal: false,
     showText: false,
-    phoneNumberError: false,
-    acceptError: false,
-    termsModal: false
+    phoneNumberError: false
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
@@ -108,13 +105,6 @@ class BasicComponent extends Component {
         ? basicNumberData
         : basicData && basicData.alternateMobiles
     });
-    if(nextProps.showVerifyScreen) {
-      setTimeout(() => {
-        this.setState({ termsModal: true }, () => {
-          this.props.clearTermsModal();
-        });
-      }, 2000);
-    }
   }
   handleInputChange = event => {
     this.setState({
@@ -155,89 +145,6 @@ class BasicComponent extends Component {
       });
     }
   };
-
-
-
-  termsAndConditions = () => {
-      const { classes } = this.props;
-      const { acceptError, termsModal } = this.state;
-    return (
-      <Dialog
-        // style={styles.rectangle}
-        className={classes.paperzzzzz}
-        onClose={() => {}}
-        open={termsModal}
-      >
-        <IconButton
-            className={classes.closeIcon}
-            aria-label="Close"
-            onClick={() => this.setState({ acceptError: true })}
-          >
-            <CloseIcon className={classes.icon} />
-          </IconButton>
-        <div className={classes.headerContainersss}>
-          <Typography className={classes.headerTextChildsssssss}>
-            Terms &amp; Conditions
-          </Typography>
-        </div>
-        {acceptError && (
-          <div className={classes.errorContainer}>
-            <Typography className={classes.errorText}>
-              Please accpet the the Terms &amp; Conditions to proceed.
-            </Typography>
-          </div>
-        )}
-        <div className={classes.FormContainerssss}>
-          <form className={classes.containersssss} noValidate autoComplete="off">
-            <Typography className={classes.midSecData}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              consectetur condimentum nunc, vel ultrices ante elementum in.
-              Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
-              purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
-              tempus quam eget egestas pellentesque. Praesent vehicula varius
-              lectus, vel maximus turpis rhoncus a. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Nam consectetur condimentum nunc, vel
-              ultrices ante elementum in. Aliquam bibendum egestas nunc. Morbi a
-              urna arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
-              interdum tortor. Sed tempus quam eget egestas pellentesque.
-              Praesent vehicula varius lectus, vel maximus turpis rhoncus a.
-              <br />
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              consectetur condimentum nunc, vel ultrices ante elementum in.
-              Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
-              purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
-              tempus quam eget egestas pellentesque. Praesent vehicula varius
-              lectus, vel maximus turpis rhoncus a.
-              <br />
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              consectetur condimentum nunc, vel ultrices ante elementum in.
-              Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
-              purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
-              tempus quam eget Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Nam consectetur condimentum nunc, vel ultrices
-              ante elementum in. Aliquam bibendum egestas nunc. Morbi a urna
-              arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
-              interdum tortor. Sed tempus quam eget
-            </Typography>
-            <div className={classes.wrappersss}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => this.setState({ termsModal: false })}
-                className={classes.agreeBtn}
-              >
-                Accept and Continue
-              </Button>
-            </div>
-          </form>
-        </div>
-      </Dialog>
-    )
-  };
-
-
-
-
 
   addNewAlternateNumber = async () => {
     event.preventDefault();
@@ -683,7 +590,6 @@ class BasicComponent extends Component {
         )}
         {this.addAlternateEmailModal()}
         {this.addAlternateNumberModal()}
-        {this.termsAndConditions()}
       </div>
     );
   }
@@ -693,7 +599,6 @@ const mapStateToProps = state => {
   console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
-    showVerifyScreen: state.verifyEmail.showVerifyScreen,
     error: state.clientBasicProfileReducer.message,
     access: state.clientBasicProfileReducer.access,
     freelancerProfile: state.clientBasicProfileReducer.freelancerProfile,
@@ -709,8 +614,6 @@ const mapDispatchToProps = dispatch => {
     retrieveFreelancerProfile: () => {
       dispatch(retrieveFreelancerProfile());
     },
-    clearTermsModal: () => {
-      dispatch(clearTermsModalComp()},
     clientAddNumberApi: number => {
       dispatch(clientAddNumberApi(number));
     },

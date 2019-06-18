@@ -22,7 +22,12 @@ import Back from "@material-ui/icons/ArrowBack";
 import Add from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { retrieveFreelancerProfile } from "@actions/client";
+import {
+  retrieveFreelancerProfile,
+  clientAddExperienceApi,
+  clientEditExperienceApi,
+  clientDeleteExperienceApi
+} from "@actions/client";
 import { connect } from "react-redux";
 
 class Experience extends Component {
@@ -32,7 +37,17 @@ class Experience extends Component {
     tillMonth: "",
     tillYear: "",
     open: false,
+    designation: "",
+    companyName: "",
+    currentlyWorking: false,
+    description: "",
     defaultChecked: true,
+    fromDate: "",
+    toDate: "",
+    validDesignation: true,
+    validCompanyName: true,
+    validDescription: true,
+    showText: false,
     months: [
       "Jan",
       "Feb",
@@ -90,8 +105,23 @@ class Experience extends Component {
       nextProps.freelancerProfile &&
       nextProps.freelancerProfile.freelancer &&
       nextProps.freelancerProfile.freelancer.experiences;
+    let deleteData =
+      nextProps &&
+      nextProps.deleteExperience &&
+      nextProps.deleteExperience.deleteExperience &&
+      nextProps.deleteExperience.deleteExperience.deleteExperience &&
+      nextProps.deleteExperience.deleteExperience.deleteExperience
+        .freelancerProfile &&
+      nextProps.deleteExperience.deleteExperience.deleteExperience
+        .freelancerProfile.experiences;
+    console.log("deleteData", deleteData);
     this.setState({
-      experienceData: basicData ? basicData : []
+      experienceData:
+        deleteData && deleteData.length
+          ? deleteData
+          : basicData
+          ? basicData
+          : []
     });
   }
 
@@ -137,7 +167,69 @@ class Experience extends Component {
       </form>
     );
   };
+  addWordExperience = () => {
+    let {
+      designation,
+      description,
+      companyName,
+      currentlyWorking,
+      fromYear,
+      fromMonth,
+      tillMonth,
+      tillYear
+    } = this.state;
+    let startDate = fromMonth + " " + fromYear;
+    let lastDate = tillMonth + " " + tillYear;
+    let dateOne;
+    let sDate;
+    let dateTwo;
+    let lDate;
 
+    if (!designation.length) {
+      this.setState({
+        validDesignation: false
+      });
+    }
+    if (!description.length) {
+      this.setState({
+        validDescription: false
+      });
+    }
+    if (!companyName.length) {
+      this.setState({
+        validCompanyName: false
+      });
+    }
+    if (fromMonth && fromYear) {
+      dateOne = new Date(startDate);
+      sDate = dateOne.toISOString().slice(0, 10);
+    }
+
+    if (tillMonth && tillYear) {
+      dateTwo = new Date(lastDate);
+      lDate = dateTwo.toISOString().slice(0, 10);
+    }
+    if (
+      designation.length &&
+      description.length &&
+      companyName.length &&
+      startDate.length &&
+      lastDate.length
+    ) {
+      this.props.clientAddExperienceApi(
+        designation,
+        companyName,
+        currentlyWorking,
+        sDate,
+        lDate,
+        description
+      );
+    }
+    this.setState({
+      showText: true
+    });
+    console.log(sDate);
+  };
   setYears = () => {
     let currentYear = new Date().getFullYear();
     let arr = [];
@@ -146,7 +238,9 @@ class Experience extends Component {
     }
     this.setState({ years: arr });
   };
-
+  deleteWordExperience = id => {
+    this.props.clientDeleteExperienceApi(id);
+  };
   render() {
     const { classes } = this.props;
     const {
@@ -160,6 +254,7 @@ class Experience extends Component {
       defaultChecked
     } = this.state;
     const { roots, formControl, formControlText, formControlSelect } = classes;
+    console.log("------", this.state.currentlyWorking);
     return (
       <div className={classes.mainContainer}>
         <div className={classes.iconBtnDiv}>
@@ -183,7 +278,10 @@ class Experience extends Component {
                     <span className={classes.iconContainer}>
                       <EditIcon className={classes.smallIcon} />
                       <span className={classes.line} />
-                      <DeleteIcon className={classes.smallIcon} />
+                      <DeleteIcon
+                        className={classes.smallIcon}
+                        onClick={() => this.deleteWordExperience(val.id)}
+                      />
                     </span>
                   </Typography>
                   <Typography className={classes.housingcom}>
@@ -214,7 +312,7 @@ class Experience extends Component {
           <IconButton
             className={classes.closeIcon}
             aria-label="Close"
-            onClick={() => this.setState({ open: false })}
+            onClick={() => this.setState({ open: false, showText: false })}
           >
             <CloseIcon className={classes.icon} />
           </IconButton>
@@ -230,22 +328,35 @@ class Experience extends Component {
               <Typography>Add Work Experience</Typography>
             </Typography>
           </DialogTitle>
+          <Typography className={classes.headerText}>
+            <span
+              className={classes.headerTextChild}
+              style={{
+                color: this.props.hasError ? "red" : "green",
+                paddingLeft: "20px"
+              }}
+            >
+              {this.state.showText ? this.props.message : ""}
+            </span>
+          </Typography>
           <DialogContent className={classes.modal}>
             <DialogContentText id="alert-dialog-description">
               <div className={classes.FormContainer}>
                 <InputArea
                   label="Designation"
                   name="designation"
-                  validation={true}
+                  validation={this.state.validDesignation}
+                  value={this.state.designation}
                   styleprops={styles.textFieldPass}
-                  handleInputChange={() => {}}
+                  handleInputChange={event => this.handleChange(event)}
                 />
                 <InputArea
                   label="Company Name"
-                  name="componay"
-                  validation={true}
+                  validation={this.state.validCompanyName}
+                  value={this.state.companyName}
+                  name="companyName"
+                  handleInputChange={event => this.handleChange(event)}
                   styleprops={styles.textFieldPass}
-                  handleInputChange={() => {}}
                 />
 
                 <div className={classes.dropDownContainer}>
@@ -294,7 +405,10 @@ class Experience extends Component {
                     <Checkbox
                       defaultChecked
                       color="#000"
-                      value="checkedG"
+                      value={this.state.currentlyWorking}
+                      onChange={e =>
+                        this.setState({ currentlyWorking: e.target.checked })
+                      }
                       inputProps={{
                         "aria-label": "checkbox with default color"
                       }}
@@ -307,17 +421,22 @@ class Experience extends Component {
                     <InputArea
                       label="Description  "
                       name="description"
-                      // validation={this.state.descriptionValid}
-                      // value={this.state.description}
+                      validation={this.state.validDescription}
+                      value={this.state.description}
                       styleprops={styles.textFieldPass}
-                      // handleInputChange={event => this.handleInputChange(event)}
+                      handleInputChange={event => this.handleChange(event)}
                     />
                   </div>
                 </div>
               </div>
             </DialogContentText>
             <div className={classes.btnContainer}>
-              <Button className={classes.saveBtn}>Save</Button>
+              <Button
+                onClick={this.addWordExperience}
+                className={classes.saveBtn}
+              >
+                Save
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -346,6 +465,28 @@ const mapDispatchToProps = dispatch => {
   return {
     retrieveFreelancerProfile: () => {
       dispatch(retrieveFreelancerProfile());
+    },
+    clientAddExperienceApi: (
+      designation,
+      companyName,
+      currentlyWorking,
+      startDate,
+      lastDate,
+      description
+    ) => {
+      dispatch(
+        clientAddExperienceApi(
+          designation,
+          companyName,
+          currentlyWorking,
+          startDate,
+          lastDate,
+          description
+        )
+      );
+    },
+    clientDeleteExperienceApi: id => {
+      dispatch(clientDeleteExperienceApi(id));
     }
   };
 };

@@ -433,7 +433,7 @@ export const clientAddExperienceApi = (
             addExperience(
               designation: "${designation}",
               companyName: "${companyName}",
-              currentlyWorking: "${currentlyWorking}",
+              currentlyWorking: ${currentlyWorking},
               fromDate: "${fromDate}",
               toDate: "${toDate}",
               description: "${description}",
@@ -503,7 +503,7 @@ export const clientEditExperienceApi = (
   let queryString = `
         mutation {
             editExperience(
-              id: "${id}",
+              id: ${id},
               designation: "${designation}",
               companyName: "${companyName}",
               currentlyWorking: "${currentlyWorking}",
@@ -568,23 +568,24 @@ export const clientDeleteExperienceApi = id => dispatch => {
   dispatch(deleteExperienceStarted());
   let queryString = `
         mutation {
-            deleteEducation(
-              id: "${id}",
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
-            ){
-              freelancerProfile{
+            deleteExperience(
+              id: ${id},
+              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"
+          ){
+            freelancerProfile{
+              id,
+              name,
+              experiences{
                 id,
-                name,
-                educations{
-                  id,
-                  degree,
-                  passOutYear,
-                  description,
-                  location,
-                  institute
-                }
+                designation,
+                companyName,
+                currentlyWorking,
+                fromDate,
+                toDate,
+                description
               }
             }
+          }
         }
     `;
 
