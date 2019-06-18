@@ -16,13 +16,20 @@ import { styles } from "@styles/clientComponents/Portfolio.styles.js";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilesContainer from "./FileContainer";
-class Portfolio extends Component {
+class ModalClient extends Component {
   state = {
     uploadFile: false,
     saveFile: false,
-    openDeleteModal: false
+    openDeleteModal: false,
+    show: ""
   };
 
+  componentDidMount(props) {
+    console.log(this.props);
+  }
+  componentWillReceiveProps(newProps) {
+    this.setState({ uploadFile: newProps.uploadFile });
+  }
   deleteModal = () => {
     const { openDeleteModal } = this.state;
     const { classes } = this.props;
@@ -100,35 +107,14 @@ class Portfolio extends Component {
       </Dialog>
     );
   };
-  callModal = () => {
-    var input = document.getElementById("file-upload");
-    // var infoArea = document.getElementById( 'file-upload-filename' );
 
-    input.addEventListener("change", showFileName);
-    // async function getImageBlob(imageUrl) {
-    //   const response = await fetch(imageUrl)
-    //   return response.blob()
-    // }
-    function showFileName(event) {
-      // the change event gives us the input it occurred in
-      var input = event.srcElement;
-
-      // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-      var fileName = input.files[0].name;
-
-      // const blob = await getImageBlob("http://path.to.image.com")
-      // use fileName however fits your app best, i.e. add it into a div
-      // infoArea.textContent = 'File name: ' + fileName;
-      console.log("sssss", input.files[0]);
-    }
-  };
   uploadFileModal = fileName => {
     const { uploadFile } = this.state;
     const { classes } = this.props;
 
     return (
       <Dialog
-        open={uploadFile}
+        open={true}
         onClose={() => {}}
         style={{ minWidth: "630px !important", minHeight: "400px" }}
         aria-labelledby="alert-dialog-title"
@@ -186,57 +172,8 @@ class Portfolio extends Component {
   render() {
     const { classes } = this.props;
     const { open } = this.state;
-    return (
-      <div className={classes.mainContainer}>
-        <div className={classes.resumeSection}>
-          <Typography className={classes.resume}>Resume</Typography>
-          <FilesContainer
-            fileName={"Rohit_Resume.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
-
-          <div className={classes.uploadBtnContainer}>
-            <Button
-              onClick={() => this.callModal()}
-              className={classes.uploadFiles}
-            >
-              <form>
-                <input
-                  type="file"
-                  id="file-upload"
-                  style={{ Zindex: -1, position: "absolute", opacity: 0 }}
-                  className={classes.uploadFiles}
-                />
-                <label for="file-upload">Upload file</label>
-              </form>
-            </Button>
-          </div>
-        </div>
-
-        <div className={classes.resumeSection}>
-          <Typography className={classes.resume}>Case Studies</Typography>
-          <FilesContainer
-            fileName={"Dunzou_case_study.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
-          <FilesContainer
-            fileName={"Skillenza_case_study.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
-          <FilesContainer
-            fileName={"Skillenza_case_study.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
-          {this.uploadFileModal("kayla_life_case_study.pdf")}
-          {this.saveBeforeLeaving()}
-          {this.deleteModal()}
-          <div className={classes.uploadBtnContainer}>
-            <Button className={classes.uploadFiles}>Upload Files</Button>
-          </div>
-        </div>
-      </div>
-    );
+    return <>{this.state.show}</>;
   }
 }
 
-export default withStyles(styles)(Portfolio);
+export default withStyles(styles)(ModalClient);

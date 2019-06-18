@@ -6,7 +6,8 @@ import CustomHeader from "@components/ReuseableComponents/header";
 import CustomTabs from "@components/ReuseableComponents/customTabs";
 import Experience from "@components/Client/Experience/Experience";
 import PortfolioComp from "@components/Client/PortfolioComp/PortfolioComp.js";
-
+import CaseLinks from "../PortfolioComp/CaseStudiesLink";
+import ProjectDetails from "../PortfolioComp/ProjectDetails";
 class Home extends Component {
   state = {
     selectedTab: 2
@@ -27,6 +28,8 @@ class Home extends Component {
           <CustomTabs setTab={this.setTab} selectedTab={selectedTab} />
           <div className={classes.mainContainer}>
             <PortfolioComp />
+            <CaseLinks />
+            <ProjectDetails />
           </div>
         </div>
       </div>
