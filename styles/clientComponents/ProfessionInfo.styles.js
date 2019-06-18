@@ -167,5 +167,61 @@ export const styles = theme => ({
     width: "100%",
     marginTop: "-1px",
     marginBottom: 0
+  },
+  saveBtn: {
+    minWidth: "50px",
+    height: "36px",
+    borderRadius: "2px",
+    boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    backgroundColor: "#5e35b1",
+    borderImageSource:
+      "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))",
+    borderImageSlice: 1,
+    backgroundImage:
+      "#5e35b1, linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.06))",
+    marginTop: "30px",
+    textTransform: "capitalize",
+
+    fontSize: "14px",
+    fontWeight: "500",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: "0.5px",
+    color: "#ffffff",
+    marginLeft: "0px",
+    [theme.breakpoints.up("sm")]: {
+      width: "182px",
+      marginLeft: " 320px"
+    }
+  },
+  typosContainer: {
+    padding: '20px 0 5px 0'
+  },
+  lastTypos: {
+    minWidth: '548px',
+    height: '24px',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+    fontSize: '16px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.5,
+    letterSpacing: 'normal',
+    color: 'rgba(0, 0, 0, 0.87)',
+  },
+  lowerTypos: {
+    minHeight: '72px',
+    paddingTop: '15px',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+    fontSize: '16px',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.5,
+    letterSpacing: 'normal',
+    color: 'rgba(0, 0, 0, 0.87)',
   }
 });

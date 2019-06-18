@@ -343,6 +343,26 @@ class ProfileComponent extends Component {
           chipsBox,
           chip
         )}
+        <div className={classes.typosContainer}>
+          <Typography className={classes.lastTypos}>
+            What else would you like to tell us about yourself and what you’re looking for?
+          </Typography>
+          <Typography className={classes.lowerTypos}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam consectetur condimentum nunc, vel ultrices ante elementum in. Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed tempus quam eget egestas pellentesque. Praesent vehicula varius lectus, vel maximus turpis rhoncus a.
+          </Typography>
+        </div>
+        <div style={{ display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.setState({ showTermsModal: false })}
+              className={classes.saveBtn}
+            >
+              Save
+            </Button>
+        </div>
       </div>
     );
   }
