@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "next/link";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import Paper from "@material-ui/core/Paper";
 import { withSnackbar } from "notistack";
 import Dialog from "@material-ui/core/Dialog";
@@ -24,8 +25,12 @@ class InputArea extends Component {
       checkEmailApi,
       validation,
       styleprops,
+      endAdornmentText,
       disabled = false,
       multiline = false,
+      verify,
+      endrClassError,
+      endrClass,
       rows = 1
     } = this.props;
     return (
@@ -43,11 +48,25 @@ class InputArea extends Component {
         rows={rows}
         disabled={disabled}
         helperText={validation ? "" : `*Enter A ${label}`}
+        InputProps={{
+          endAdornment: endAdornmentText ? (
+            <InputAdornment position="end" className={endrClass}>
+              {verify ? (
+                <span className={endrClass}>Verified</span>
+              ) : (
+                <span className={endrClassError}>Not Verified</span>
+              )}
+            </InputAdornment>
+          ) : (
+            ""
+          )
+        }}
         InputLabelProps={{
           style: {
             height: "24px",
             fontFamily: "Roboto, Helvetica, Arial, sans-serif",
             fontSize: "16px",
+            color: "red",
             fontWeight: "600",
             fontStyle: "normal",
             fontStretch: "normal",

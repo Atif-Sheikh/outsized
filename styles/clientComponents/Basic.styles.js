@@ -157,6 +157,16 @@ export const styles = theme => ({
     alignItems: "center",
     padding: "6px 10px 0px 20px"
   },
+  endrClass: {
+    width: "100px",
+    color: "green",
+    fontSize: "15px",
+    textAlign: "right"
+  },
+  endrClassError: {
+    width: "100px",
+    color: "red"
+  },
   headerText: {
     width: "592px",
     display: "flex",

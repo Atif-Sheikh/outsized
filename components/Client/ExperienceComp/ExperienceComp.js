@@ -39,7 +39,7 @@ class Experience extends Component {
     open: false,
     designation: "",
     companyName: "",
-    currentlyWorking: false,
+    currentlyWorking: true,
     description: "",
     defaultChecked: true,
     fromDate: "",
@@ -48,6 +48,8 @@ class Experience extends Component {
     validCompanyName: true,
     validDescription: true,
     showText: false,
+    buttonText: "Save",
+    editId: 0,
     months: [
       "Jan",
       "Feb",
@@ -216,14 +218,26 @@ class Experience extends Component {
       startDate.length &&
       lastDate.length
     ) {
-      this.props.clientAddExperienceApi(
-        designation,
-        companyName,
-        currentlyWorking,
-        sDate,
-        lDate,
-        description
-      );
+      if (this.state.buttonText === "Save") {
+        this.props.clientAddExperienceApi(
+          designation,
+          companyName,
+          currentlyWorking,
+          sDate,
+          lDate,
+          description
+        );
+      } else {
+        this.props.clientEditExperienceApi(
+          this.state.editId,
+          designation,
+          companyName,
+          currentlyWorking,
+          sDate,
+          lDate,
+          description
+        );
+      }
     }
     this.setState({
       showText: true
@@ -240,6 +254,25 @@ class Experience extends Component {
   };
   deleteWordExperience = id => {
     this.props.clientDeleteExperienceApi(id);
+  };
+  editExperience = (val, date, todate) => {
+    let fromMonth = date.slice(0, 3);
+    let fromYear = date.slice(4, 8);
+    let tillMonth = todate.slice(0, 3);
+    let tillYear = todate.slice(4, 8);
+    this.setState({
+      open: true,
+      editId: val.id,
+      designation: val.designation,
+      companyName: val.companyName,
+      currentlyWorking: val.currentlyWorking,
+      description: val.description,
+      fromMonth: fromMonth,
+      fromYear: fromYear,
+      tillMonth: tillMonth,
+      tillYear: tillYear,
+      buttonText: "Edit"
+    });
   };
   render() {
     const { classes } = this.props;
@@ -260,7 +293,7 @@ class Experience extends Component {
         <div className={classes.iconBtnDiv}>
           <IconButton
             className={classes.plusIconContainer}
-            onClick={() => this.setState({ open: true })}
+            onClick={() => this.setState({ open: true, buttonText: "Save" })}
           >
             <Add className={classes.addIcon} />
           </IconButton>
@@ -276,7 +309,10 @@ class Experience extends Component {
                   <Typography className={classes.title}>
                     {val.designation}
                     <span className={classes.iconContainer}>
-                      <EditIcon className={classes.smallIcon} />
+                      <EditIcon
+                        className={classes.smallIcon}
+                        onClick={() => this.editExperience(val, date, todate)}
+                      />
                       <span className={classes.line} />
                       <DeleteIcon
                         className={classes.smallIcon}
@@ -403,7 +439,7 @@ class Experience extends Component {
                 <div>
                   <div className={classes.checkBoxContainer}>
                     <Checkbox
-                      defaultChecked
+                      defaultChecked={this.state.currentlyWorking}
                       color="#000"
                       value={this.state.currentlyWorking}
                       onChange={e =>
@@ -435,7 +471,7 @@ class Experience extends Component {
                 onClick={this.addWordExperience}
                 className={classes.saveBtn}
               >
-                Save
+                {this.state.buttonText}
               </Button>
             </div>
           </DialogContent>
@@ -476,6 +512,27 @@ const mapDispatchToProps = dispatch => {
     ) => {
       dispatch(
         clientAddExperienceApi(
+          designation,
+          companyName,
+          currentlyWorking,
+          startDate,
+          lastDate,
+          description
+        )
+      );
+    },
+    clientEditExperienceApi: (
+      id,
+      designation,
+      companyName,
+      currentlyWorking,
+      startDate,
+      lastDate,
+      description
+    ) => {
+      dispatch(
+        clientEditExperienceApi(
+          id,
           designation,
           companyName,
           currentlyWorking,

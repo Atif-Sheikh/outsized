@@ -6,20 +6,20 @@ import { styles } from "@styles/clientComponents/Basic.styles.js";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import CheckIcon from "@material-ui/icons/Check";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import InputArea from "../../ReuseableComponents/InputArea";
 import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
+import Router from "next/router";
+
 import {
   retrieveFreelancerProfile,
   clientAddNumberApi,
   clientAddEmailApi,
-  clientEditProfileApi
+  clientEditProfileApi,
+  clientVerifyEmail
 } from "@actions/client";
 
 class BasicComponent extends Component {
@@ -52,7 +52,8 @@ class BasicComponent extends Component {
     emailModal: false,
     numberModal: false,
     showText: false,
-    phoneNumberError: false
+    phoneNumberError: false,
+    submitText: "Submit"
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
@@ -138,11 +139,24 @@ class BasicComponent extends Component {
     }
     if (this.state.addNewEmailValid) {
       console.log("add new emeil", this.state.addNewEmail);
-      this.props.clientAddEmailApi(this.state.addNewEmail);
-      this.setState({
-        addNewEmail: "",
-        showText: true
-      });
+      if (this.state.submitText === "Submit") {
+        this.props.clientAddEmailApi(this.state.addNewEmail);
+        this.setState({
+          addNewEmail: "",
+          showText: true
+        });
+      } else {
+        this.props.clientVerifyEmail(
+          this.state.addNewEmail,
+          this.props.enqueueSnackbar,
+          this.props.closeSnackbar,
+          Router
+        );
+        this.setState({
+          addNewEmail: "",
+          showText: true
+        });
+      }
     }
   };
 
@@ -209,6 +223,7 @@ class BasicComponent extends Component {
       location.length &&
       email.length
     ) {
+      console.log("email", email);
       this.props.clientEditProfileApi(gender, name, number, location, email);
     }
   };
@@ -277,7 +292,7 @@ class BasicComponent extends Component {
                 type="submit"
                 className={classes.AddEmailBtn}
               >
-                Submit
+                {this.state.submitText}
               </Button>
             </div>
           </form>
@@ -410,6 +425,7 @@ class BasicComponent extends Component {
     newHere,
     loginBtn
   ) => {
+    const { classes } = this.props;
     return (
       <div className={formContainer}>
         <InputArea
@@ -441,7 +457,9 @@ class BasicComponent extends Component {
         <div className={modalFooter}>
           <Button
             className={signupTypo}
-            onClick={() => this.setState({ numberModal: true })}
+            onClick={() =>
+              this.setState({ numberModal: true, submitText: "Submit" })
+            }
           >
             <span className={newHere}>Add alternate number</span>
           </Button>
@@ -474,7 +492,9 @@ class BasicComponent extends Component {
         <div className={modalFooter}>
           <Button
             className={signupTypo}
-            onClick={() => this.setState({ emailModal: true })}
+            onClick={() =>
+              this.setState({ emailModal: true, submitText: "Submit" })
+            }
           >
             <span className={newHere}>Add alternate email</span>
           </Button>
@@ -491,13 +511,32 @@ class BasicComponent extends Component {
                     handleInputChange={event => this.handleInputChange(event)}
                     validation={alternateEmailValid}
                     styleprops={textFieldPasss}
+                    endAdornmentText={true}
+                    verify={val.verified}
+                    endrClass={classes.endrClass}
+                    endrClassError={classes.endrClassError}
                   />
-                  <div className={modalFooter}>
-                    <Typography className={signupTypo}>
-                      Don't receive link?{" "}
-                      <span className={newHere}>Resend link</span>
-                    </Typography>
-                  </div>
+                  {val.verified ? (
+                    ""
+                  ) : (
+                    <div className={modalFooter}>
+                      <Typography className={signupTypo}>
+                        Don't receive link?{" "}
+                        <span
+                          className={newHere}
+                          onClick={() =>
+                            this.setState({
+                              emailModal: true,
+                              addNewEmail: val.email,
+                              submitText: "Send Verifcation Link"
+                            })
+                          }
+                        >
+                          Resend link
+                        </span>
+                      </Typography>
+                    </div>
+                  )}
                 </div>
               );
             })
@@ -619,6 +658,11 @@ const mapDispatchToProps = dispatch => {
     },
     clientAddEmailApi: email => {
       dispatch(clientAddEmailApi(email));
+    },
+    clientVerifyEmail: (email, enqueueSnackbar, closeSnackbar, Router) => {
+      dispatch(
+        clientVerifyEmail(email, enqueueSnackbar, closeSnackbar, Router)
+      );
     },
     clientEditProfileApi: (gender, name, number, location, email) => {
       dispatch(clientEditProfileApi(gender, name, number, location, email));

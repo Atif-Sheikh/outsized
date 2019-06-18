@@ -39,7 +39,14 @@ export const clientVerifyEmail = (
     })
     .catch(err => {
       // dispatch(loginFailed(err.message));
-      const key = enqueueSnackbar("Invalid email", {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      const key = enqueueSnackbar(error, {
         variant: "error",
         anchorOrigin: {
           vertical: "top",

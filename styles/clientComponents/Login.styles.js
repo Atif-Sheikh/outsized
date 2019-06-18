@@ -299,7 +299,9 @@ export const styles = theme => ({
     marginLeft: -12
   },
   wrapper: {
-    position: "relative"
+    position: "relative",
+    display: "flex",
+    justifyContent: "center"
   },
   buttonSuccess: {
     backgroundColor: "green",

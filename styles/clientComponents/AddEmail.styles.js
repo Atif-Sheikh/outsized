@@ -3,11 +3,11 @@ export const styles = theme => ({
     borderRadius: "0px",
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
       margin: 0,
+      width: "100vw",
       height: "100% !important",
       maxHeight: "100vh"
     },
     [theme.breakpoints.up("sm")]: {
-      maxWidth: "620px",
       height: "270px",
       borderRadius: "15px !important",
       backgroundColor: "#fff",
@@ -54,7 +54,8 @@ export const styles = theme => ({
     width: "30%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
   headerContainer: {
     display: "flex",
@@ -269,7 +270,9 @@ export const styles = theme => ({
     marginLeft: -12
   },
   wrapper: {
-    position: "relative"
+    position: "relative",
+    display: "flex",
+    justifyContent: "flex-end"
   },
   buttonSuccess: {
     backgroundColor: "green",

@@ -111,8 +111,9 @@ class Education extends Component {
           : []
       });
     } else if (this.state.actionPerform === "editEducation") {
+      console.log("editEducationData", editEducationData);
       this.setState({
-        educationData: editEducationData
+        educationData: editEducationData.length
           ? editEducationData
           : basicData
           ? basicData

@@ -13,6 +13,8 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
+import { connect } from "react-redux";
+import { retrieveFreelancerProfile } from "@actions/client";
 
 class ProfileComponent extends Component {
   state = {
@@ -27,6 +29,9 @@ class ProfileComponent extends Component {
     search: "",
     searchValid: true
   };
+  componentDidMount() {
+    this.props.retrieveFreelancerProfile();
+  }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -343,4 +348,28 @@ class ProfileComponent extends Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(ProfileComponent));
+const mapStateToProps = state => {
+  console.log("state", state.clientBasicProfileReducer);
+  return {
+    isLoading: state.clientBasicProfileReducer.isLoading,
+    error: state.clientBasicProfileReducer.message,
+    access: state.clientBasicProfileReducer.access,
+    freelancerProfile: state.clientBasicProfileReducer.freelancerProfile,
+    message: state.clientBasicProfileReducer.message,
+    hasError: state.clientBasicProfileReducer.hasError
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    retrieveFreelancerProfile: () => {
+      dispatch(retrieveFreelancerProfile());
+    }
+  };
+};
+
+export default withSnackbar(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(ProfileComponent))
+);

@@ -44,6 +44,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
           />
+          <script src="https://momentjs.com/downloads/moment.js" />
           <style dangerouslySetInnerHTML={{ __html: css.replace(/\s/g, "") }} />
         </Head>
         <body style={{ margin: "0px" }}>

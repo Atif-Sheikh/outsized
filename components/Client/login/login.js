@@ -149,17 +149,24 @@ class LoginFormComponent extends Component {
               <Typography className={classes.orOperator}>or</Typography>
               <Divider light className={classes.dividerLine} />
             </div>
-            <div className={classes.wrapper}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                className={classes.loginBtnLinkedIn}
-              >
-                Login with LinkedIn
-              </Button>
-            </div>
           </form>
+          <div className={classes.wrapper}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.loginBtnLinkedIn}
+              onClick={() => {
+                localStorage.setItem("state", "freelancer");
+              }}
+            >
+              <Link href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=81742vq7hot2j7&redirect_uri=http%3A%2F%2F13.232.136.59%3A3000%2Flinkedin-oauth&state=fooobar&scope=r_liteprofile%20r_emailaddress%20w_member_social">
+                <a style={{ color: "white", textDecoration: "none" }}>
+                  Login with LinkedIn
+                </a>
+              </Link>
+            </Button>
+          </div>
           <div className={classes.modalFooter}>
             <Link href="/forgot-password">
               <Typography className={classes.forgotTypo}>

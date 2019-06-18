@@ -83,7 +83,7 @@ class ClientResetPass extends Component {
           Enter New Password
         </Typography>
         {error && error.length ? (
-          <Typography style={{ color: sucsess ? "green" : "red" }}>
+          <Typography style={{ color: !this.props.hasError ? "green" : "red" }}>
             {error}
           </Typography>
         ) : null}
@@ -132,7 +132,7 @@ class ClientResetPass extends Component {
               style={styles.resetBtn}
               // onClick={this.formValidator}
             >
-              Reset Passwordsss
+              Reset Password
             </Button>
           </div>
         </form>
@@ -147,7 +147,8 @@ const mapStateToProps = state => {
     token: state.clientResetPassword.token,
     isLoading: state.clientResetPassword.isLoading,
     error: state.clientResetPassword.message,
-    sucsess: state.clientResetPassword.sucsess
+    sucsess: state.clientResetPassword.sucsess,
+    hasError: state.clientResetPassword.hasError
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -37,58 +37,85 @@ export const retrieveFreelancerProfile = () => dispatch => {
   dispatch(getFreelancerProfileStarted());
   let queryString = `
             query {
-                freelancer(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
-                  name,
-                  id,
+              freelancer(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+                name,
+                id,
+                email,
+                mobile,
+                gender,
+                currentLocation,
+                linkedinUrl,
+                alternateEmails{
                   email,
-                  mobile,
-                  gender,
-                  currentLocation,
-                  linkedinUrl,
-                  alternateEmails{
-                    email,
-                    verified
-                  },
-                  alternateMobiles{
-                    mobile
-                  },
-                  professionalInfo{
-                    industryType
-                  },
-                  portfolio{
-                    
-                    resumes{
-                      name
-                    },
-                    caseStudies{
-                      name
-                    },
-                    caseStudyLinks{
-                      name
-                    },
-                    projects{
-                      id
-                    }
-                  },
-                  educations{
-                    id,
-                    degree,
-                    passOutYear,
-                    description,
-                    location,
-                    institute
-                    
-                  },
-                  experiences{
+                  verified
+                },
+                alternateMobiles{
+                  mobile
+                },
+                professionalInfo{
+                  currentEmploymentType,
+                  currentRole,
+                  relocation,
+                    currency,
+                    enableFullTime,
+                    expectedAnnualSalary,
+                    enableFixedRateProjects,
+                    expectedMonthlyRate,
+                    enableFullDayProjects,
+                    expectedDailyRate,
+                    enableHourlyProjects,
+                    expectedHourlyRate,
+                    minHours,
+                    sectors{
                       id,
-                      designation,
-                      companyName,
-                      currentlyWorking,
-                      fromDate,
-                      toDate,
-                      description
+                      name
+                    },
+                    skills{
+                      id,
+                      name
+                    },
+                    clients{
+                      id,
+                      name
+                    },
+                    geoExperiences{
+                      name
+                    }
+                },
+                portfolio{
+                  
+                  resumes{
+                    name
+                  },
+                  caseStudies{
+                    name
+                  },
+                  caseStudyLinks{
+                    name
+                  },
+                  projects{
+                    id
                   }
+                },
+                educations{
+                  id,
+                  degree,
+                  passOutYear,
+                  description,
+                  location,
+                  institute
+                  
+                },
+                experiences{
+                    id,
+                    designation,
+                    companyName,
+                    currentlyWorking,
+                    fromDate,
+                    toDate,
+                    description
                 }
+              }
             }
       `;
 
@@ -506,12 +533,11 @@ export const clientEditExperienceApi = (
               id: ${id},
               designation: "${designation}",
               companyName: "${companyName}",
-              currentlyWorking: "${currentlyWorking}",
+              currentlyWorking: ${currentlyWorking},
               fromDate: "${fromDate}",
               toDate: "${toDate}",
               description: "${description}",
               token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
-            ){
               freelancerProfile{
                 id,
                 name,

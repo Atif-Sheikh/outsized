@@ -188,7 +188,7 @@ export const clientBasicProfileReducer = (state = initialState, action) => {
         isLoading: false,
         access: false,
         message: action.payload,
-        message: "This number is already registered"
+        message: "Please fill the form perfectly"
       };
     case EDIT_EXPERIENCE_STARTED:
       return { ...state, isLoading: true, message: "", access: false };
@@ -207,8 +207,8 @@ export const clientBasicProfileReducer = (state = initialState, action) => {
         hasError: true,
         isLoading: false,
         access: false,
-        message: action.payload,
-        message: "This number is already registered"
+        // message: action.payload,
+        message: "Please fill the form perfectly"
       };
     case DELETE_EXPERIENCE_STARTED:
       return { ...state, isLoading: true, message: "", access: false };
