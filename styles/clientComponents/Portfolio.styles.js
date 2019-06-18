@@ -2,7 +2,7 @@ export const styles = theme => ({
   mainContainer: {
     width: "100%",
     minWidth: "230px",
-    height: "100%",
+    // height: "100%",
     paddingTop: 20
   },
   resumeSection: {},
@@ -27,11 +27,45 @@ export const styles = theme => ({
     alignItems: "center",
     justifyContent: "center"
   },
+  textFieldPass: {
+    width: "80%",
+    // marginTop: "5px",
+    marginBottom: 0
+  },
+  casePreview: {
+    minWidth: "100%",
+    height: "80px",
+    backgroundColor: "#fff",
+    margin: "10px 0 10px 0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  messagePreview: {
+    minWidth: "100%",
+    height: "140px",
+    backgroundColor: "#fff",
+    margin: "10px 0 10px 0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   nameSection: {
     flex: 2,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around"
+  },
+  caseLinkSection: {
+    flex: 2,
+    display: "flex",
+    alignItems: "center",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "18px",
+    fontWeight: " 500",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal"
   },
   nameSectionUploaded: {
     flex: 4,
@@ -49,13 +83,31 @@ export const styles = theme => ({
     alignItems: "center",
     justifyContent: "flex-end"
   },
+  iconCaseSection: {
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end"
+  },
   icon: {
     color: "#000"
+  },
+  iconAdd: {
+    color: "#fff"
+  },
+  projctPreview: {
+    minHeight: "500px"
   },
   uploadFiles: {
     minWidth: "117px",
     height: "36px",
     borderRadius: "2px",
+    boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
+    backgroundColor: "#5e35b1",
+    textTransform: "capitalize",
+    color: "#fff"
+  },
+  AddFiles: {
     boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
     backgroundColor: "#5e35b1",
     textTransform: "capitalize",

@@ -23,7 +23,10 @@ class InputArea extends Component {
       EmailApi,
       checkEmailApi,
       validation,
-      styleprops
+      styleprops,
+      disabled = false,
+      multiline = false,
+      rows = 1
     } = this.props;
     return (
       <TextField
@@ -36,6 +39,9 @@ class InputArea extends Component {
         onBlur={EmailApi ? checkEmailApi : () => {}}
         type={type}
         fullWidth
+        multiline={multiline}
+        rows={rows}
+        disabled={disabled}
         helperText={validation ? "" : `*Enter A ${label}`}
         InputLabelProps={{
           style: {
