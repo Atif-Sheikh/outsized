@@ -109,18 +109,19 @@ class Portfolio extends Component {
   };
   showFileName = event => {
     // the change event gives us the input it occurred in
-    var inputs = event.target.result;
+    var input = event.srcElement;
+    var file = input.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
 
-    // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-    // var file = input.files[0];
-    // this.setState({uploadFile:true,file:file})
-    console.log(inputs);
+    var imgdata = { name: file.name, data: reader, type: file.type };
+    this.setState({ uploadFile: true, file: imgdata });
   };
   nameChanger = e => {
     let { file } = this.state;
     var addFile = file;
     addFile.name = e.target.value;
-    console.log(addFile);
+    this.setState({ file: addFile });
   };
   uploadFileModal = fileName => {
     const { uploadFile, file } = this.state;
