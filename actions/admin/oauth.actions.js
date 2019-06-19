@@ -7,6 +7,7 @@ import axios from "../../config/axios";
 
 export const linkedInAuthAPI = (
   code,
+  userType,
   enqueueSnackbar,
   closeSnackbar,
   Router
@@ -14,7 +15,7 @@ export const linkedInAuthAPI = (
   dispatch(loginStarted());
   let queryString = `
         mutation {
-            loginWithLinkedin(userType:"freelancer",code:"${code}"){
+            loginWithLinkedin(userType:"${userType}",code:"${code}"){
                 token
             }
         }
