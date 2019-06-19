@@ -250,26 +250,29 @@ class ProfileComponent extends Component {
     ratesText,
     paymentContent
   ) => {
+    const { classes } = this.props;
     return (
       <div
         className={contractContaienr}
         style={{ paddingBottom: minHrs ? "10px" : "15px" }}
       >
-        <div className={checkBoxContainer}>
-          <Checkbox
-            checked={checked}
-            color="default"
-            name={keyName}
-            onChange={e => this.setState({ [keyName]: e.target.checked })}
-            value="checkedG"
-            inputProps={{
-              "aria-label": "checkbox with default color"
-            }}
-          />
-        </div>
-        <div className={typeContainer}>
-          <Typography className={timeText}>{time}</Typography>
-          <Typography className={descriptionText}>{description}</Typography>
+        <div className={classes.checkContainer}>
+          <div className={checkBoxContainer}>
+            <Checkbox
+              checked={checked}
+              color="default"
+              name={keyName}
+              onChange={e => this.setState({ [keyName]: e.target.checked })}
+              value="checkedG"
+              inputProps={{
+                "aria-label": "checkbox with default color"
+              }}
+            />
+          </div>
+          <div className={typeContainer}>
+            <Typography className={timeText}>{time}</Typography>
+            <Typography className={descriptionText}>{description}</Typography>
+          </div>
         </div>
         <div className={paymentContent}>
           <div className={salaryContainer}>

@@ -1,8 +1,11 @@
 export const styles = theme => ({
   mainContainer: {
     width: "100%",
-    minWidth: "230px",
-    height: "100%"
+    height: "100%",
+    minWidth: "90vw",
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "100%"
+    }
   },
   title: {
     maxWidth: "350px",
@@ -45,16 +48,59 @@ export const styles = theme => ({
     letterSpacing: "normal",
     color: "#575553"
   },
+  textModal: {
+    maxHeight: "100%"
+    // width:'500px !important'
+  },
+  modalContainer: {
+    minwidth: "100%",
+    margin: "0px !important",
+    position: "relative",
+    zIndex: 333333423432432,
+    // overflow:'hidden',
+    [theme.breakpoints.up("sm")]: {
+      minwidth: "800px !important",
+      maxHeight: "800px"
+    }
+  },
+  modal: {
+    width: "100vw",
+    borderRadius: "5px",
+    position: "relative",
+    zIndex: 3333333099999999,
+    position: "relative",
+    margin: "0px !important",
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      margin: 0,
+      borderRadius: "0px",
+      width: "100vw",
+      // minHeight: "573px",
+      borderRadius: "5px",
+      backgroundColor: "#ffffff"
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: "600px",
+      height: "1000px",
+      overflow: "hidden",
+      maxHeight: "1000px"
+    }
+  },
+  educationModalTitle: {
+    position: "relative",
+    margin: "0px !important",
+    zIndex: 9999,
+    height: "auto"
+  },
   back: {
     [theme.breakpoints.up("sm")]: {
       display: "none"
     }
   },
   FormContainer: {
-    width: "85%",
+    width: "100%",
     minHeight: "230px",
     margin: "0 auto",
-    paddingBottom: "35px"
+    paddingBottom: "5px"
   },
   btnContainer: {
     display: "flex",
@@ -110,7 +156,10 @@ export const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    visibility: "hidden"
+    visibility: "visible",
+    [theme.breakpoints.up("sm")]: {
+      visibility: "hidden"
+    }
   },
   line: {
     width: "1px",
@@ -205,6 +254,7 @@ export const styles = theme => ({
     width: "100%",
     height: "30px",
     display: "flex",
+    marginBottom: "40px",
     alignItems: "center",
     justifyContent: "flex-end"
   }

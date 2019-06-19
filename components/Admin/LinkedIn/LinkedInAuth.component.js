@@ -14,7 +14,8 @@ class LinkedInAuth extends Component {
     this.props.linkedInAuthAPI(
       code,
       this.props.enqueueSnackbar,
-      this.props.closeSnackbar
+      this.props.closeSnackbar,
+      Router
     );
   }
 
@@ -25,8 +26,8 @@ class LinkedInAuth extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    linkedInAuthAPI: (code, enqueueSnackbar, closeSnackbar) =>
-      dispatch(linkedInAuthAPI(code, enqueueSnackbar, closeSnackbar))
+    linkedInAuthAPI: (code, enqueueSnackbar, closeSnackbar, Router) =>
+      dispatch(linkedInAuthAPI(code, enqueueSnackbar, closeSnackbar, Router))
   };
 };
 export default withSnackbar(

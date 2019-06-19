@@ -100,7 +100,8 @@ export const styles = {
     marginLeft: -12
   },
   wrapper: {
-    position: "relative"
+    position: "relative",
+    marginRight: "10px"
   },
   buttonSuccess: {
     backgroundColor: "green",

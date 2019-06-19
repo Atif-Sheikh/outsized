@@ -11,7 +11,7 @@ export const styles = theme => ({
     [theme.breakpoints.down("sm")]: {
       height: " 80px",
       position: "absolute",
-      zIndex: 9999,
+      zIndex: 10,
       display: "flex",
       flexDirection: "row",
       width: "100%",

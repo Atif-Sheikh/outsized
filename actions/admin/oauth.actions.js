@@ -23,8 +23,10 @@ export const linkedInAuthAPI = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      localStorage.setItem("token", res.data.login.token);
-      dispatch(loginSuccess(res.data.login.token));
+      localStorage.setItem("token", res.data.loginWithLinkedin.token);
+      let state = localStorage.getItem("state");
+      console.log("res", res);
+      dispatch(loginSuccess(res.data.loginWithLinkedin));
       const key = enqueueSnackbar(
         "You have successfully logged into your account",
         {
@@ -38,7 +40,13 @@ export const linkedInAuthAPI = (
       setTimeout(() => {
         closeSnackbar(key);
       }, 2000);
-      Router.push("/hiring-process");
+      setTimeout(() => {
+        if (state === "admin") {
+          Router.push("/admin/hiring-process");
+        } else {
+          Router.push("/basic-profile");
+        }
+      }, 2000);
     })
     .catch(err => {
       dispatch(loginFailed(err.message));

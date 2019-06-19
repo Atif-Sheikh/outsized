@@ -1,8 +1,11 @@
 export const styles = theme => ({
   mainContainer: {
     width: "100%",
-    minWidth: "230px",
-    height: "100%"
+    minWidth: "90vw",
+    height: "100%",
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "100%"
+    }
   },
   title: {
     maxWidth: "350px",
@@ -22,19 +25,33 @@ export const styles = theme => ({
       visibility: "visible"
     }
   },
+  modalContainer: {
+    minwidth: "100%",
+    position: "relative",
+    zIndex: 333333423432432,
+    // overflow:'hidden',
+    [theme.breakpoints.up("sm")]: {
+      minwidth: "1000px !important"
+      // overflow:'hidden',
+    }
+  },
   iconBtnDiv: {
     width: "100%",
     height: "30px",
     display: "flex",
+    marginBottom: "40px",
     alignItems: "center",
     justifyContent: "flex-end"
   },
   iconContainer: {
-    minWidth: "46px",
+    minWidth: "45px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    visibility: "hidden"
+    visibility: "visible",
+    [theme.breakpoints.up("sm")]: {
+      visibility: "hidden"
+    }
   },
   line: {
     width: "1px",
@@ -118,17 +135,42 @@ export const styles = theme => ({
     color: "#3d3d3d",
     marginTop: "10px"
   },
+  modalTitle: {
+    position: "relative",
+    margin: "0px !important",
+
+    zIndex: 9999
+  },
+  content: {
+    margin: "0px !important",
+    width: "100%",
+    height: "100vh",
+    padding: "0px",
+    overflow: "hidden !important",
+    [theme.breakpoints.up("sm")]: {
+      width: "75%"
+    }
+  },
   modal: {
-    maxWidth: "660px",
-    maxHeight: "573px",
+    width: "100vw",
+    maxHeight: "100vh",
     borderRadius: "5px",
+    position: "relative",
+    zIndex: 3333333099999999,
+    position: "relative",
+    margin: "0px !important",
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
       margin: 0,
       borderRadius: "0px",
-      minWidth: "660px",
-      minHeight: "573px",
+      width: "100vw",
+      // minHeight: "573px",
       borderRadius: "5px",
       backgroundColor: "#ffffff"
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: "800px",
+      height: "auto",
+      overflow: "hidden"
     }
   },
   saveBtn: {

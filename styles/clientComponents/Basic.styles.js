@@ -33,15 +33,19 @@ export const styles = theme => ({
   },
   papers: {
     borderRadius: "0px",
+    position: "relative",
+    zIndex: 2222222,
+    width: "100% !important",
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
       margin: 0,
-      height: "70% !important",
-      maxHeight: "70vh",
-      width: "640px"
+      width: "100% !important",
+      height: "100% !important",
+      maxHeight: "100vh"
+      // width: "640px"
     },
     [theme.breakpoints.up("sm")]: {
       maxWidth: "720px",
-      height: "170px",
+      height: "400px",
       borderRadius: "15px !important",
       display: "flex",
       margin: "60px auto",
@@ -53,7 +57,8 @@ export const styles = theme => ({
   wrapper: {
     display: "flex",
     justifyContent: "flex-end",
-    width: "100%"
+    width: "100%",
+    backgroundColor: "red"
   },
   container: {
     display: "flex",
@@ -186,13 +191,13 @@ export const styles = theme => ({
     marginLeft: "15px"
   },
   closeIcon: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "flex",
-      justifyContent: "flex-end",
-      width: "50px",
-      alignSelf: "flex-end"
-    }
+    // display: "none",
+    // [theme.breakpoints.up("sm")]: {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "50px",
+    alignSelf: "flex-end"
+    // }
   },
   icon: {
     width: "24px",

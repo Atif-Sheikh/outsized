@@ -38,9 +38,11 @@ import axios from "../../config/axios";
 
 export const retrieveFreelancerProfile = () => dispatch => {
   dispatch(getFreelancerProfileStarted());
+  let token = localStorage.getItem("token");
+  console.log("token---------", token);
   let queryString = `
             query {
-              freelancer(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+              freelancer(token:"${token}"){
                 name,
                 id,
                 email,
@@ -134,9 +136,10 @@ export const retrieveFreelancerProfile = () => dispatch => {
 
 export const clientAddEmailApi = email => dispatch => {
   dispatch(addEmailStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
-            addEmail(email:"${email}",token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+            addEmail(email:"${email}",token:"${token}"){
               freelancerProfile{
                 id,
                 name,
@@ -168,9 +171,10 @@ export const clientAddEmailApi = email => dispatch => {
 
 export const clientAddNumberApi = number => dispatch => {
   dispatch(addNumberStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
-            addMobile(mobile:"${number}",token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+            addMobile(mobile:"${number}",token:"${token}"){
               freelancerProfile{
                 id,
                 name,
@@ -257,6 +261,7 @@ export const clientAddEducationApi = (
   institute
 ) => dispatch => {
   dispatch(addEducationStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
             addEducation(
@@ -265,7 +270,7 @@ export const clientAddEducationApi = (
               description: "${description}",
               location: "${location}",
               institute: "${institute}"
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"
+              token:"${token}"
             ){
               freelancerProfile{
                 id,
@@ -327,6 +332,7 @@ export const clientEditEducationApi = (
   institute
 ) => dispatch => {
   dispatch(editEducationStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
             editEducation(
@@ -336,7 +342,7 @@ export const clientEditEducationApi = (
               description: "${description}",
               location: "${location}",
               institute: "${institute}"
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"
+              token:"${token}"
             ){
               freelancerProfile{
                 id,
@@ -391,11 +397,12 @@ const editEducationFailed = error => ({
 
 export const clientDeleteEducationApi = id => dispatch => {
   dispatch(deleteEducationStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
             deleteEducation(
               id: ${id},
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"
+              token:"${token}"
             ){
               freelancerProfile{
                 id,
@@ -458,6 +465,7 @@ export const clientAddExperienceApi = (
   description
 ) => dispatch => {
   dispatch(addExperienceStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
             addExperience(
@@ -467,7 +475,7 @@ export const clientAddExperienceApi = (
               fromDate: "${fromDate}",
               toDate: "${toDate}",
               description: "${description}",
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+              token:"${token}"){
               freelancerProfile{
                 id,
                 name,
@@ -530,6 +538,7 @@ export const clientEditExperienceApi = (
   description
 ) => dispatch => {
   dispatch(editExperienceStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
             editExperience(
@@ -540,7 +549,7 @@ export const clientEditExperienceApi = (
               fromDate: "${fromDate}",
               toDate: "${toDate}",
               description: "${description}",
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
+              token:"${token}"){
               freelancerProfile{
                 id,
                 name,
@@ -595,11 +604,12 @@ const editExperienceFailed = error => ({
 
 export const clientDeleteExperienceApi = id => dispatch => {
   dispatch(deleteExperienceStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
             deleteExperience(
               id: ${id},
-              token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"
+              token:"${token}"
           ){
             freelancerProfile{
               id,
@@ -661,28 +671,30 @@ export const clientEditProfileApi = (
   email
 ) => dispatch => {
   dispatch(editProfileStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
         mutation {
-          editBasicProfile(
-            gender: "${gender}",
-            name: "${name}",
-            mobile: "${mobile}",
-            currentLocation: "${currentLocation}",
-            email: "${email}",
-            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE"){
-              freelancerProfile{
-                id,
-                name,
-                email,
-                gender,
-                mobile,
-                currentLocation,
-                alternateEmails{
+            editBasicProfile(
+              gender: "${gender}",
+              name: "${name}",
+              mobile: "${mobile}",
+              currentLocation: "${currentLocation}",
+              email: "${email}",
+              token:"${token}"){
+                freelancerProfile{
+                  id,
+                  name,
                   email,
-                  verified
-                }
+                  gender,
+                  mobile,
+                  currentLocation,
+                  alternateEmails{
+                    email,
+                    verified
+                  }
+                },
+                token
               }
-            }
         }
     `;
 
@@ -690,6 +702,7 @@ export const clientEditProfileApi = (
     .post("/graphql", queryString)
     .then(res => {
       dispatch(editProfileSuccess(res.data));
+      localStorage.setItem("token", res.data.editBasicProfile.token);
     })
     .catch(err => {
       const error =
@@ -719,8 +732,6 @@ const editProfileFailed = error => ({
   payload: error
 });
 
-
-
 export const saveprofessionalInfoData = ({
   currentEmploymentType,
   relocation,
@@ -738,6 +749,7 @@ export const saveprofessionalInfoData = ({
   enqueueSnackbar
 }) => dispatch => {
   dispatch(updateProfileStarted());
+  let token = localStorage.getItem("token");
   let queryString = `
       mutation {
         addProfessionalInfo(
@@ -800,16 +812,13 @@ export const saveprofessionalInfoData = ({
     .post("/graphql", queryString)
     .then(res => {
       dispatch(updateProfileSuccess(res.data));
-      enqueueSnackbar(
-        "Successfully updated profile",
-        {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right"
-          }
+      enqueueSnackbar("Successfully updated profile", {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
         }
-      );
+      });
     })
     .catch(err => {
       const error =
@@ -829,7 +838,6 @@ const updateProfileStarted = editExperience => ({
     editExperience
   }
 });
-
 
 const updateProfileSuccess = editExperience => ({
   type: UPDATE_PROFILE_SUCCESS,

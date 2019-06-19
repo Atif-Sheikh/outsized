@@ -4,6 +4,12 @@ export const styles = theme => ({
     width: "60px",
     height: "60px"
   },
+  paper: {
+    width: "75vw",
+    minWidth: "30vw",
+    height: "100%",
+    marginTop: "50px"
+  },
   container: {
     display: "flex",
     justifyContent: "space-between",
@@ -75,7 +81,9 @@ export const styles = theme => ({
   },
   formControlText: {},
   formControlSelect: {
-    width: "200px !importance"
+    width: "200px !importance",
+    position: "relative",
+    zIndex: 999
   },
   typo: {
     width: "174px",
@@ -89,11 +97,23 @@ export const styles = theme => ({
     letterSpacing: "normal",
     color: "rgba(0, 0, 0, 0.87)"
   },
+  checkContainer: {
+    display: "flex",
+    flex: 1,
+    margin: "10px 0px",
+    [theme.breakpoints.up("sm")]: {
+      margin: "0px"
+    }
+  },
   contractContaienr: {
     width: "100%",
     borderBottom: "solid 1px rgba(0, 0, 0, 0.22);",
     padding: "15px 0px 15px",
-    display: "flex"
+    display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row"
+    }
   },
   checkBoxContainer: {},
   typeContainer: {
@@ -103,10 +123,17 @@ export const styles = theme => ({
   },
   salaryContainer: {
     display: "flex",
+    flexDirection: "column",
     width: "100%",
-    alignItems: "center",
     paddingBottom: "10px",
-    justifyContent: "space-between"
+    justifyContent: "flex-start",
+    padding: "0px 40px",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      margin: "0px"
+    }
   },
   timeText: {
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
@@ -126,7 +153,11 @@ export const styles = theme => ({
     fontWeight: "bold",
     display: "flex",
     flex: 1,
-    textAlign: "right !important"
+    paddingBottom: "10px",
+    textAlign: "right !important",
+    [theme.breakpoints.up("sm")]: {
+      paddingBottom: "0px"
+    }
   },
   paymentContent: {
     display: "flex",
@@ -198,31 +229,31 @@ export const styles = theme => ({
     }
   },
   typosContainer: {
-    padding: '20px 0 5px 0'
+    padding: "20px 0 5px 0"
   },
   lastTypos: {
-    minWidth: '548px',
-    height: '24px',
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-    fontSize: '16px',
-    fontWeight: '500',
-    fontStyle: 'normal',
-    fontStretch: 'normal',
+    minWidth: "50%",
+    // height: '24px',
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "16px",
+    fontWeight: "500",
+    fontStyle: "normal",
+    fontStretch: "normal",
     lineHeight: 1.5,
-    letterSpacing: 'normal',
-    color: 'rgba(0, 0, 0, 0.87)',
+    letterSpacing: "normal",
+    color: "rgba(0, 0, 0, 0.87)"
   },
   lowerTypos: {
-    minHeight: '72px',
-    paddingTop: '15px',
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-    fontSize: '16px',
-    fontWeight: '600',
-    fontStyle: 'normal',
-    fontStretch: 'normal',
+    minHeight: "72px",
+    paddingTop: "15px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "16px",
+    fontWeight: "600",
+    fontStyle: "normal",
+    fontStretch: "normal",
     lineHeight: 1.5,
-    letterSpacing: 'normal',
-    color: 'rgba(0, 0, 0, 0.87)',
+    letterSpacing: "normal",
+    color: "rgba(0, 0, 0, 0.87)"
   },
   textField: {
     width: "180px"
@@ -230,5 +261,5 @@ export const styles = theme => ({
   dense: {
     height: "30px !important",
     fontSize: 10
-  },
+  }
 });

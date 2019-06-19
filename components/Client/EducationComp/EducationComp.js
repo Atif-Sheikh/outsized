@@ -254,7 +254,7 @@ class Education extends Component {
           onClose={() => this.setState({ open: false })}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          style={{ minWidth: "600px" }}
+          className={classes.modalContainer}
         >
           <IconButton
             className={classes.closeIcon}
@@ -292,7 +292,10 @@ class Education extends Component {
             </span>
           </Typography>
           <DialogContent className={classes.modal}>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText
+              id="alert-dialog-description"
+              className={classes.textModal}
+            >
               <div className={classes.FormContainer}>
                 <InputArea
                   label="Degree"

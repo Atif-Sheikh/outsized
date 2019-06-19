@@ -341,9 +341,7 @@ class Experience extends Component {
         <Dialog
           open={open}
           onClose={() => this.setState({ open: false })}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          style={{ minWidth: "600px !important" }}
+          className={classes.modalContainer}
         >
           <IconButton
             className={classes.closeIcon}
@@ -352,7 +350,7 @@ class Experience extends Component {
           >
             <CloseIcon className={classes.icon} />
           </IconButton>
-          <DialogTitle id="alert-dialog-title">
+          <DialogTitle id="alert-dialog-title" className={classes.modalTitle}>
             <Typography className={classes.headerText}>
               <IconButton
                 className={classes.back}
@@ -376,7 +374,10 @@ class Experience extends Component {
             </span>
           </Typography>
           <DialogContent className={classes.modal}>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText
+              id="alert-dialog-description"
+              className={classes.content}
+            >
               <div className={classes.FormContainer}>
                 <InputArea
                   label="Designation"
@@ -465,15 +466,15 @@ class Experience extends Component {
                   </div>
                 </div>
               </div>
+              <div className={classes.btnContainer}>
+                <Button
+                  onClick={this.addWordExperience}
+                  className={classes.saveBtn}
+                >
+                  {this.state.buttonText}
+                </Button>
+              </div>
             </DialogContentText>
-            <div className={classes.btnContainer}>
-              <Button
-                onClick={this.addWordExperience}
-                className={classes.saveBtn}
-              >
-                {this.state.buttonText}
-              </Button>
-            </div>
           </DialogContent>
         </Dialog>
       </div>

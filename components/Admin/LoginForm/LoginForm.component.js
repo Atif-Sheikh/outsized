@@ -120,6 +120,26 @@ class LoginFormComponent extends Component {
                 <CircularProgress size={28} style={styles.buttonProgress} />
               )}
             </div>
+            <div style={styles.wrapper}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                style={styles.margin}
+                onClick={() => {
+                  localStorage.setItem("state", "admin");
+                }}
+              >
+                <Link href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=81742vq7hot2j7&redirect_uri=http%3A%2F%2F13.232.136.59%3A3000%2Flinkedin-oauth&state=fooobar&scope=r_liteprofile%20r_emailaddress%20w_member_social">
+                  <a style={{ color: "white", textDecoration: "none" }}>
+                    Login with LinkedIn
+                  </a>
+                </Link>
+              </Button>
+              {this.props.isLoading && (
+                <CircularProgress size={28} style={styles.buttonProgress} />
+              )}
+            </div>
           </form>
           <div>
             <Button color="inherit" style={styles.suggestionLink}>

@@ -56,60 +56,82 @@ class BasicComponent extends Component {
     phoneNumberError: false,
     submitText: "Submit",
     showTermsModal: false,
-    termsError: false
+    termsError: false,
+    actionPerform: ""
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
   }
   componentWillReceiveProps(nextProps) {
-    let basicData =
-      nextProps &&
-      nextProps.freelancerProfile &&
-      nextProps.freelancerProfile.freelancer;
-    let basicEmailData =
-      nextProps &&
-      nextProps.newEmailData &&
-      nextProps.newEmailData.emailData &&
-      nextProps.newEmailData.emailData.addEmail &&
-      nextProps.newEmailData.emailData.addEmail.freelancerProfile &&
-      nextProps.newEmailData.emailData.addEmail.freelancerProfile
-        .alternateEmails
-        ? nextProps.newEmailData.emailData.addEmail.freelancerProfile
-            .alternateEmails
-        : [];
-    let basicNumberData =
-      nextProps &&
-      nextProps.newNumberData &&
-      nextProps.newNumberData.numberData &&
-      nextProps.newNumberData.numberData.addMobile &&
-      nextProps.newNumberData.numberData.addMobile.freelancerProfile &&
-      nextProps.newNumberData.numberData.addMobile.freelancerProfile
-        .alternateMobiles
-        ? nextProps.newNumberData.numberData.addMobile.freelancerProfile
-            .alternateMobiles
-        : [];
+    if (this.state.actionPerform === "edit") {
+      let editData =
+        nextProps &&
+        nextProps.editProfile &&
+        nextProps.editProfile.editExperience &&
+        nextProps.editProfile.editExperience.editBasicProfile &&
+        nextProps.editProfile.editExperience.editBasicProfile.freelancerProfile;
+      this.setState({
+        name: editData && editData.name,
+        number: editData && editData.mobile,
+        code: editData && editData.mobile ? editData.mobile.slice(0, 3) : "+91",
+        email: editData && editData.email,
+        location:
+          editData && editData.currentLocation
+            ? editData.currentLocation
+            : "India",
+        gender: editData && editData.gender ? editData.gender : "Male"
+      });
+    } else {
+      let basicData =
+        nextProps &&
+        nextProps.freelancerProfile &&
+        nextProps.freelancerProfile.freelancer;
+      let basicEmailData =
+        nextProps &&
+        nextProps.newEmailData &&
+        nextProps.newEmailData.emailData &&
+        nextProps.newEmailData.emailData.addEmail &&
+        nextProps.newEmailData.emailData.addEmail.freelancerProfile &&
+        nextProps.newEmailData.emailData.addEmail.freelancerProfile
+          .alternateEmails
+          ? nextProps.newEmailData.emailData.addEmail.freelancerProfile
+              .alternateEmails
+          : [];
+      let basicNumberData =
+        nextProps &&
+        nextProps.newNumberData &&
+        nextProps.newNumberData.numberData &&
+        nextProps.newNumberData.numberData.addMobile &&
+        nextProps.newNumberData.numberData.addMobile.freelancerProfile &&
+        nextProps.newNumberData.numberData.addMobile.freelancerProfile
+          .alternateMobiles
+          ? nextProps.newNumberData.numberData.addMobile.freelancerProfile
+              .alternateMobiles
+          : [];
 
-    console.log("basicData", basicData);
-    // let { name, number, gender, email, linkedlnUrl, location} = this.state
-    this.setState({
-      name: basicData && basicData.name,
-      number: basicData && basicData.mobile,
-      code: basicData && basicData.mobile.slice(0, 3),
-      email: basicData && basicData.email,
-      linkedlnUrl: basicData && basicData.linkedinUrl,
-      location:
-        basicData && basicData.currentLocation
-          ? basicData.currentLocation
-          : "India",
-      gender: basicData && basicData.gender ? basicData.gender : "Male",
-      alternateEmailsArray: basicEmailData.length
-        ? basicEmailData
-        : basicData && basicData.alternateEmails,
-      alternateNumberArray: basicNumberData.length
-        ? basicNumberData
-        : basicData && basicData.alternateMobiles
-    });
-    if(nextProps.showVerifyScreen) {
+      console.log("basicData", basicData);
+      // let { name, number, gender, email, linkedlnUrl, location} = this.state
+      this.setState({
+        name: basicData && basicData.name,
+        number: basicData && basicData.mobile,
+        code:
+          basicData && basicData.mobile ? basicData.mobile.slice(0, 3) : "+91",
+        email: basicData && basicData.email,
+        linkedlnUrl: basicData && basicData.linkedinUrl,
+        location:
+          basicData && basicData.currentLocation
+            ? basicData.currentLocation
+            : "India",
+        gender: basicData && basicData.gender ? basicData.gender : "Male",
+        alternateEmailsArray: basicEmailData.length
+          ? basicEmailData
+          : basicData && basicData.alternateEmails,
+        alternateNumberArray: basicNumberData.length
+          ? basicNumberData
+          : basicData && basicData.alternateMobiles
+      });
+    }
+    if (nextProps.showVerifyScreen) {
       setTimeout(() => {
         this.setState({ showTermsModal: true }, () => {
           this.props.clearTermsModal();
@@ -122,76 +144,76 @@ class BasicComponent extends Component {
     const { classes } = this.props;
     const { showTermsModal, termsError } = this.state;
     return (
-        <Dialog
-          // style={styles.rectangle}
-          className={classes.paperzzzz}
-          onClose={() => {}}
-          open={showTermsModal}
+      <Dialog
+        // style={styles.rectangle}
+        className={classes.paperzzzz}
+        onClose={() => {}}
+        open={showTermsModal}
+      >
+        <IconButton
+          className={classes.closeIcon}
+          aria-label="Close"
+          onClick={() => this.setState({ termsError: true })}
         >
-          <IconButton
-            className={classes.closeIcon}
-            aria-label="Close"
-            onClick={() => this.setState({ termsError: true })}
-          >
-            <CloseIcon className={classes.icon} />
-          </IconButton>
-          <div className={classes.headerContainerss}>
-            <Typography className={classes.headerTextChi}>
-              Terms &amp; Conditions
+          <CloseIcon className={classes.icon} />
+        </IconButton>
+        <div className={classes.headerContainerss}>
+          <Typography className={classes.headerTextChi}>
+            Terms &amp; Conditions
+          </Typography>
+        </div>
+        {termsError && (
+          <div className={classes.errorContainerss}>
+            <Typography className={classes.errorsss}>
+              Please accpet the the Terms &amp; Conditions to proceed.
             </Typography>
           </div>
-          {termsError && (
-            <div className={classes.errorContainerss}>
-              <Typography className={classes.errorsss}>
-                Please accpet the the Terms &amp; Conditions to proceed.
-              </Typography>
+        )}
+        <div className={classes.FormContainerss}>
+          <form className={classes.containerss} noValidate autoComplete="off">
+            <Typography className={classes.midSecDatass}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+              consectetur condimentum nunc, vel ultrices ante elementum in.
+              Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
+              purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
+              tempus quam eget egestas pellentesque. Praesent vehicula varius
+              lectus, vel maximus turpis rhoncus a. Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit. Nam consectetur condimentum nunc, vel
+              ultrices ante elementum in. Aliquam bibendum egestas nunc. Morbi a
+              urna arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
+              interdum tortor. Sed tempus quam eget egestas pellentesque.
+              Praesent vehicula varius lectus, vel maximus turpis rhoncus a.
+              <br />
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+              consectetur condimentum nunc, vel ultrices ante elementum in.
+              Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
+              purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
+              tempus quam eget egestas pellentesque. Praesent vehicula varius
+              lectus, vel maximus turpis rhoncus a.
+              <br />
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+              consectetur condimentum nunc, vel ultrices ante elementum in.
+              Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
+              purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
+              tempus quam eget Lorem ipsum dolor sit amet, consectetur
+              adipiscing elit. Nam consectetur condimentum nunc, vel ultrices
+              ante elementum in. Aliquam bibendum egestas nunc. Morbi a urna
+              arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
+              interdum tortor. Sed tempus quam eget
+            </Typography>
+            <div className={classes.wrapperss}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => this.setState({ showTermsModal: false })}
+                className={classes.agreeBtn}
+              >
+                Accept and Continue
+              </Button>
             </div>
-          )}
-          <div className={classes.FormContainerss}>
-            <form className={classes.containerss} noValidate autoComplete="off">
-              <Typography className={classes.midSecDatass}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                consectetur condimentum nunc, vel ultrices ante elementum in.
-                Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
-                purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
-                tempus quam eget egestas pellentesque. Praesent vehicula varius
-                lectus, vel maximus turpis rhoncus a. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Nam consectetur condimentum nunc, vel
-                ultrices ante elementum in. Aliquam bibendum egestas nunc. Morbi a
-                urna arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
-                interdum tortor. Sed tempus quam eget egestas pellentesque.
-                Praesent vehicula varius lectus, vel maximus turpis rhoncus a.
-                <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                consectetur condimentum nunc, vel ultrices ante elementum in.
-                Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
-                purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
-                tempus quam eget egestas pellentesque. Praesent vehicula varius
-                lectus, vel maximus turpis rhoncus a.
-                <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                consectetur condimentum nunc, vel ultrices ante elementum in.
-                Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod
-                purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed
-                tempus quam eget Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Nam consectetur condimentum nunc, vel ultrices
-                ante elementum in. Aliquam bibendum egestas nunc. Morbi a urna
-                arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a
-                interdum tortor. Sed tempus quam eget
-              </Typography>
-              <div className={classes.wrapperss}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => this.setState({ showTermsModal: false })}
-                  className={classes.agreeBtn}
-                >
-                  Accept and Continue
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Dialog>
+          </form>
+        </div>
+      </Dialog>
     );
   };
 
@@ -246,6 +268,10 @@ class BasicComponent extends Component {
         });
       }
     }
+
+    this.setState({
+      actionPerform: ""
+    });
   };
 
   addNewAlternateNumber = async () => {
@@ -269,9 +295,17 @@ class BasicComponent extends Component {
           this.state.addNewCode + this.state.addNewNumber
         );
       }
-      this.setState({ phoneNumberError: false, showText: true });
+      this.setState({
+        phoneNumberError: false,
+        showText: true,
+        actionPerform: ""
+      });
     } else {
-      this.setState({ phoneNumberError: true, showText: true });
+      this.setState({
+        phoneNumberError: true,
+        showText: true,
+        actionPerform: ""
+      });
     }
   };
 
@@ -287,7 +321,7 @@ class BasicComponent extends Component {
         nameValid: false
       });
     }
-    if (!number.length) {
+    if (!number) {
       this.setState({
         numberValid: false
       });
@@ -307,13 +341,26 @@ class BasicComponent extends Component {
     if (
       name.length &&
       gender.length &&
-      number.length &&
+      number &&
       location.length &&
       email.length
     ) {
       console.log("email", email);
-      this.props.clientEditProfileApi(gender, name, number, location, email);
+      if (number && number.slice(0, 1) === "+") {
+        this.props.clientEditProfileApi(gender, name, number, location, email);
+      } else {
+        this.props.clientEditProfileApi(
+          gender,
+          name,
+          this.state.code + number,
+          location,
+          email
+        );
+      }
     }
+    this.setState({
+      actionPerform: "edit"
+    });
   };
   addAlternateEmailModal = () => {
     const { emailModal } = this.state;
@@ -324,7 +371,6 @@ class BasicComponent extends Component {
         open={emailModal}
         close={this.state.emailModal}
         className={classes.papers}
-        style={{ minWidth: "630px !important", minHeight: "400px" }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -333,7 +379,7 @@ class BasicComponent extends Component {
             <span className={classes.headerTextChild}>Add Email address</span>
           </Typography>
           <IconButton
-            className={classes.closeIcon}
+            // className={classes.closeIcon}
             aria-label="Close"
             onClick={() => {
               this.setState({
@@ -406,7 +452,6 @@ class BasicComponent extends Component {
             <span className={classes.headerTextChild}>Add Number</span>
           </Typography>
           <IconButton
-            className={classes.closeIcon}
             aria-label="Close"
             onClick={() => {
               this.setState({
@@ -758,7 +803,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(clientEditProfileApi(gender, name, number, location, email));
     },
     clearTermsModal: () => {
-      dispatch(clearTermsModalComp())
+      dispatch(clearTermsModalComp());
     }
   };
 };
