@@ -91,6 +91,8 @@ export const retrieveFreelancerProfile = () => dispatch => {
                   
                   resumes{
                     name
+                    id
+                    link
                   },
                   caseStudies{
                     name

@@ -16,12 +16,29 @@ import { styles } from "@styles/clientComponents/Portfolio.styles.js";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilesContainer from "./FileContainer";
+import { addProjectResums, retrieveFreelancerProfile } from "@actions/client";
+import { connect } from "react-redux";
+
 class Portfolio extends Component {
   state = {
     uploadFile: false,
     saveFile: false,
     openDeleteModal: false,
-    file: {}
+    file: {},
+    fileUploaded: {},
+    pdf: []
+  };
+
+  componentDidMount() {
+    this.props.retrieveFreelancerProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setAllData(nextProps.updateProfessional);
+  }
+
+  setAllData = ({ resumes }) => {
+    this.setState({ pdf: resumes || [] });
   };
 
   deleteModal = () => {
@@ -61,7 +78,12 @@ class Portfolio extends Component {
       </Dialog>
     );
   };
-
+  saveSendDoc = () => {
+    const { file, fileUploaded } = this.state;
+    var data = { name: file.name, file: fileUploaded };
+    this.props.addProjectResum(data);
+    this.setState({ saveFile: false });
+  };
   saveBeforeLeaving = () => {
     const { saveFile } = this.state;
     const { classes } = this.props;
@@ -92,7 +114,11 @@ class Portfolio extends Component {
               <Button className={classes.notInterested}>
                 No, not interested
               </Button>
-              <Button className={classes.btnBg} autoFocus>
+              <Button
+                className={classes.btnBg}
+                onClick={() => this.saveSendDoc()}
+                autoFocus
+              >
                 Yes, please save it
               </Button>
             </div>
@@ -113,9 +139,8 @@ class Portfolio extends Component {
     var file = input.files[0];
     var reader = new FileReader();
     reader.readAsDataURL(file);
-
     var imgdata = { name: file.name, data: reader, type: file.type };
-    this.setState({ uploadFile: true, file: imgdata });
+    this.setState({ uploadFile: true, file: imgdata, fileUploaded: file });
   };
   nameChanger = e => {
     let { file } = this.state;
@@ -185,16 +210,22 @@ class Portfolio extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { open } = this.state;
+    const { classes, updateProfessional } = this.props;
+    const { open, pdf } = this.state;
     return (
       <div className={classes.mainContainer}>
         <div className={classes.resumeSection}>
           <Typography className={classes.resume}>Resume</Typography>
-          <FilesContainer
+          {pdf.map(data => (
+            <FilesContainer
+              fileName={data.name}
+              callFunction={() => this.setState({ openDeleteModal: true })}
+            />
+          ))}
+          {/* <FilesContainer
             fileName={"Rohit_Resume.pdf"}
             callFunction={() => this.setState({ openDeleteModal: true })}
-          />
+          /> */}
 
           <div className={classes.uploadBtnContainer}>
             <Button
@@ -240,4 +271,32 @@ class Portfolio extends Component {
   }
 }
 
-export default withStyles(styles)(Portfolio);
+const mapStateToProps = state => {
+  const data =
+    state.clientBasicProfileReducer.freelancerProfile &&
+    state.clientBasicProfileReducer.freelancerProfile.freelancer &&
+    state.clientBasicProfileReducer.freelancerProfile.freelancer.portfolio;
+  return {
+    token: state.clientSignUpReducer.token,
+    isLoading: state.clientSignUpReducer.isLoading,
+    isValidEmail: state.clientSignUpReducer.isValidEmail,
+    message: state.clientSignUpReducer.message,
+    error: state.clientSignUpReducer.error,
+    updateProfessional: data
+    // resumes: state.portfolioReducer.resumes
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addProjectResum: data => dispatch(addProjectResums(data)),
+    retrieveFreelancerProfile: () => {
+      dispatch(retrieveFreelancerProfile());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Portfolio));

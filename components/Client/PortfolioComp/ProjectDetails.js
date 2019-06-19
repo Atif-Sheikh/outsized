@@ -57,7 +57,7 @@ class ProjectDetails extends Component {
   render() {
     const { classes, fileName } = this.props;
     const { projects, add, name, url } = this.state;
-    console.log(add);
+    console.log(this.props, "??>>>>>>>>>>>>>");
     return (
       <div className={classes.resumeSection}>
         <div className={classes.casePreview}>
