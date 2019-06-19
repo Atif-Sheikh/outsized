@@ -14,7 +14,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import { connect } from "react-redux";
-import { retrieveFreelancerProfile, saveprofessionalInfoData } from "@actions/client";
+import {
+  retrieveFreelancerProfile,
+  saveprofessionalInfoData
+} from "@actions/client";
 
 class ProfileComponent extends Component {
   state = {
@@ -28,12 +31,14 @@ class ProfileComponent extends Component {
     relocationValue: ["Open to relocation"],
     search: "",
     searchValid: true,
-
+    actionPerform: "",
     fullTime: false,
     fixedProject: false,
     dayProject: false,
     hourlyContract: false,
-
+    sectors: [],
+    clients: [],
+    skills: [],
     expectedAnnualSalary: 0,
     expectedDailyRate: 0,
     expectedHourlyRate: 0,
@@ -42,17 +47,60 @@ class ProfileComponent extends Component {
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
-  };
+  }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.freelancerProfile && Object.keys(nextProps.freelancerProfile).length !== Object.keys(this.props.freelancerProfile).length){
-      console.log(nextProps.freelancerProfile.freelancer, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-      this.setAllFieldsData(nextProps.freelancerProfile.freelancer);
+    if (this.state.actionPerform === "update") {
+      console.log(
+        "======================",
+        nextProps &&
+          nextProps.updateProfessional &&
+          nextProps.updateProfessional.editExperience &&
+          nextProps.updateProfessional.editExperience.addProfessionalInfo &&
+          nextProps.updateProfessional.editExperience.addProfessionalInfo
+            .freelancerProfile
+      );
+      if (
+        nextProps &&
+        nextProps.updateProfessional &&
+        nextProps.updateProfessional.editExperience &&
+        nextProps.updateProfessional.editExperience.addProfessionalInfo &&
+        nextProps.updateProfessional.editExperience.addProfessionalInfo
+          .freelancerProfile &&
+        nextProps.updateProfessional.editExperience.addProfessionalInfo
+          .freelancerProfile.professionalInfo &&
+        Object.keys(
+          nextProps.updateProfessional.editExperience.addProfessionalInfo
+            .freelancerProfile
+        ).length
+      ) {
+        this.setAllFieldsData(
+          nextProps &&
+            nextProps.updateProfessional &&
+            nextProps.updateProfessional.editExperience &&
+            nextProps.updateProfessional.editExperience.addProfessionalInfo &&
+            nextProps.updateProfessional.editExperience.addProfessionalInfo
+              .freelancerProfile.professionalInfo
+        );
+      }
+    } else {
+      if (
+        nextProps.freelancerProfile &&
+        Object.keys(nextProps.freelancerProfile).length
+      ) {
+        console.log(
+          nextProps.freelancerProfile.freelancer,
+          ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+        );
+        this.setAllFieldsData(
+          nextProps.freelancerProfile.freelancer.professionalInfo
+        );
+      }
     }
-  };
+  }
 
   saveProfessionalInfo = () => {
-    const { 
+    const {
       type,
       role,
       relocation,
@@ -68,33 +116,36 @@ class ProfileComponent extends Component {
       expectedHourlyRate,
       expectedMonthlyRate,
       minHours
-     } = this.state;
-     let obj = {
-        currentEmploymentType: type,
-        relocation: relocation,
-        currentRole: role,
-        currency: currency,
+    } = this.state;
+    let obj = {
+      currentEmploymentType: type,
+      relocation: relocation,
+      currentRole: role,
+      currency: currency,
 
-        enableFullTime: fullTime,
-        expectedAnnualSalary: expectedAnnualSalary,
-        enableFixedRateProjects: fixedProject,
-        expectedMonthlyRate: expectedMonthlyRate,
-        enableFullDayProjects: dayProject,
-        expectedDailyRate: expectedDailyRate,
-        enableHourlyProjects: hourlyContract,
-        expectedHourlyRate: expectedHourlyRate,
-        minHours: minHours,
-        enqueueSnackbar: this.props.enqueueSnackbar
-     };
-     this.props.saveprofessionalInfoData(obj)
+      enableFullTime: fullTime,
+      expectedAnnualSalary: expectedAnnualSalary,
+      enableFixedRateProjects: fixedProject,
+      expectedMonthlyRate: expectedMonthlyRate,
+      enableFullDayProjects: dayProject,
+      expectedDailyRate: expectedDailyRate,
+      enableHourlyProjects: hourlyContract,
+      expectedHourlyRate: expectedHourlyRate,
+      minHours: minHours,
+      enqueueSnackbar: this.props.enqueueSnackbar
+    };
+    this.props.saveprofessionalInfoData(obj);
+    this.setState({ actionPerform: "update" });
   };
 
-  setAllFieldsData = ({ professionalInfo: { 
+  setAllFieldsData = ({
     currentEmploymentType,
     currentRole,
     relocation,
     currency,
-
+    clients,
+    skills,
+    sectors,
     enableFixedRateProjects,
     enableFullDayProjects,
     enableFullTime,
@@ -105,21 +156,25 @@ class ProfileComponent extends Component {
     expectedHourlyRate,
     expectedMonthlyRate,
     minHours
-   } }) => {
-    this.setState({ type: currentEmploymentType, 
-      role: currentRole, 
-      relocation, currency,
-    
+  }) => {
+    this.setState({
+      type: currentEmploymentType,
+      role: currentRole,
+      relocation,
+      currency,
+      clients: clients,
+      skills: skills,
+      sectors: sectors,
       typeValue: [...this.state.typeValue, currentEmploymentType],
-      roleValue: [ ...this.state.roleValue, currentRole ],
-      relocationValue: [ ...this.state.relocationValue, relocation ],
-      currencyValue: [ ...this.state.currencyValue, currency ],
+      roleValue: [...this.state.roleValue, currentRole],
+      relocationValue: [...this.state.relocationValue, relocation],
+      currencyValue: [...this.state.currencyValue, currency],
 
       fullTime: enableFullTime,
       fixedProject: enableFixedRateProjects,
       dayProject: enableFullDayProjects,
       hourlyContract: enableHourlyProjects,
-      
+
       expectedAnnualSalary,
       expectedDailyRate,
       expectedHourlyRate,
@@ -140,18 +195,22 @@ class ProfileComponent extends Component {
     chipText,
     chipMain,
     chipsBox,
-    chip
+    chip,
+    searchPlaceHolder,
+    objValue,
+    array
   ) => {
+    console.log("array", array);
     return (
       <div className={chipMain}>
         <Typography className={chipText}>
           Sectors you have worked in?
         </Typography>
         <div className={chipsBox}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(() => {
+          {array.map(val => {
             return (
               <Chip
-                label="Finance"
+                label={val.name}
                 onClick={() => {}}
                 onDelete={() => {}}
                 className={chip}
@@ -159,10 +218,10 @@ class ProfileComponent extends Component {
             );
           })}
         </div>
-        
+
         <InputArea
           styleprops={textFieldPass}
-          label="Search for sector"
+          label={"Search for " + searchPlaceHolder}
           name="search"
           value={search}
           handleInputChange={event => this.handleChange(event)}
@@ -201,7 +260,7 @@ class ProfileComponent extends Component {
             checked={checked}
             color="default"
             name={keyName}
-            onChange={(e) => this.setState({ [keyName]: e.target.checked })}
+            onChange={e => this.setState({ [keyName]: e.target.checked })}
             value="checkedG"
             inputProps={{
               "aria-label": "checkbox with default color"
@@ -312,7 +371,7 @@ class ProfileComponent extends Component {
       chip,
       textFieldPass
     } = classes;
-    console.log(this.state, "state")
+    console.log(this.state, "state");
     return (
       <div className={classes.paper}>
         {this.dropDown(
@@ -353,7 +412,7 @@ class ProfileComponent extends Component {
           formControlSelect
         )}
         {this.contractInfo(
-          'fullTime',
+          "fullTime",
           fullTime,
           false,
           "Full-time",
@@ -372,7 +431,7 @@ class ProfileComponent extends Component {
           paymentContent
         )}
         {this.contractInfo(
-          'fixedProject',          
+          "fixedProject",
           fixedProject,
           false,
           "Fixed project rate",
@@ -391,7 +450,7 @@ class ProfileComponent extends Component {
           paymentContent
         )}
         {this.contractInfo(
-          'dayProject',
+          "dayProject",
           dayProject,
           false,
           "One day projects",
@@ -410,7 +469,7 @@ class ProfileComponent extends Component {
           paymentContent
         )}
         {this.contractInfo(
-          'hourlyContract',          
+          "hourlyContract",
           hourlyContract,
           true,
           "Hourly contracts",
@@ -435,7 +494,10 @@ class ProfileComponent extends Component {
           chipText,
           chipMain,
           chipsBox,
-          chip
+          chip,
+          "sector",
+          "sectors",
+          this.state.sectors
         )}
         {this.chipContainer(
           search,
@@ -444,7 +506,10 @@ class ProfileComponent extends Component {
           chipText,
           chipMain,
           chipsBox,
-          chip
+          chip,
+          "Skill",
+          "skills",
+          this.state.skills
         )}
         {this.chipContainer(
           search,
@@ -453,36 +518,40 @@ class ProfileComponent extends Component {
           chipText,
           chipMain,
           chipsBox,
-          chip
-        )}
-        {this.chipContainer(
-          search,
-          searchValid,
-          textFieldPass,
-          chipText,
-          chipMain,
-          chipsBox,
-          chip
+          chip,
+          "Client",
+          "clients",
+          this.state.clients
         )}
         <div className={classes.typosContainer}>
           <Typography className={classes.lastTypos}>
-            What else would you like to tell us about yourself and what you’re looking for?
+            What else would you like to tell us about yourself and what you’re
+            looking for?
           </Typography>
           <Typography className={classes.lowerTypos}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam consectetur condimentum nunc, vel ultrices ante elementum in. Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod purus ut elit luctus aliquet. Maecenas a interdum tortor. Sed tempus quam eget egestas pellentesque. Praesent vehicula varius lectus, vel maximus turpis rhoncus a.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+            consectetur condimentum nunc, vel ultrices ante elementum in.
+            Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod purus
+            ut elit luctus aliquet. Maecenas a interdum tortor. Sed tempus quam
+            eget egestas pellentesque. Praesent vehicula varius lectus, vel
+            maximus turpis rhoncus a.
           </Typography>
         </div>
-        <div style={{ display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end' }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.saveProfessionalInfo}
-              className={classes.saveBtn}
-            >
-              Save
-            </Button>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end"
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.saveProfessionalInfo}
+            className={classes.saveBtn}
+          >
+            Save
+          </Button>
         </div>
       </div>
     );
@@ -490,6 +559,7 @@ class ProfileComponent extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,
@@ -497,6 +567,7 @@ const mapStateToProps = state => {
     freelancerProfile: state.clientBasicProfileReducer.freelancerProfile,
     message: state.clientBasicProfileReducer.message,
     hasError: state.clientBasicProfileReducer.hasError,
+    updateProfessional: state.clientBasicProfileReducer.updateProfessional
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -505,7 +576,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(retrieveFreelancerProfile());
     },
     saveprofessionalInfoData: (...args) => {
-      dispatch(saveprofessionalInfoData(...args))
+      dispatch(saveprofessionalInfoData(...args));
     }
   };
 };

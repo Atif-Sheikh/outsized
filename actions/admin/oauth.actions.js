@@ -14,7 +14,7 @@ export const linkedInAuthAPI = (
   dispatch(loginStarted());
   let queryString = `
         mutation {
-            loginWithLinkedin(code:"${code}"){
+            loginWithLinkedin(userType:"freelancer",code:"${code}"){
                 token
             }
         }
