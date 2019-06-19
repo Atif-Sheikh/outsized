@@ -3,7 +3,10 @@ export const styles = theme => ({
     width: "100%",
     minWidth: "230px",
     // height: "100%",
-    paddingTop: 20
+    paddingTop: 20,
+    [theme.breakpoints.down("sm")]: {
+      masrginTop: 75
+    }
   },
   resumeSection: {},
   resume: {

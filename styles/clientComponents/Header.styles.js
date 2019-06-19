@@ -8,6 +8,9 @@ export const styles = theme => ({
     backgroundColor: "#e2e2e2",
     [theme.breakpoints.up("sm")]: {
       width: "100%"
+    },
+    [theme.breakpoints.down("sm")]: {
+      height: "50px"
     }
   },
   avatar: {
@@ -18,7 +21,10 @@ export const styles = theme => ({
     width: "42px",
     height: "42px",
     border: "solid 1px #383838",
-    backgroundColor: "#383838"
+    backgroundColor: "#383838",
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
   },
   leftArea: {
     display: "flex",
@@ -37,14 +43,20 @@ export const styles = theme => ({
     fontStretch: "normal",
     lineHeight: 1.11,
     letterSpacing: "normal",
-    color: "#000000"
+    color: "#000000",
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
   },
   rightArea: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
     width: "170px",
-    paddingRight: "20px"
+    paddingRight: "20px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
   },
   userName: {
     maxWidth: "120px",

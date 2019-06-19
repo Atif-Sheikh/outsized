@@ -18,6 +18,9 @@ export const styles = theme => ({
       backgroundColor: "#fff"
       // margin: "30px auto",
       // padding: "5px 0 5px 0"
+    },
+    [theme.breakpoints.down("sm")]: {
+      masrginTop: 75
     }
   },
   midContainer: {
@@ -27,6 +30,9 @@ export const styles = theme => ({
   },
   mainContainer: {
     width: "100%",
-    margin: "30px 200px 0px 50px"
+    margin: "30px 200px 0px 50px",
+    [theme.breakpoints.down("sm")]: {
+      margin: "75px 200px 0px 20px"
+    }
   }
 });
