@@ -28,7 +28,10 @@ import {
   DELETE_EXPERIENCE_FAILED,
   EDIT_PROFILE_STARTED,
   EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAILED
+  EDIT_PROFILE_FAILED,
+  UPDATE_PROFILE,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILED
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -713,5 +716,129 @@ const editProfileStarted = () => ({
 
 const editProfileFailed = error => ({
   type: EDIT_PROFILE_FAILED,
+  payload: error
+});
+
+
+
+export const saveprofessionalInfoData = ({
+  currentEmploymentType,
+  relocation,
+  currentRole,
+  currency,
+  enableFullTime,
+  expectedAnnualSalary,
+  enableFixedRateProjects,
+  expectedMonthlyRate,
+  enableFullDayProjects,
+  expectedDailyRate,
+  enableHourlyProjects,
+  expectedHourlyRate,
+  minHours,
+  enqueueSnackbar
+}) => dispatch => {
+  dispatch(updateProfileStarted());
+  let queryString = `
+      mutation {
+        addProfessionalInfo(
+        currentEmploymentType: "${currentEmploymentType}",
+        relocation: "${relocation}",
+        currentRole: "${currentRole}",
+        currency: "${currency}",
+        enableFullTime: ${enableFullTime},
+        expectedAnnualSalary: ${expectedAnnualSalary},
+        enableFixedRateProjects: ${enableFixedRateProjects},
+        expectedMonthlyRate: ${expectedMonthlyRate},
+        enableFullDayProjects: ${enableFullDayProjects},
+        expectedDailyRate: ${expectedDailyRate},
+        enableHourlyProjects: ${enableHourlyProjects},
+        expectedHourlyRate: ${expectedHourlyRate},
+        minHours: ${minHours},
+        sectors: [1],
+        skills: [1],
+        clients: [1],
+        geoExperiences: ["Mumbai, India", "Kolkata, India"],
+        token:"${localStorage.getItem("token")}"){
+          freelancerProfile{
+            professionalInfo{
+            currentEmploymentType,
+            currentRole,
+            relocation,
+              currency,
+              enableFullTime,
+              expectedAnnualSalary,
+              enableFixedRateProjects,
+              expectedMonthlyRate,
+              enableFullDayProjects,
+              expectedDailyRate,
+              enableHourlyProjects,
+              expectedHourlyRate,
+              minHours,
+              sectors{
+                id,
+                name
+              },
+              skills{
+                id,
+                name
+              },
+              clients{
+                id,
+                name
+              },
+              geoExperiences{
+                name
+              }
+              
+            }
+          }
+        }
+      }
+  `;
+
+  axios
+    .post("/graphql", queryString)
+    .then(res => {
+      dispatch(updateProfileSuccess(res.data));
+      enqueueSnackbar(
+        "Successfully updated profile",
+        {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          }
+        }
+      );
+    })
+    .catch(err => {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(updateProfileFailed(error));
+    });
+};
+
+const updateProfileStarted = editExperience => ({
+  type: UPDATE_PROFILE,
+  payload: {
+    editExperience
+  }
+});
+
+
+const updateProfileSuccess = editExperience => ({
+  type: UPDATE_PROFILE_SUCCESS,
+  payload: {
+    editExperience
+  }
+});
+
+const updateProfileFailed = error => ({
+  type: UPDATE_PROFILE_FAILED,
   payload: error
 });

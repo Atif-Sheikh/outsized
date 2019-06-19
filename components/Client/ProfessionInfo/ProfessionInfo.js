@@ -14,7 +14,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import { connect } from "react-redux";
-import { retrieveFreelancerProfile } from "@actions/client";
+import { retrieveFreelancerProfile, saveprofessionalInfoData } from "@actions/client";
 
 class ProfileComponent extends Component {
   state = {
@@ -27,11 +27,107 @@ class ProfileComponent extends Component {
     roleValue: ["Employee Full time", "Employee Part time"],
     relocationValue: ["Open to relocation"],
     search: "",
-    searchValid: true
+    searchValid: true,
+
+    fullTime: false,
+    fixedProject: false,
+    dayProject: false,
+    hourlyContract: false,
+
+    expectedAnnualSalary: 0,
+    expectedDailyRate: 0,
+    expectedHourlyRate: 0,
+    expectedMonthlyRate: 0,
+    minHours: 0
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
-  }
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.freelancerProfile && Object.keys(nextProps.freelancerProfile).length !== Object.keys(this.props.freelancerProfile).length){
+      console.log(nextProps.freelancerProfile.freelancer, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      this.setAllFieldsData(nextProps.freelancerProfile.freelancer);
+    }
+  };
+
+  saveProfessionalInfo = () => {
+    const { 
+      type,
+      role,
+      relocation,
+      currency,
+
+      fullTime,
+      fixedProject,
+      dayProject,
+      hourlyContract,
+
+      expectedAnnualSalary,
+      expectedDailyRate,
+      expectedHourlyRate,
+      expectedMonthlyRate,
+      minHours
+     } = this.state;
+     let obj = {
+        currentEmploymentType: type,
+        relocation: relocation,
+        currentRole: role,
+        currency: currency,
+
+        enableFullTime: fullTime,
+        expectedAnnualSalary: expectedAnnualSalary,
+        enableFixedRateProjects: fixedProject,
+        expectedMonthlyRate: expectedMonthlyRate,
+        enableFullDayProjects: dayProject,
+        expectedDailyRate: expectedDailyRate,
+        enableHourlyProjects: hourlyContract,
+        expectedHourlyRate: expectedHourlyRate,
+        minHours: minHours,
+        enqueueSnackbar: this.props.enqueueSnackbar
+     };
+     this.props.saveprofessionalInfoData(obj)
+  };
+
+  setAllFieldsData = ({ professionalInfo: { 
+    currentEmploymentType,
+    currentRole,
+    relocation,
+    currency,
+
+    enableFixedRateProjects,
+    enableFullDayProjects,
+    enableFullTime,
+    enableHourlyProjects,
+
+    expectedAnnualSalary,
+    expectedDailyRate,
+    expectedHourlyRate,
+    expectedMonthlyRate,
+    minHours
+   } }) => {
+    this.setState({ type: currentEmploymentType, 
+      role: currentRole, 
+      relocation, currency,
+    
+      typeValue: [...this.state.typeValue, currentEmploymentType],
+      roleValue: [ ...this.state.roleValue, currentRole ],
+      relocationValue: [ ...this.state.relocationValue, relocation ],
+      currencyValue: [ ...this.state.currencyValue, currency ],
+
+      fullTime: enableFullTime,
+      fixedProject: enableFixedRateProjects,
+      dayProject: enableFullDayProjects,
+      hourlyContract: enableHourlyProjects,
+      
+      expectedAnnualSalary,
+      expectedDailyRate,
+      expectedHourlyRate,
+      expectedMonthlyRate,
+      minHours
+    });
+  };
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -63,6 +159,7 @@ class ProfileComponent extends Component {
             );
           })}
         </div>
+        
         <InputArea
           styleprops={textFieldPass}
           label="Search for sector"
@@ -76,6 +173,8 @@ class ProfileComponent extends Component {
     );
   };
   contractInfo = (
+    keyName,
+    checked,
     minHrs,
     time,
     description,
@@ -99,8 +198,10 @@ class ProfileComponent extends Component {
       >
         <div className={checkBoxContainer}>
           <Checkbox
-            defaultChecked
+            checked={checked}
             color="default"
+            name={keyName}
+            onChange={(e) => this.setState({ [keyName]: e.target.checked })}
             value="checkedG"
             inputProps={{
               "aria-label": "checkbox with default color"
@@ -177,7 +278,18 @@ class ProfileComponent extends Component {
       roleValue,
       relocationValue,
       search,
-      searchValid
+      searchValid,
+
+      fullTime,
+      fixedProject,
+      dayProject,
+      hourlyContract,
+
+      expectedAnnualSalary,
+      expectedDailyRate,
+      expectedHourlyRate,
+      expectedMonthlyRate,
+      minHours
     } = this.state;
     const {
       roots,
@@ -200,6 +312,7 @@ class ProfileComponent extends Component {
       chip,
       textFieldPass
     } = classes;
+    console.log(this.state, "state")
     return (
       <div className={classes.paper}>
         {this.dropDown(
@@ -240,11 +353,13 @@ class ProfileComponent extends Component {
           formControlSelect
         )}
         {this.contractInfo(
+          'fullTime',
+          fullTime,
           false,
           "Full-time",
           "I am available for permanent roles",
           "Annual Salary",
-          "20,00,000",
+          expectedAnnualSalary,
           "",
           contractContaienr,
           checkBoxContainer,
@@ -257,11 +372,13 @@ class ProfileComponent extends Component {
           paymentContent
         )}
         {this.contractInfo(
+          'fixedProject',          
+          fixedProject,
           false,
           "Fixed project rate",
           "I am available for fixed rate projects",
           "Monthly Rate",
-          "2,00,000",
+          expectedMonthlyRate,
           "",
           contractContaienr,
           checkBoxContainer,
@@ -274,11 +391,13 @@ class ProfileComponent extends Component {
           paymentContent
         )}
         {this.contractInfo(
+          'dayProject',
+          dayProject,
           false,
           "One day projects",
           "I am available for full day projects",
           "Day Rate",
-          "2,00,000",
+          expectedDailyRate,
           "",
           contractContaienr,
           checkBoxContainer,
@@ -291,12 +410,14 @@ class ProfileComponent extends Component {
           paymentContent
         )}
         {this.contractInfo(
+          'hourlyContract',          
+          hourlyContract,
           true,
           "Hourly contracts",
           "I am available for work on hourly basis",
           "Hourly Rate",
-          "2,00,000",
-          "20",
+          expectedHourlyRate,
+          minHours,
           contractContaienr,
           checkBoxContainer,
           typeContainer,
@@ -357,7 +478,7 @@ class ProfileComponent extends Component {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => this.setState({ showTermsModal: false })}
+              onClick={this.saveProfessionalInfo}
               className={classes.saveBtn}
             >
               Save
@@ -369,20 +490,22 @@ class ProfileComponent extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,
     access: state.clientBasicProfileReducer.access,
     freelancerProfile: state.clientBasicProfileReducer.freelancerProfile,
     message: state.clientBasicProfileReducer.message,
-    hasError: state.clientBasicProfileReducer.hasError
+    hasError: state.clientBasicProfileReducer.hasError,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     retrieveFreelancerProfile: () => {
       dispatch(retrieveFreelancerProfile());
+    },
+    saveprofessionalInfoData: (...args) => {
+      dispatch(saveprofessionalInfoData(...args))
     }
   };
 };

@@ -223,5 +223,12 @@ export const styles = theme => ({
     lineHeight: 1.5,
     letterSpacing: 'normal',
     color: 'rgba(0, 0, 0, 0.87)',
-  }
+  },
+  textField: {
+    width: "180px"
+  },
+  dense: {
+    height: "30px !important",
+    fontSize: 10
+  },
 });

@@ -16,5 +16,6 @@ export {
   clientAddExperienceApi,
   clientEditExperienceApi,
   clientDeleteExperienceApi,
-  clientEditProfileApi
+  clientEditProfileApi,
+  saveprofessionalInfoData
 } from "./basicProfile.action";
