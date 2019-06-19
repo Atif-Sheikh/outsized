@@ -76,7 +76,7 @@ export const styles = theme => ({
   },
   signupTypo: {
     cursor: "pointer",
-    width: "20%",
+    // width: "20%",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     fontSize: "11px",
     fontWeight: "550",
@@ -488,8 +488,6 @@ export const styles = theme => ({
     }
   },
 
-
-
   paperzzzz: {
     borderRadius: "0px",
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
@@ -533,19 +531,19 @@ export const styles = theme => ({
     padding: "0 0px 0px 26px"
   },
   errorContainerss: {
-      width: "85%",
-      height: "30px",
-      fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-      // textAlign:'center !important',
-      fontSize: "16px",
-      margin: "0px auto",
-      fontWeight: "550",
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: 0.25,
-      letterSpacing: "normal",
-      color: "#e0383e",
-      paddingTop: "4px"
+    width: "85%",
+    height: "30px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    // textAlign:'center !important',
+    fontSize: "16px",
+    margin: "0px auto",
+    fontWeight: "550",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: 0.25,
+    letterSpacing: "normal",
+    color: "#e0383e",
+    paddingTop: "4px"
   },
   FormContainerss: {
     width: "85%",
@@ -554,10 +552,10 @@ export const styles = theme => ({
     paddingBottom: "35px"
   },
   containerss: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      margin: 0
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    margin: 0
   },
   midSecDatass: {
     width: "100%",
@@ -577,5 +575,5 @@ export const styles = theme => ({
   },
   wrapperss: {
     position: "relative"
-  },
+  }
 });
