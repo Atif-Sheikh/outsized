@@ -7,6 +7,15 @@ export { clientVerifyEmailCode, clearTermsModalComp } from "./verifyEmailCode";
 export { callForgotPasswordApi } from "./forgotPassword";
 import { from } from "zen-observable";
 export {
+  addCaseStudyLink,
+  deleteCaseStudyLink,
+  deleteCaseStudy,
+  deleteResumes,
+  deleteProjectDocument,
+  editProject,
+  addProject
+} from "./Porfolio.action";
+export {
   retrieveFreelancerProfile,
   clientAddEmailApi,
   clientAddNumberApi,

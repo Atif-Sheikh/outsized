@@ -4,6 +4,7 @@ import { verifyEmail } from "./verifyEmail";
 import { clientResetPassword } from "./clientResetReducer";
 import { clientForgotPassword } from "./forgotPassword";
 import { clientBasicProfileReducer } from "./clientBasicProfileReducer";
+import { PortfolioReducer } from "./PortfolioReducer";
 
 export {
   clientLoginReducer,
@@ -11,5 +12,6 @@ export {
   verifyEmail,
   clientResetPassword,
   clientForgotPassword,
-  clientBasicProfileReducer
+  clientBasicProfileReducer,
+  PortfolioReducer
 };
