@@ -89,6 +89,8 @@ export const retrieveFreelancerProfile = () => dispatch => {
                   
                   resumes{
                     name
+                    id
+                    link
                   },
                   caseStudies{
                     name
@@ -719,8 +721,6 @@ const editProfileFailed = error => ({
   payload: error
 });
 
-
-
 export const saveprofessionalInfoData = ({
   currentEmploymentType,
   relocation,
@@ -800,16 +800,13 @@ export const saveprofessionalInfoData = ({
     .post("/graphql", queryString)
     .then(res => {
       dispatch(updateProfileSuccess(res.data));
-      enqueueSnackbar(
-        "Successfully updated profile",
-        {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right"
-          }
+      enqueueSnackbar("Successfully updated profile", {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
         }
-      );
+      });
     })
     .catch(err => {
       const error =
@@ -829,7 +826,6 @@ const updateProfileStarted = editExperience => ({
     editExperience
   }
 });
-
 
 const updateProfileSuccess = editExperience => ({
   type: UPDATE_PROFILE_SUCCESS,

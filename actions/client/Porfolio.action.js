@@ -19,7 +19,10 @@ import {
   ADD_PROJECT_STARTED,
   ADD_EDIT_SUCCESS,
   ADD_EDIT_FAILED,
-  ADD_EDIT_STARTED
+  ADD_EDIT_STARTED,
+  ADD_RESUME,
+  ADD_RESUME_SUCCESS,
+  ADD_RESUME_FAILED
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -29,7 +32,7 @@ export const addCaseStudyLink = (
   link,
   enqueueSnackbar,
   closeSnackbar
-) => {
+) => dispatch => {
   dispatch(addCaseLinkStarted());
   let queryString = ` mutation{
         addCaseStudyLink(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
@@ -78,7 +81,11 @@ const addCaseLinkFailed = error => ({
 });
 
 ///////////////////////////Cse lnk////////////////////////////
-export const deleteCaseStudyLink = (id, enqueueSnackbar, closeSnackbar) => {
+export const deleteCaseStudyLink = (
+  id,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   dispatch(deleteCaseStudyLinkStarted());
   let queryString = ` mutation{
         deleteCaseStudyLink(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
@@ -129,7 +136,11 @@ const deleteCaseStudyLinkFailed = error => ({
 });
 
 ///////////////////////////////Delet link////////////////////////////////////
-export const deleteCaseStudy = (id, enqueueSnackbar, closeSnackbar) => {
+export const deleteCaseStudy = (
+  id,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   dispatch(deleteCaseStudyStarted());
   let queryString = ` mutation{
         deleteCaseStudy(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
@@ -178,7 +189,11 @@ const deleteCaseStudyFailed = error => ({
 });
 
 ///////////////////////////////Delet link////////////////////////////////////
-export const deleteResumes = (id, enqueueSnackbar, closeSnackbar) => {
+export const deleteResumes = (
+  id,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   dispatch(deleteResumesStarted());
   let queryString = `mutation{
             deleteResumes(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
@@ -227,7 +242,11 @@ const deleteResumesFailed = error => ({
 });
 
 ///////////////////////////////Delet link////////////////////////////////////
-export const deleteProjectDocument = (id, enqueueSnackbar, closeSnackbar) => {
+export const deleteProjectDocument = (
+  id,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   dispatch(deleteProjectDocumentStarted());
   let queryString = `mutation{
             deleteProjectDocument(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
@@ -283,7 +302,11 @@ const deleteProjectDocumentFailed = error => ({
 });
 
 ///////////////////////////////Delet link////////////////////////////////////
-export const editProject = (data, enqueueSnackbar, closeSnackbar) => {
+export const editProject = (
+  data,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   const {
     id,
     name,
@@ -360,7 +383,11 @@ const editProjectFailed = error => ({
 });
 
 //////////////////////////Project end///////////////////////////
-export const addProject = (data, enqueueSnackbar, closeSnackbar) => {
+export const addProject = (
+  data,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
   const {
     name,
     client,
@@ -430,3 +457,63 @@ const addProjectFailed = error => ({
 });
 
 //////////////////////////Project end///////////////////////////
+export const addProjectResums = (
+  data,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
+  const { name, file } = data;
+  debugger;
+  var form = new FormData();
+  form.append(
+    "query",
+    `mutation{uploadResume(token:\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE\",name:\"${name}\"){portfolio{resumes{id, name,link}}}}`
+  );
+  form.append("resume", file);
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: "http://ec2-13-232-186-28.ap-south-1.compute.amazonaws.com//graphql",
+    method: "POST",
+    headers: {
+      "cache-control": "no-cache",
+      "postman-token": "f4c04718-f5f1-f1c6-1f25-d060059a87cf"
+    },
+    processData: false,
+    contentType: false,
+    mimeType: "multipart/form-data",
+    data: form
+  };
+
+  axios(settings)
+    .then(res => {
+      console.log(res, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      dispatch(addResumeSucces(res.data.uploadResume.portfolio.resumes));
+    })
+    .catch(err => {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(addResumeFailed(error));
+    });
+};
+// axios.post('http://httpbin.org/post', data);
+
+const addResumeSucces = resum => ({
+  type: ADD_RESUME_SUCCESS,
+  payload: resum
+});
+
+const addResume = () => ({
+  type: ADD_RESUME
+});
+
+const addResumeFailed = error => ({
+  type: ADD_RESUME_FAILED,
+  payload: error
+});

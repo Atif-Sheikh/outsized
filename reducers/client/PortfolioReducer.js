@@ -1,7 +1,10 @@
 import {
   CLIENT_RESET_PASSWORD_SUCCESS,
   CLIENT_RESET_PASSWORD_FAILED,
-  CLIENT_RESET_PASSWORD_STARTED
+  CLIENT_RESET_PASSWORD_STARTED,
+  ADD_RESUME_SUCCESS,
+  ADD_RESUME,
+  ADD_RESUME_FAILED
 } from "../../utils/redux/types";
 
 const initialState = {
@@ -10,7 +13,10 @@ const initialState = {
   hasError: false,
   message: "",
   success: false,
-  token: ""
+  token: "",
+  resumes: [],
+  resumeLoading: false,
+  error: ""
 };
 
 export const PortfolioReducer = (state = initialState, action) => {
@@ -32,6 +38,24 @@ export const PortfolioReducer = (state = initialState, action) => {
         isLoading: false,
         success: false
       };
+    case ADD_RESUME:
+      return {
+        ...state,
+        resumeLoading: true
+      };
+    case ADD_RESUME_SUCCESS:
+      return {
+        ...state,
+        resumes: action.payload,
+        resumeLoading: false
+      };
+    case ADD_RESUME_FAILED:
+      return {
+        ...state,
+        error: action.payload,
+        resumeLoading: false
+      };
+
     default:
       return state;
   }

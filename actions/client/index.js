@@ -13,7 +13,8 @@ export {
   deleteResumes,
   deleteProjectDocument,
   editProject,
-  addProject
+  addProject,
+  addProjectResums
 } from "./Porfolio.action";
 export {
   retrieveFreelancerProfile,
