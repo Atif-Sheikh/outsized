@@ -56,45 +56,19 @@ class Education extends Component {
       nextProps.freelancerProfile &&
       nextProps.freelancerProfile.freelancer &&
       nextProps.freelancerProfile.freelancer.educations;
-    let addEducation =
-      nextProps &&
-      nextProps.addEducation &&
-      nextProps.addEducation.addEducation &&
-      nextProps.addEducation.addEducation.addEducation &&
-      nextProps.addEducation.addEducation.addEducation.freelancerProfile &&
-      nextProps.addEducation.addEducation.addEducation.freelancerProfile &&
-      nextProps.addEducation.addEducation.addEducation.freelancerProfile
-        .educations
-        ? nextProps.addEducation.addEducation.addEducation.freelancerProfile
-            .educations
-        : [];
-    let deleteEducation =
-      nextProps &&
-      nextProps.deleteEducation &&
-      nextProps.deleteEducation.deleteEducation &&
-      nextProps.deleteEducation.deleteEducation.deleteEducation &&
-      nextProps.deleteEducation.deleteEducation.deleteEducation
-        .freelancerProfile &&
-      nextProps.deleteEducation.deleteEducation.deleteEducation
-        .freelancerProfile &&
-      nextProps.deleteEducation.deleteEducation.deleteEducation
-        .freelancerProfile.educations
-        ? nextProps.deleteEducation.deleteEducation.deleteEducation
-            .freelancerProfile.educations
-        : [];
-    let editEducationData =
-      nextProps &&
-      nextProps.editEducation &&
-      nextProps.editEducation.editEducation &&
-      nextProps.editEducation.editEducation.editEducation &&
-      nextProps.editEducation.editEducation.editEducation.freelancerProfile &&
-      nextProps.editEducation.editEducation.editEducation.freelancerProfile &&
-      nextProps.editEducation.editEducation.editEducation.freelancerProfile
-        .educations
-        ? nextProps.editEducation.editEducation.editEducation.freelancerProfile
-            .educations
-        : [];
     if (this.state.actionPerform === "addEducation") {
+      let addEducation =
+        nextProps &&
+        nextProps.addEducation &&
+        nextProps.addEducation.addEducation &&
+        nextProps.addEducation.addEducation.addEducation &&
+        nextProps.addEducation.addEducation.addEducation.freelancerProfile &&
+        nextProps.addEducation.addEducation.addEducation.freelancerProfile &&
+        nextProps.addEducation.addEducation.addEducation.freelancerProfile
+          .educations
+          ? nextProps.addEducation.addEducation.addEducation.freelancerProfile
+              .educations
+          : [];
       this.setState({
         educationData: addEducation.length
           ? addEducation
@@ -103,6 +77,20 @@ class Education extends Component {
           : []
       });
     } else if (this.state.actionPerform === "deleteEducation") {
+      let deleteEducation =
+        nextProps &&
+        nextProps.deleteEducation &&
+        nextProps.deleteEducation.deleteEducation &&
+        nextProps.deleteEducation.deleteEducation.deleteEducation &&
+        nextProps.deleteEducation.deleteEducation.deleteEducation
+          .freelancerProfile &&
+        nextProps.deleteEducation.deleteEducation.deleteEducation
+          .freelancerProfile &&
+        nextProps.deleteEducation.deleteEducation.deleteEducation
+          .freelancerProfile.educations
+          ? nextProps.deleteEducation.deleteEducation.deleteEducation
+              .freelancerProfile.educations
+          : [];
       this.setState({
         educationData: deleteEducation.length
           ? deleteEducation
@@ -112,6 +100,15 @@ class Education extends Component {
       });
     } else if (this.state.actionPerform === "editEducation") {
       console.log("editEducationData", editEducationData);
+
+      let editEducationData =
+        nextProps &&
+        nextProps.editEducation &&
+        nextProps.editEducation.freelancerProfile &&
+        nextProps.editEducation.freelancerProfile.educations
+          ? nextProps.editEducation.editEducation.editEducation
+              .freelancerProfile.educations
+          : [];
       this.setState({
         educationData: editEducationData.length
           ? editEducationData
