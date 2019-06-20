@@ -115,15 +115,17 @@ class Experience extends Component {
       nextProps.deleteExperience.deleteExperience.deleteExperience
         .freelancerProfile &&
       nextProps.deleteExperience.deleteExperience.deleteExperience
-        .freelancerProfile.experiences;
+        .freelancerProfile.experiences
+        ? nextProps.deleteExperience.deleteExperience.deleteExperience
+            .freelancerProfile.experiences
+        : [];
     console.log("deleteData", deleteData);
     this.setState({
-      experienceData:
-        deleteData && deleteData.length
-          ? deleteData
-          : basicData
-          ? basicData
-          : []
+      experienceData: deleteData.length
+        ? deleteData
+        : basicData
+        ? basicData
+        : []
     });
   }
 

@@ -21,7 +21,7 @@ class FilesContainer extends Component {
       <div className={classes.filePreview}>
         <div className={classes.nameSection}>
           <PdfFile />
-          <Typography>{fileName}</Typography>
+          <Typography className={classes.files}>{fileName}</Typography>
           <CheckIcon className={classes.check} />
         </div>
         <div className={classes.iconSection}>
