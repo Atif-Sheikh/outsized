@@ -5,9 +5,6 @@ import {
   DELETE_CASE_LINK_SUCCESS,
   DELETE_CASE_LINK_FAILED,
   DELETE_CASE_LINK_STARTED,
-  DELETE_CASE_STUDY_SUCCESS,
-  DELETE_CASE_STUDY_FAILED,
-  DELETE_CASE_STUDY_STARTED,
   DELETE_RESUMS_SUCCESS,
   DELETE_RESUMS_FAILED,
   DELETE_RESUMS_STARTED,
@@ -22,7 +19,16 @@ import {
   ADD_EDIT_STARTED,
   ADD_RESUME,
   ADD_RESUME_SUCCESS,
-  ADD_RESUME_FAILED
+  ADD_RESUME_FAILED,
+  ADD_STUDY_DOC,
+  ADD_STUDY_DOC_SUCCESS,
+  ADD_STUDY_DOC_FAILED,
+  DELETE_STUDY_DOC,
+  DELETE_STUDY_DOC_SUCCESS,
+  DELETE_STUDY_DOC_FAILED,
+  ADD_PROJECT_DOCUMENTS,
+  ADD_PROJECT_DOCUMENTS_SUCCESS,
+  ADD_PROJECT_DOCUMENTS_FAILED
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -35,8 +41,8 @@ export const addCaseStudyLink = (
 ) => dispatch => {
   dispatch(addCaseLinkStarted());
   let queryString = ` mutation{
-        addCaseStudyLink(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
-        name:${name},link:${link}){ 
+        addCaseStudyLink(token:"${localStorage.getItem("token")}",
+        name:"${name}",link:"${link}"){ 
         portfolio{
             caseStudyLinks{
                 id,
@@ -50,7 +56,9 @@ export const addCaseStudyLink = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(addCaseLinkSuccess(res.data.addCaseStudyLink.portfolio));
+      dispatch(
+        addCaseLinkSuccess(res.data.addCaseStudyLink.portfolio.caseStudyLinks)
+      );
     })
     .catch(err => {
       const error =
@@ -66,9 +74,7 @@ export const addCaseStudyLink = (
 
 const addCaseLinkSuccess = token => ({
   type: ADD_CASE_LINK_SUCCESS,
-  payload: {
-    token
-  }
+  payload: token
 });
 
 const addCaseLinkStarted = () => ({
@@ -88,7 +94,7 @@ export const deleteCaseStudyLink = (
 ) => dispatch => {
   dispatch(deleteCaseStudyLinkStarted());
   let queryString = ` mutation{
-        deleteCaseStudyLink(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
+        deleteCaseStudyLink(token:"${localStorage.getItem("token")}",
         id:${id}){ 
         portfolio{
             caseStudyLinks{
@@ -104,7 +110,9 @@ export const deleteCaseStudyLink = (
     .post("/graphql", queryString)
     .then(res => {
       dispatch(
-        deleteCaseStudyLinkSuccess(res.data.deleteCaseStudyLink.portfolio)
+        deleteCaseStudyLinkSuccess(
+          res.data.deleteCaseStudyLink.portfolio.caseStudyLinks
+        )
       );
     })
     .catch(err => {
@@ -121,9 +129,7 @@ export const deleteCaseStudyLink = (
 
 const deleteCaseStudyLinkSuccess = token => ({
   type: DELETE_CASE_LINK_SUCCESS,
-  payload: {
-    token
-  }
+  payload: token
 });
 
 const deleteCaseStudyLinkStarted = () => ({
@@ -143,7 +149,7 @@ export const deleteCaseStudy = (
 ) => dispatch => {
   dispatch(deleteCaseStudyStarted());
   let queryString = ` mutation{
-        deleteCaseStudy(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
+        deleteCaseStudy(token:"${localStorage.getItem("token")}",
         id:${id}){ 
         portfolio{
             caseStudyLinks{
@@ -158,7 +164,11 @@ export const deleteCaseStudy = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(deleteCaseStudySuccess(res.data.deleteCaseStudy.portfolio));
+      dispatch(
+        deleteCaseStudySuccess(
+          res.data.deleteCaseStudy.portfolio.caseStudyLinks
+        )
+      );
     })
     .catch(err => {
       const error =
@@ -172,19 +182,17 @@ export const deleteCaseStudy = (
     });
 };
 
-const deleteCaseStudySuccess = token => ({
-  type: DELETE_CASE_STUDY_SUCCESS,
-  payload: {
-    token
-  }
+const deleteCaseStudySuccess = DATA => ({
+  type: DELETE_STUDY_DOC_SUCCESS,
+  payload: DATA
 });
 
 const deleteCaseStudyStarted = () => ({
-  type: DELETE_CASE_STUDY_STARTED
+  type: DELETE_STUDY_DOC
 });
 
 const deleteCaseStudyFailed = error => ({
-  type: DELETE_CASE_STUDY_FAILED,
+  type: DELETE_STUDY_DOC_FAILED,
   payload: error
 });
 
@@ -196,7 +204,7 @@ export const deleteResumes = (
 ) => dispatch => {
   dispatch(deleteResumesStarted());
   let queryString = `mutation{
-            deleteResumes(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
+            deleteResume(token:"${localStorage.getItem("token")}",
             id:${id}){
             portfolio{
                 resumes{
@@ -211,7 +219,7 @@ export const deleteResumes = (
   axios
     .post("/graphql", queryString)
     .then(res => {
-      dispatch(deleteResumesSuccess(res.data.deleteResumes.portfolio));
+      dispatch(deleteResumesSuccess(res.data.deleteResume.portfolio.resumes));
     })
     .catch(err => {
       const error =
@@ -227,9 +235,7 @@ export const deleteResumes = (
 
 const deleteResumesSuccess = token => ({
   type: DELETE_RESUMS_SUCCESS,
-  payload: {
-    token
-  }
+  payload: token
 });
 
 const deleteResumesStarted = () => ({
@@ -249,7 +255,7 @@ export const deleteProjectDocument = (
 ) => dispatch => {
   dispatch(deleteProjectDocumentStarted());
   let queryString = `mutation{
-            deleteProjectDocument(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
+            deleteProjectDocument(token:"${localStorage.getItem("token")}",
             id:${id}){
             portfolio{
                 projects{
@@ -319,7 +325,7 @@ export const editProject = (
   } = data;
   dispatch(editProjectStarted());
   let queryString = `mutation{
-        addProject(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
+        addProject(token:"${localStorage.getItem("token")}",
         id:${id},
         name:"${name}",
         client:"${client}",
@@ -397,14 +403,15 @@ export const addProject = (
     ongoing,
     description
   } = data;
+  dispatch(addProjectStarted());
   let queryString = `mutation{
-    addProject(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE",
+    addProject(token:"${localStorage.getItem("token")}",
     name:"${name}",
     client:"${client}",
-    startDate:"${endDate}",
-    endDate:"${projectType}",
-    projectType:"${ongoing}",
-    ongoing:false,
+    startDate:"${startDate}",
+    endDate:"${endDate}",
+    projectType:"${projectType}",
+    ongoing:${ongoing},
     description:"${description}",
     ){
     portfolio{
@@ -440,11 +447,9 @@ export const addProject = (
     });
 };
 
-const addProjectSuccess = token => ({
+const addProjectSuccess = data => ({
   type: ADD_PROJECT_SUCCESS,
-  payload: {
-    token
-  }
+  payload: data
 });
 
 const addProjectStarted = () => ({
@@ -467,7 +472,9 @@ export const addProjectResums = (
   var form = new FormData();
   form.append(
     "query",
-    `mutation{uploadResume(token:\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByYW5hMTUxOTcyQGdtYWlsLmNvbSJ9.PF6CDduuV9BX4cW5I40NwGWT0a0R6y0-pRMPrwsknPE\",name:\"${name}\"){portfolio{resumes{id, name,link}}}}`
+    `mutation{uploadResume(token:\"${localStorage.getItem(
+      "token"
+    )}"",name:\"${name}\"){portfolio{resumes{id, name,link}}}}`
   );
   form.append("resume", file);
 
@@ -488,7 +495,6 @@ export const addProjectResums = (
 
   axios(settings)
     .then(res => {
-      console.log(res, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
       dispatch(addResumeSucces(res.data.uploadResume.portfolio.resumes));
     })
     .catch(err => {
@@ -515,5 +521,133 @@ const addResume = () => ({
 
 const addResumeFailed = error => ({
   type: ADD_RESUME_FAILED,
+  payload: error
+});
+
+export const addProjectDocuments = (
+  data,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
+  const { name, id, file } = data;
+  debugger;
+  var form = new FormData();
+  form.append(
+    "query",
+    `mutation{uploadProjectDocument(token:\"${localStorage.getItem(
+      "token"
+    )}"",name:\"${name}\", projectId:${id}){portfolio{projects{id, name, documents{name, link}}}}}`
+  );
+  form.append("doc", file);
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: "http://ec2-13-232-186-28.ap-south-1.compute.amazonaws.com//graphql",
+    method: "POST",
+    headers: {
+      "cache-control": "no-cache",
+      "postman-token": "de13d011-ec1c-c982-4e31-428a21c15ac0"
+    },
+    processData: false,
+    contentType: false,
+    mimeType: "multipart/form-data",
+    data: form
+  };
+
+  axios(settings)
+    .then(res => {
+      dispatch(
+        addProjectDocumentsSucces(res.data.uploadProjectDocument.portfolio)
+      );
+    })
+    .catch(err => {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(addProjectDocumentsFailed(error));
+    });
+};
+// axios.post('http://httpbin.org/post', data);
+
+const addProjectDocumentsSucces = DATA => ({
+  type: ADD_PROJECT_DOCUMENTS_SUCCESS,
+  payload: DATA
+});
+
+const addProjectDocumentsStart = () => ({
+  type: ADD_PROJECT_DOCUMENTS
+});
+
+const addProjectDocumentsFailed = error => ({
+  type: ADD_PROJECT_DOCUMENTS_FAILED,
+  payload: error
+});
+
+//////////////////////////Project end///////////////////////////
+export const addCaseDoc = (
+  data,
+  enqueueSnackbar,
+  closeSnackbar
+) => dispatch => {
+  const { name, file } = data;
+  debugger;
+  var form = new FormData();
+  form.append(
+    "query",
+    `mutation{uploadCaseStudy(token:\"${localStorage.getItem(
+      "token"
+    )}"",name:\"${name}\"){portfolio{caseStudies{id,name,link}}}}`
+  );
+  form.append("case_study", file);
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: "http://ec2-13-232-186-28.ap-south-1.compute.amazonaws.com//graphql",
+    method: "POST",
+    headers: {
+      "cache-control": "no-cache",
+      "postman-token": "f4c04718-f5f1-f1c6-1f25-d060059a87cf"
+    },
+    processData: false,
+    contentType: false,
+    mimeType: "multipart/form-data",
+    data: form
+  };
+
+  axios(settings)
+    .then(res => {
+      dispatch(
+        addCaseDocSucces(res.data.uploadCaseStudy.portfolio.caseStudies)
+      );
+    })
+    .catch(err => {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(addCaseDocFailed(error));
+    });
+};
+// axios.post('http://httpbin.org/post', data);
+
+const addCaseDocSucces = resum => ({
+  type: ADD_STUDY_DOC_SUCCESS,
+  payload: resum
+});
+
+const addCaseDocStart = () => ({
+  type: ADD_STUDY_DOC
+});
+
+const addCaseDocFailed = error => ({
+  type: ADD_STUDY_DOC_FAILED,
   payload: error
 });

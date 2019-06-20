@@ -96,12 +96,23 @@ export const retrieveFreelancerProfile = () => dispatch => {
                   },
                   caseStudies{
                     name
+                    id
+                    link
                   },
                   caseStudyLinks{
                     name
+                    id
+                    link
                   },
                   projects{
-                    id
+                      id,
+                      name,
+                      client,
+                      startDate,
+                      endDate,
+                      projectType,
+                      ongoing,
+                      description
                   }
                 },
                 educations{
