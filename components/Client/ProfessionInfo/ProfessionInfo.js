@@ -210,11 +210,18 @@ class ProfileComponent extends Component {
       [event.target.name]: event.target.value
     });
   };
-  handleAuto = event => {
-    console.log("event", event);
-    let { clients } = this.state;
-    clients.push(event);
-    this.setState({ clients, searchClient: "" });
+  handleAuto = (event, check) => {
+    let { clients, sectors, skills } = this.state;
+    if (check === "skills") {
+      skills.push(event);
+      this.setState({ skills, searchSkill: "" });
+    } else if (check === "sectors") {
+      sectors.push(event);
+      this.setState({ sectors, searchSector: "" });
+    } else if (check === "clients") {
+      clients.push(event);
+      this.setState({ clients, searchClient: "" });
+    }
   };
   handelTemplate = (e, check) => {
     if (check === "skills") {
@@ -301,7 +308,7 @@ class ProfileComponent extends Component {
     return (
       <IntegrationAutosuggest
         updateChanges={e => this.handelTemplate(e, objValue)}
-        // handleAuto={this.handleAuto}
+        handleAuto={event => this.handleAuto(event, objValue)}
         labelArry={this.state.profileAttributesSectors}
         // className={classNames(textField, dense)}
         value={this.state.searchSector}
@@ -313,7 +320,7 @@ class ProfileComponent extends Component {
     return (
       <IntegrationAutosuggest
         updateChanges={e => this.handelTemplate(e, objValue)}
-        // handleAuto={this.handleAuto}
+        handleAuto={event => this.handleAuto(event, objValue)}
         labelArry={this.state.profileAttributesSkills}
         // className={classNames(textField, dense)}
         value={this.state.searchSkill}
@@ -325,7 +332,7 @@ class ProfileComponent extends Component {
     return (
       <IntegrationAutosuggest
         updateChanges={e => this.handelTemplate(e, objValue)}
-        // handleAuto={this.handleAuto}
+        handleAuto={event => this.handleAuto(event, objValue)}
         labelArry={this.state.profileAttributesClients}
         // className={classNames(textField, dense)}
         value={this.state.searchClient}

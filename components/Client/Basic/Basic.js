@@ -64,9 +64,8 @@ class BasicComponent extends Component {
     this.props.retrieveFreelancerProfile();
     setTimeout(() => {
       let showTermsModal = localStorage.getItem("terms");
-      this.setState({ showTermsModal });
-      console.log("showTermsModal", showTermsModal);
-      console.log("type", typeof showTermsModal);
+      let cont = /true/i.test(showTermsModal);
+      this.setState({ showTermsModal: cont });
     }, 1000);
   }
   componentWillReceiveProps(nextProps) {
