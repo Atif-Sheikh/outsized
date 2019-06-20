@@ -25,7 +25,7 @@ class ProfileComponent extends Component {
     role: "",
     relocation: "",
     currency: "",
-    currencyValue: ["₹ (Indian Rupee)", "$ (Dollor)"],
+    currencyValue: ["USD", "PKR"],
     typeValue: ["Full time", "Part time"],
     roleValue: ["Employee Full time", "Employee Part time"],
     relocationValue: ["Open to relocation"],

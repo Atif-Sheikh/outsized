@@ -13,6 +13,7 @@ import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import Router from "next/router";
+import Link from "next/link";
 
 import {
   retrieveFreelancerProfile,
@@ -539,8 +540,13 @@ class BasicComponent extends Component {
           color="primary"
           type="submit"
           className={loginBtnLinkedIn}
+          onClick={() => localStorage.setItem("state", "freelancer")}
         >
-          Connect your LinkedIn
+          <Link href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=81742vq7hot2j7&redirect_uri=http%3A%2F%2F13.232.136.59%3A3000%2Flinkedin-oauth&state=fooobar&scope=r_liteprofile%20r_emailaddress%20w_member_social">
+            <a style={{ color: "white", textDecoration: "none" }}>
+              Connect your LinkedIn`
+            </a>
+          </Link>
         </Button>
       </div>
     );
