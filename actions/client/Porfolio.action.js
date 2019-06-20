@@ -473,7 +473,7 @@ export const addProjectResums = (
     "query",
     `mutation{uploadResume(token:\"${localStorage.getItem(
       "token"
-    )}"",name:\"${name}\"){portfolio{resumes{id, name,link}}}}`
+    )}"\,name:\"${name}\"){portfolio{resumes{id, name,link}}}}`
   );
   form.append("resume", file);
 
@@ -534,7 +534,7 @@ export const addProjectDocuments = (
     "query",
     `mutation{uploadProjectDocument(token:\"${localStorage.getItem(
       "token"
-    )}"",name:\"${name}\", projectId:${id}){portfolio{projects{id, name, documents{name, link}}}}}`
+    )}"\,name:\"${name}\", projectId:${id}){portfolio{projects{id, name, documents{name, link}}}}}`
   );
   form.append("doc", file);
   var settings = {
@@ -592,13 +592,12 @@ export const addCaseDoc = (
   closeSnackbar
 ) => dispatch => {
   const { name, file } = data;
-  debugger;
   var form = new FormData();
   form.append(
     "query",
     `mutation{uploadCaseStudy(token:\"${localStorage.getItem(
       "token"
-    )}"",name:\"${name}\"){portfolio{caseStudies{id,name,link}}}}`
+    )}"\,name:\"${name}\"){portfolio{caseStudies{id,name,link}}}}`
   );
   form.append("case_study", file);
 
