@@ -468,7 +468,6 @@ export const addProjectResums = (
   closeSnackbar
 ) => dispatch => {
   const { name, file } = data;
-  debugger;
   var form = new FormData();
   form.append(
     "query",
@@ -530,7 +529,6 @@ export const addProjectDocuments = (
   closeSnackbar
 ) => dispatch => {
   const { name, id, file } = data;
-  debugger;
   var form = new FormData();
   form.append(
     "query",

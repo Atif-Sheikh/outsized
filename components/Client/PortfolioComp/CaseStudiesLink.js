@@ -127,6 +127,7 @@ class CaseLinks extends Component {
               label={"Name"}
               handleInputChange={this.handleInputChange}
               value={name}
+              validation={true}
               styleprops={classes.textField}
             />
 
@@ -135,6 +136,7 @@ class CaseLinks extends Component {
               label={"Url"}
               handleInputChange={this.handleInputChange}
               value={url}
+              validation={true}
               styleprops={classes.textField}
             />
           </div>
