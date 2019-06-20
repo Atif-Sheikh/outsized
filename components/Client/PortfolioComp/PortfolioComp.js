@@ -16,9 +16,15 @@ import { styles } from "@styles/clientComponents/Portfolio.styles.js";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilesContainer from "./FileContainer";
-import { addProjectResums, retrieveFreelancerProfile } from "@actions/client";
+import {
+  addProjectResums,
+  addCaseDoc,
+  retrieveFreelancerProfile,
+  deleteResumes,
+  deleteCaseStudy
+} from "@actions/client";
 import { connect } from "react-redux";
-
+var forCall = "";
 class Portfolio extends Component {
   state = {
     uploadFile: false,
@@ -26,7 +32,10 @@ class Portfolio extends Component {
     openDeleteModal: false,
     file: {},
     fileUploaded: {},
-    pdf: []
+    pdf: [],
+    id: "",
+    CaseStudy: [],
+    deleeCall: ""
   };
 
   componentDidMount() {
@@ -34,15 +43,21 @@ class Portfolio extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setAllData(nextProps.updateProfessional);
+    if (nextProps.resumes.length || nextProps.CaseDoc.length) {
+      this.setAllData(nextProps.resumes, nextProps.CaseDoc);
+    } else {
+      this.setAllData(
+        nextProps.updateProfessional.resumes,
+        nextProps.updateProfessional.caseStudies
+      );
+    }
   }
-
-  setAllData = ({ resumes }) => {
-    this.setState({ pdf: resumes || [] });
+  setAllData = (resumes, cases) => {
+    this.setState({ pdf: resumes || [], CaseStudy: cases || [] });
   };
 
   deleteModal = () => {
-    const { openDeleteModal } = this.state;
+    const { openDeleteModal, id, deleeCall } = this.state;
     const { classes } = this.props;
 
     return (
@@ -68,8 +83,22 @@ class Portfolio extends Component {
         <DialogContent>
           <div className={classes.deleteModal}>
             <div className={classes.deleteBtnsContainer}>
-              <Button className={classes.yesOrNoBtn}>No</Button>
-              <Button className={classes.yesOrNoBtn} autoFocus>
+              <Button
+                className={classes.yesOrNoBtn}
+                onClick={() => this.setState({ openDeleteModal: false })}
+              >
+                No
+              </Button>
+              <Button
+                className={classes.yesOrNoBtn}
+                onClick={() => {
+                  this.setState({ openDeleteModal: false }),
+                    deleeCall === "resum"
+                      ? this.props.deleteResumes(id)
+                      : this.props.deleteCaseStudy(id);
+                }}
+                autoFocus
+              >
                 Yes
               </Button>
             </div>
@@ -81,7 +110,12 @@ class Portfolio extends Component {
   saveSendDoc = () => {
     const { file, fileUploaded } = this.state;
     var data = { name: file.name, file: fileUploaded };
-    this.props.addProjectResum(data);
+    if (forCall === "Resum") {
+      this.props.addProjectResum(data);
+    }
+    if (forCall === "CaseDoc") {
+      this.props.addCaseDoc(data);
+    }
     this.setState({ saveFile: false });
   };
   saveBeforeLeaving = () => {
@@ -127,10 +161,10 @@ class Portfolio extends Component {
       </Dialog>
     );
   };
-  callModal = () => {
-    var input = document.getElementById("file-upload");
+  callModal = (type, id) => {
+    forCall = type;
+    var input = document.getElementById(id);
     // var infoArea = document.getElementById( 'file-upload-filename' );
-
     input.addEventListener("change", this.showFileName);
   };
   showFileName = event => {
@@ -151,7 +185,6 @@ class Portfolio extends Component {
   uploadFileModal = fileName => {
     const { uploadFile, file } = this.state;
     const { classes } = this.props;
-    console.log(file);
     return (
       <Dialog
         open={uploadFile}
@@ -211,7 +244,7 @@ class Portfolio extends Component {
 
   render() {
     const { classes, updateProfessional } = this.props;
-    const { open, pdf } = this.state;
+    const { open, pdf, CaseStudy } = this.state;
     return (
       <div className={classes.mainContainer}>
         <div className={classes.resumeSection}>
@@ -219,7 +252,13 @@ class Portfolio extends Component {
           {pdf.map(data => (
             <FilesContainer
               fileName={data.name}
-              callFunction={() => this.setState({ openDeleteModal: true })}
+              callFunction={() =>
+                this.setState({
+                  openDeleteModal: true,
+                  id: data.id,
+                  deleeCall: "resum"
+                })
+              }
             />
           ))}
           {/* <FilesContainer
@@ -229,7 +268,7 @@ class Portfolio extends Component {
 
           <div className={classes.uploadBtnContainer}>
             <Button
-              onClick={() => this.callModal()}
+              onClick={() => this.callModal("Resum", "file-upload")}
               className={classes.uploadFiles}
             >
               <form>
@@ -247,23 +286,36 @@ class Portfolio extends Component {
 
         <div className={classes.resumeSection}>
           <Typography className={classes.resume}>Case Studies</Typography>
-          <FilesContainer
-            fileName={"Dunzou_case_study.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
-          <FilesContainer
-            fileName={"Skillenza_case_study.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
-          <FilesContainer
-            fileName={"Skillenza_case_study.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          />
+          {CaseStudy.map(data => (
+            <FilesContainer
+              fileName={data.name}
+              callFunction={() =>
+                this.setState({
+                  openDeleteModal: true,
+                  id: data.id,
+                  deleeCall: "case"
+                })
+              }
+            />
+          ))}
           {this.uploadFileModal("kayla_life_case_study.pdf")}
           {this.saveBeforeLeaving()}
           {this.deleteModal()}
           <div className={classes.uploadBtnContainer}>
-            <Button className={classes.uploadFiles}>Upload Files</Button>
+            <Button
+              onClick={() => this.callModal("CaseDoc", "file-upload1")}
+              className={classes.uploadFiles}
+            >
+              <form>
+                <input
+                  type="file"
+                  id="file-upload1"
+                  style={{ Zindex: -1, position: "absolute", opacity: 0 }}
+                  className={classes.uploadFiles}
+                />
+                <label for="file-upload">Upload file</label>
+              </form>
+            </Button>
           </div>
         </div>
       </div>
@@ -282,7 +334,9 @@ const mapStateToProps = state => {
     isValidEmail: state.clientSignUpReducer.isValidEmail,
     message: state.clientSignUpReducer.message,
     error: state.clientSignUpReducer.error,
-    updateProfessional: data
+    updateProfessional: data,
+    resumes: state.PortfolioReducer.resumes,
+    CaseDoc: state.PortfolioReducer.caseDoc
     // resumes: state.portfolioReducer.resumes
   };
 };
@@ -290,6 +344,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addProjectResum: data => dispatch(addProjectResums(data)),
+    deleteResumes: data => dispatch(deleteResumes(data)),
+    deleteCaseStudy: data => dispatch(deleteCaseStudy(data)),
+    addCaseDoc: data => dispatch(addCaseDoc(data)),
+    addProjectDocuments: data => dispatch(addProjectDocumentss(data)),
     retrieveFreelancerProfile: () => {
       dispatch(retrieveFreelancerProfile());
     }

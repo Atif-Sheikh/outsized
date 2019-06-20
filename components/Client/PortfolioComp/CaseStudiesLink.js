@@ -8,20 +8,151 @@ import CheckIcon from "@material-ui/icons/Check";
 import PdfFile from "@material-ui/icons/PictureAsPdf";
 import { styles } from "@styles/clientComponents/Portfolio.styles.js";
 import InputArea from "../../ReuseableComponents/InputArea";
-
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
+import {
+  addCaseStudyLink,
+  retrieveFreelancerProfile,
+  deleteCaseStudyLink
+} from "@actions/client";
+import { connect } from "react-redux";
 class CaseLinks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uploadFile: false,
+      addlink: false,
       saveFile: false,
       openDeleteModal: false,
       cases: [],
       add: [],
       name: "",
-      url: ""
+      url: "",
+      id: ""
     };
   }
+
+  componentDidMount() {
+    this.props.retrieveFreelancerProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.caseLink.length) {
+      this.setAllData(nextProps.caseLink, nextProps.CaseDoc);
+    } else {
+      this.setAllData(nextProps.updateProfessional.caseStudyLinks);
+    }
+  }
+  setAllData = resumes => {
+    this.setState({ cases: resumes || [] });
+  };
+
+  deleteModal = () => {
+    const { openDeleteModal, id, deleeCall } = this.state;
+    const { classes } = this.props;
+
+    return (
+      <Dialog
+        open={openDeleteModal}
+        onClose={() => this.setState({ openDeleteModal: false })}
+        style={{ minWidth: "500px", minHeight: "250px", borderRadius: "5px" }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <IconButton
+          className={classes.closeIcon}
+          aria-label="Close"
+          onClick={() => this.setState({ openDeleteModal: false })}
+        >
+          <CloseIcon className={classes.icon} />
+        </IconButton>
+        <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">
+          <Typography className={classes.deleteTitle}>
+            Are you sure you want to delete ?
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <div className={classes.deleteModal}>
+            <div className={classes.deleteBtnsContainer}>
+              <Button
+                className={classes.yesOrNoBtn}
+                onClick={() => this.setState({ openDeleteModal: false })}
+              >
+                No
+              </Button>
+              <Button
+                className={classes.yesOrNoBtn}
+                onClick={() => {
+                  this.setState({ openDeleteModal: false }),
+                    this.props.deleteCaseStudy(id);
+                }}
+                autoFocus
+              >
+                Yes
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
+  addCaseLink = fileName => {
+    const { addlink, file, name, url } = this.state;
+    const { classes } = this.props;
+    return (
+      <Dialog
+        open={addlink}
+        onClose={() => {}}
+        style={{ minWidth: "630px !important", minHeight: "400px" }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <IconButton
+          className={classes.closeIcon}
+          aria-label="Close"
+          onClick={() => this.setState({ addlink: false })}
+        >
+          <CloseIcon className={classes.icon} />
+        </IconButton>
+        <DialogTitle className={classes.headerTitle} id="alert-dialog-title">
+          Case studies link(s)
+        </DialogTitle>
+        <DialogContent>
+          <div className={classes.addCaseLink}>
+            <InputArea
+              name={"name"}
+              label={"Name"}
+              handleInputChange={this.handleInputChange}
+              value={name}
+              styleprops={classes.textField}
+            />
+
+            <InputArea
+              name={"url"}
+              label={"Url"}
+              handleInputChange={this.handleInputChange}
+              value={url}
+              styleprops={classes.textField}
+            />
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            className={classes.saveBtn}
+            onClick={() => {
+              this.setState({ addlink: false }),
+                this.props.addCaseStudyLink(name, url);
+            }}
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
   addNewFiled = () => {
     console.log(this.state.add.length);
     var data = [];
@@ -48,7 +179,7 @@ class CaseLinks extends Component {
   render() {
     const { classes, fileName } = this.props;
     const { cases, add, name, url } = this.state;
-    console.log(add);
+    console.log(this.state);
     return (
       <div className={classes.resumeSection}>
         <Typography className={classes.resume}>
@@ -70,13 +201,15 @@ class CaseLinks extends Component {
                 <Typography>{casesData.name}</Typography>
               </div>
               <div className={classes.caseLinkSection}>
-                <Typography>{casesData.url}</Typography>
+                <Typography>{casesData.link}</Typography>
               </div>
               <div className={classes.iconCaseSection}>
                 <IconButton
                   className={classes.closeIcon}
                   aria-label="Close"
-                  onClick={() => this.deleteCase(i)}
+                  onClick={() =>
+                    this.setState({ openDeleteModal: true, id: casesData.id })
+                  }
                 >
                   <CloseIcon className={classes.icon} />
                 </IconButton>
@@ -84,53 +217,50 @@ class CaseLinks extends Component {
             </div>
           ))}
 
-        {add.length > 0 &&
-          add.map(cases => (
-            <div className={classes.casePreview}>
-              <div className={classes.caseLinkSection}>
-                <InputArea
-                  name={"name"}
-                  label={"Name"}
-                  handleInputChange={this.handleInputChange}
-                  value={name}
-                  styleprops={classes.textFieldPass}
-                />
-              </div>
-              <div className={classes.caseLinkSection}>
-                <InputArea
-                  name={"url"}
-                  label={"Url"}
-                  handleInputChange={this.handleInputChange}
-                  value={url}
-                  styleprops={classes.textFieldPass}
-                />
-              </div>
-              <div className={classes.iconCaseSection}>
-                <IconButton
-                  className={classes.closeIcon}
-                  aria-label="Close"
-                  onClick={() => this.setState({ add: [] })}
-                >
-                  <CloseIcon className={classes.icon} />
-                </IconButton>
-                <IconButton
-                  className={classes.closeIcon}
-                  aria-label="Close"
-                  onClick={this.addNewCase}
-                >
-                  <CheckIcon className={classes.icon} />
-                </IconButton>
-              </div>
-            </div>
-          ))}
         <div className={classes.uploadBtnContainer}>
-          <Button onClick={this.addNewFiled} className={classes.uploadFiles}>
+          <Button
+            onClick={() => this.setState({ addlink: true })}
+            className={classes.uploadFiles}
+          >
             Add Links
           </Button>
+          {this.addCaseLink("kayla_life_case_study.pdf")}
+          {this.deleteModal()}
         </div>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(CaseLinks);
+const mapStateToProps = state => {
+  const data =
+    state.clientBasicProfileReducer.freelancerProfile &&
+    state.clientBasicProfileReducer.freelancerProfile.freelancer &&
+    state.clientBasicProfileReducer.freelancerProfile.freelancer.portfolio;
+  return {
+    token: state.clientSignUpReducer.token,
+    isLoading: state.clientSignUpReducer.isLoading,
+    isValidEmail: state.clientSignUpReducer.isValidEmail,
+    message: state.clientSignUpReducer.message,
+    error: state.clientSignUpReducer.error,
+    updateProfessional: data,
+    caseLink: state.PortfolioReducer.caseLink,
+    CaseDoc: state.PortfolioReducer.caseDoc
+    // caseLink: state.portfolioReducer.caseLink
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteCaseStudy: data => dispatch(deleteCaseStudyLink(data)),
+    addCaseStudyLink: (name, url) => dispatch(addCaseStudyLink(name, url)),
+    retrieveFreelancerProfile: () => {
+      dispatch(retrieveFreelancerProfile());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(CaseLinks));

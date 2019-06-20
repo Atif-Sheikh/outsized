@@ -8,6 +8,21 @@ export const styles = theme => ({
       masrginTop: 75
     }
   },
+  paper: {
+    minwidth: "100%",
+    position: "relative",
+    zIndex: 333333423432432,
+    // overflow:'hidden',
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      overflowY: "auto",
+      width: "600px",
+      height: "642px"
+    },
+    [theme.breakpoints.up("sm")]: {
+      minwidth: "1000px !important"
+      // overflow:'hidden',
+    }
+  },
   resumeSection: {},
   resume: {
     minWidth: "88px",
@@ -29,6 +44,54 @@ export const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
+  },
+  FormContainer: {
+    width: "85%",
+    minHeight: "230px",
+    margin: "0 auto",
+    paddingBottom: "10px"
+  },
+  dropDownContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  working: {
+    width: "195px",
+    height: "19px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "16px",
+    fontWeight: "500",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
+    color: "rgba(0, 0, 0, 0.87)"
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+    backgroundColor: "white"
+  },
+  checkBoxContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end"
+  },
+  FormContainerDup: {
+    width: "100%",
+    // minHeight: "230px",
+    margin: "0 auto",
+    paddingBottom: "35px"
+  },
+  content: {
+    margin: "0px !important",
+    width: "100%",
+    // height: "100vh",
+    padding: "0px",
+    overflow: "hidden !important",
+    [theme.breakpoints.up("sm")]: {
+      width: "95%"
+    }
   },
   textFieldPass: {
     width: "80%",
@@ -93,7 +156,28 @@ export const styles = theme => ({
     justifyContent: "flex-end"
   },
   icon: {
+    width: "24px",
+    height: "24px",
     color: "#000"
+  },
+  modalTitle: {
+    position: "relative",
+    margin: "0px !important",
+    padding: "0 20px",
+    zIndex: 9999
+  },
+  headerText: {
+    width: "85%",
+    margin: "auto",
+    height: "28px",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "24px",
+    fontWeight: "550",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
+    color: "#575553"
   },
   iconAdd: {
     color: "#fff"
@@ -116,6 +200,11 @@ export const styles = theme => ({
     textTransform: "capitalize",
     color: "#fff"
   },
+  back: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
+  },
   filePreviewUpload: {
     maxWidth: "90%",
     height: "60px",
@@ -125,6 +214,29 @@ export const styles = theme => ({
     alignItems: "center",
     justifyContent: "center",
     margin: "auto"
+  },
+  modal: {
+    // width: "100vw",
+    // maxHeight: "100vh",
+    borderRadius: "5px",
+    position: "relative",
+    zIndex: 3333333099999999,
+    position: "relative",
+    padding: "0px 3px 0px 20px",
+    margin: "0px !important",
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      margin: 0,
+      borderRadius: "0px",
+      width: "100vw",
+      // minHeight: "573px",
+      borderRadius: "5px",
+      backgroundColor: "#ffffff"
+    },
+    [theme.breakpoints.up("sm")]: {
+      //   width: '600px',
+      // height: '642px',
+      //   overflow: "hidden"
+    }
   },
   uploadFileModal: {
     minWidth: "500px",
@@ -137,6 +249,11 @@ export const styles = theme => ({
     height: "80px",
     borderRadius: "5px",
     backgroundColor: "#ffffff"
+  },
+  btnContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
   uploadBtnContainer: {
     display: "flex",
@@ -185,6 +302,24 @@ export const styles = theme => ({
       width: "50px",
       alignSelf: "flex-end"
     }
+  },
+  formControl: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    width: "24%",
+    flex: 1,
+    backgroundColor: "white"
+  },
+  formControlText: {},
+  formControlSelect: {
+    width: "200px !importance"
+  },
+  roots: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    minWidth: "20%"
+    // flexWrap: "wrap"
   },
   textField: {
     maxWidth: "90%",

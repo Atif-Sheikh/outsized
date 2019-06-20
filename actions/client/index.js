@@ -14,7 +14,9 @@ export {
   deleteProjectDocument,
   editProject,
   addProject,
-  addProjectResums
+  addProjectResums,
+  addProjectDocuments,
+  addCaseDoc
 } from "./Porfolio.action";
 export {
   retrieveFreelancerProfile,
