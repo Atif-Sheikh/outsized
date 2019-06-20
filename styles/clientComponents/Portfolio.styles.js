@@ -37,13 +37,24 @@ export const styles = theme => ({
     color: "rgba(0, 0, 0, 0.87)"
   },
   filePreview: {
-    minWidth: "100%",
+    width: "100%",
     height: "80px",
     backgroundColor: "#f1f1f7",
     margin: "10px 0 10px 0",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    paddingLeft: "10px",
+    justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      minWidth: "100%",
+      height: "80px",
+      width: "90vw",
+      backgroundColor: "#f1f1f7",
+      margin: "10px 0 10px 0",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
   },
   FormContainer: {
     width: "85%",
@@ -182,6 +193,9 @@ export const styles = theme => ({
   iconAdd: {
     color: "#fff"
   },
+  files: {
+    paddingLeft: "10px"
+  },
   projctPreview: {
     minHeight: "500px"
   },
@@ -286,13 +300,15 @@ export const styles = theme => ({
     backgroundColor: "#5e35b1",
     color: "#fff"
   },
+
   flexContainer: {
     display: "flex",
     justifyContent: "flex-end"
   },
   check: {
-    fontSize: "25.4px",
-    color: "#53e07b"
+    fontSize: "33.4px",
+    color: "#53e07b",
+    paddingLeft: "10px"
   },
   closeIcon: {
     display: "none",
