@@ -177,7 +177,14 @@ class SignUpFormComponent extends Component {
             >
               {message}
             </Typography>
-          ) : null}
+          ) : (
+            <Typography
+              style={{ color: this.props.isValidEmail ? "green" : "red" }}
+              className={classes.errorText}
+            >
+              {this.props.message}
+            </Typography>
+          )}
         </div>
         <div className={classes.FormContainer}>
           <form
@@ -229,7 +236,7 @@ class SignUpFormComponent extends Component {
                 color="primary"
                 type="submit"
                 className={classes.SignUpBtn}
-                disabled={!condition}
+                disabled={!this.props.isValidEmail || !condition}
                 // onClick={() => this.setState({ message: "something went wrong" })}
               >
                 Continue
@@ -268,6 +275,7 @@ class SignUpFormComponent extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     token: state.clientSignUpReducer.token,
     isLoading: state.clientSignUpReducer.isLoading,

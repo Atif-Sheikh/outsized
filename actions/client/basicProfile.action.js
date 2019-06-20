@@ -31,7 +31,10 @@ import {
   EDIT_PROFILE_FAILED,
   UPDATE_PROFILE,
   UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_FAILED
+  UPDATE_PROFILE_FAILED,
+  PROFILE_ATTRIBUTES_SUCCESS,
+  PROFILE_ATTRIBUTES_FAILED,
+  PROFILE_ATTRIBUTES_STARTED
 } from "../../utils/redux/types";
 
 import axios from "../../config/axios";
@@ -864,6 +867,13 @@ export const saveprofessionalInfoData = ({
           ? err.response.data.errors[0]
           : err.message;
       dispatch(updateProfileFailed(error));
+      enqueueSnackbar("Please Fill the form perfectly", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
+        }
+      });
     });
 };
 
@@ -883,5 +893,63 @@ const updateProfileSuccess = editExperience => ({
 
 const updateProfileFailed = error => ({
   type: UPDATE_PROFILE_FAILED,
+  payload: error
+});
+
+export const clientProffesionalAttributes = () => dispatch => {
+  dispatch(profileAttributeStarted());
+  let token = localStorage.getItem("token");
+  let queryString = `
+            query {
+        profileAttributes(token:"${token}"){
+          sectors{
+            id,
+            name
+          },
+          skills{
+            id,
+            name
+          },
+          clients{
+            id,
+            name
+          }
+        }
+      }
+  `;
+
+  axios
+    .post("/graphql", queryString)
+    .then(res => {
+      dispatch(profileAttributesSuccess(res.data));
+    })
+    .catch(err => {
+      const error =
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors[0]
+          ? err.response.data.errors[0]
+          : err.message;
+      dispatch(profileAttributesFailed(error));
+    });
+};
+
+const profileAttributeStarted = editExperience => ({
+  type: PROFILE_ATTRIBUTES_STARTED,
+  payload: {
+    editExperience
+  }
+});
+
+const profileAttributesSuccess = editExperience => ({
+  type: PROFILE_ATTRIBUTES_SUCCESS,
+  payload: {
+    editExperience
+  }
+});
+
+const profileAttributesFailed = error => ({
+  type: PROFILE_ATTRIBUTES_FAILED,
   payload: error
 });

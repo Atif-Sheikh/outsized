@@ -19,6 +19,7 @@ class VerifyEmailAddress extends Component {
   };
   componentDidMount(props) {
     const qs = Router.router.query;
+    localStorage.setItem("terms", true);
     const code = qs.code;
     if (code) {
       this.setState({ linkVerification: true, valided: false });

@@ -16,8 +16,10 @@ import Chip from "@material-ui/core/Chip";
 import { connect } from "react-redux";
 import {
   retrieveFreelancerProfile,
-  saveprofessionalInfoData
+  saveprofessionalInfoData,
+  clientProffesionalAttributes
 } from "@actions/client";
+import IntegrationAutosuggest from "../AutoSuggestion/AutoSuggestion";
 
 class ProfileComponent extends Component {
   state = {
@@ -25,11 +27,13 @@ class ProfileComponent extends Component {
     role: "",
     relocation: "",
     currency: "",
-    currencyValue: ["USD", "PKR"],
+    currencyValue: ["USD", "PKR", "INR"],
     typeValue: ["Full time", "Part time"],
     roleValue: ["Employee Full time", "Employee Part time"],
-    relocationValue: ["Open to relocation"],
-    search: "",
+    relocationValue: ["Yes", "No"],
+    searchClient: "",
+    searchSector: "",
+    searchSkill: "",
     searchValid: true,
     actionPerform: "",
     fullTime: false,
@@ -43,10 +47,18 @@ class ProfileComponent extends Component {
     expectedDailyRate: 0,
     expectedHourlyRate: 0,
     expectedMonthlyRate: 0,
-    minHours: 0
+    minHours: 0,
+    profileAttributes: {},
+    profileAttributesClients: [],
+    profileAttributesSkills: [],
+    profileAttributesSectors: [],
+    detectSkill: false,
+    detectSector: false,
+    detectClient: false
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
+    this.props.clientProffesionalAttributes();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -97,6 +109,16 @@ class ProfileComponent extends Component {
         );
       }
     }
+    let profileAttributes =
+      nextProps &&
+      nextProps.profileAttributes &&
+      nextProps.profileAttributes.editExperience &&
+      nextProps.profileAttributes.editExperience.profileAttributes;
+    this.setState({
+      profileAttributesClients: profileAttributes && profileAttributes.clients,
+      profileAttributesSectors: profileAttributes && profileAttributes.sectors,
+      profileAttributesSkills: profileAttributes && profileAttributes.skills
+    });
   }
 
   saveProfessionalInfo = () => {
@@ -165,10 +187,10 @@ class ProfileComponent extends Component {
       clients: clients,
       skills: skills,
       sectors: sectors,
-      typeValue: [...this.state.typeValue, currentEmploymentType],
-      roleValue: [...this.state.roleValue, currentRole],
-      relocationValue: [...this.state.relocationValue, relocation],
-      currencyValue: [...this.state.currencyValue, currency],
+      typeValue: [...this.state.typeValue],
+      roleValue: [...this.state.roleValue],
+      relocationValue: [...this.state.relocationValue],
+      currencyValue: [...this.state.currencyValue],
 
       fullTime: enableFullTime,
       fixedProject: enableFixedRateProjects,
@@ -188,6 +210,53 @@ class ProfileComponent extends Component {
       [event.target.name]: event.target.value
     });
   };
+  handleAuto = event => {
+    console.log("event", event);
+    let { clients } = this.state;
+    clients.push(event);
+    this.setState({ clients, searchClient: "" });
+  };
+  handelTemplate = (e, check) => {
+    if (check === "skills") {
+      var detect = !this.state.skills.find(
+        a => a.name.toUpperCase() === e.toUpperCase()
+      );
+      this.setState({ searchSkill: e, detectSkill: detect });
+    } else if (check === "sectors") {
+      var detect = !this.state.sectors.find(
+        a => a.name.toUpperCase() === e.toUpperCase()
+      );
+      this.setState({ searchSector: e, detectSector: detect });
+    } else if (check === "clients") {
+      var detect = !this.state.clients.find(
+        a => a.name.toUpperCase() === e.toUpperCase()
+      );
+      this.setState({ searchClient: e, detectClient: detect });
+    }
+  };
+  deleteChip = (val, array, check) => {
+    let deleteArray = array.filter(value => {
+      return value.id !== val.id;
+    });
+    if (check === "skills") {
+      this.setState({
+        skills: deleteArray
+      });
+    } else if (check === "sectors") {
+      this.setState({
+        sectors: deleteArray
+      });
+    } else if (check === "clients") {
+      this.setState({
+        clients: deleteArray
+      });
+    }
+  };
+  handleInputChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
   chipContainer = (
     search,
     searchValid,
@@ -198,9 +267,11 @@ class ProfileComponent extends Component {
     chip,
     searchPlaceHolder,
     objValue,
-    array
+    array,
+    profileArray,
+    key
   ) => {
-    console.log("array", array);
+    console.log("search", search);
     return (
       <div className={chipMain}>
         <Typography className={chipText}>
@@ -212,23 +283,54 @@ class ProfileComponent extends Component {
               <Chip
                 label={val.name}
                 onClick={() => {}}
-                onDelete={() => {}}
+                onDelete={() => this.deleteChip(val, array, objValue)}
                 className={chip}
               />
             );
           })}
         </div>
-
-        <InputArea
-          styleprops={textFieldPass}
-          label={"Search for " + searchPlaceHolder}
-          name="search"
-          value={search}
-          handleInputChange={event => this.handleChange(event)}
-          validation={searchValid}
-          styleprops={textFieldPass}
-        />
+        {key === "searchClient"
+          ? this.clientChipContainer(objValue, profileArray, key)
+          : key === "searchSkill"
+          ? this.skillChipContainer(objValue, profileArray, key)
+          : this.sectorChipContainer(objValue, profileArray, key)}
       </div>
+    );
+  };
+  sectorChipContainer = (objValue, profileArray, key) => {
+    return (
+      <IntegrationAutosuggest
+        updateChanges={e => this.handelTemplate(e, objValue)}
+        // handleAuto={this.handleAuto}
+        labelArry={this.state.profileAttributesSectors}
+        // className={classNames(textField, dense)}
+        value={this.state.searchSector}
+        name="searchSector"
+      />
+    );
+  };
+  skillChipContainer = (objValue, profileArray, key) => {
+    return (
+      <IntegrationAutosuggest
+        updateChanges={e => this.handelTemplate(e, objValue)}
+        // handleAuto={this.handleAuto}
+        labelArry={this.state.profileAttributesSkills}
+        // className={classNames(textField, dense)}
+        value={this.state.searchSkill}
+        name="searchSkill"
+      />
+    );
+  };
+  clientChipContainer = (objValue, profileArray, key) => {
+    return (
+      <IntegrationAutosuggest
+        updateChanges={e => this.handelTemplate(e, objValue)}
+        // handleAuto={this.handleAuto}
+        labelArry={this.state.profileAttributesClients}
+        // className={classNames(textField, dense)}
+        value={this.state.searchClient}
+        name="searchClient"
+      />
     );
   };
   contractInfo = (
@@ -248,13 +350,18 @@ class ProfileComponent extends Component {
     descriptionText,
     ExpectedText,
     ratesText,
-    paymentContent
+    paymentContent,
+    key,
+    rateKey
   ) => {
     const { classes } = this.props;
     return (
       <div
         className={contractContaienr}
-        style={{ paddingBottom: minHrs ? "10px" : "15px" }}
+        style={{
+          paddingBottom: minHrs ? "10px" : "15px",
+          borderBottom: !minHrs ? "solid 1px rgba(0, 0, 0, 0.22)" : "none"
+        }}
       >
         <div className={classes.checkContainer}>
           <div className={checkBoxContainer}>
@@ -279,12 +386,32 @@ class ProfileComponent extends Component {
             <Typography className={ExpectedText}>
               Expected. {extectedName}
             </Typography>
-            <Typography className={ratesText}>₹ {salary}</Typography>
+            <span className={classes.ratesTexts}>
+              <InputArea
+                styleprops={classes.ratesText}
+                // label="LinkedIn profile Url"
+                value={this.state[key]}
+                name={key}
+                handleInputChange={event => this.handleInputChange(event)}
+                validation={true}
+                styleprops={styles.ratesText}
+              />
+            </span>
           </div>
           {minHrs ? (
             <div className={salaryContainer}>
               <Typography className={ExpectedText}>Min. Hours</Typography>
-              <Typography className={ratesText}>{hours} hours</Typography>
+              <span className={ratesText}>
+                <InputArea
+                  // styleprops={styles.ratesText}
+                  // label="LinkedIn profile Url"
+                  value={this.state[rateKey]}
+                  name={rateKey}
+                  handleInputChange={event => this.handleInputChange(event)}
+                  validation={true}
+                  // styleprops={styles.ratesText}
+                />
+              </span>
             </div>
           ) : (
             ""
@@ -332,21 +459,19 @@ class ProfileComponent extends Component {
   render() {
     const { classes } = this.props;
     const {
-      type,
-      role,
-      relocation,
       typeValue,
       currencyValue,
       roleValue,
       relocationValue,
       search,
       searchValid,
-
       fullTime,
       fixedProject,
       dayProject,
       hourlyContract,
-
+      profileAttributesClients,
+      profileAttributesSectors,
+      profileAttributesSkills,
       expectedAnnualSalary,
       expectedDailyRate,
       expectedHourlyRate,
@@ -374,7 +499,9 @@ class ProfileComponent extends Component {
       chip,
       textFieldPass
     } = classes;
-    console.log(this.state, "state");
+    console.log(profileAttributesClients, "profileAttributesClients");
+    console.log(profileAttributesSectors, "profileAttributesSectors");
+    console.log(profileAttributesSkills, "profileAttributesSkills");
     return (
       <div className={classes.paper}>
         {this.dropDown(
@@ -431,7 +558,9 @@ class ProfileComponent extends Component {
           descriptionText,
           ExpectedText,
           ratesText,
-          paymentContent
+          paymentContent,
+          "expectedAnnualSalary",
+          ""
         )}
         {this.contractInfo(
           "fixedProject",
@@ -450,7 +579,9 @@ class ProfileComponent extends Component {
           descriptionText,
           ExpectedText,
           ratesText,
-          paymentContent
+          paymentContent,
+          "expectedMonthlyRate",
+          ""
         )}
         {this.contractInfo(
           "dayProject",
@@ -469,7 +600,9 @@ class ProfileComponent extends Component {
           descriptionText,
           ExpectedText,
           ratesText,
-          paymentContent
+          paymentContent,
+          "expectedDailyRate",
+          ""
         )}
         {this.contractInfo(
           "hourlyContract",
@@ -488,10 +621,12 @@ class ProfileComponent extends Component {
           descriptionText,
           ExpectedText,
           ratesText,
-          paymentContent
+          paymentContent,
+          "expectedHourlyRate",
+          "minHours"
         )}
         {this.chipContainer(
-          search,
+          this.state.searchSector,
           searchValid,
           textFieldPass,
           chipText,
@@ -500,10 +635,12 @@ class ProfileComponent extends Component {
           chip,
           "sector",
           "sectors",
-          this.state.sectors
+          this.state.sectors,
+          this.state.profileAttributesSectors,
+          "searchSector"
         )}
         {this.chipContainer(
-          search,
+          this.state.searchSkill,
           searchValid,
           textFieldPass,
           chipText,
@@ -512,10 +649,12 @@ class ProfileComponent extends Component {
           chip,
           "Skill",
           "skills",
-          this.state.skills
+          this.state.skills,
+          this.state.profileAttributesSkills,
+          "searchSkill"
         )}
         {this.chipContainer(
-          search,
+          this.state.searchClient,
           searchValid,
           textFieldPass,
           chipText,
@@ -524,7 +663,9 @@ class ProfileComponent extends Component {
           chip,
           "Client",
           "clients",
-          this.state.clients
+          this.state.clients,
+          this.state.profileAttributesClients,
+          "searchClient"
         )}
         <div className={classes.typosContainer}>
           <Typography className={classes.lastTypos}>
@@ -570,7 +711,8 @@ const mapStateToProps = state => {
     freelancerProfile: state.clientBasicProfileReducer.freelancerProfile,
     message: state.clientBasicProfileReducer.message,
     hasError: state.clientBasicProfileReducer.hasError,
-    updateProfessional: state.clientBasicProfileReducer.updateProfessional
+    updateProfessional: state.clientBasicProfileReducer.updateProfessional,
+    profileAttributes: state.clientBasicProfileReducer.profileAttributes
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -580,6 +722,9 @@ const mapDispatchToProps = dispatch => {
     },
     saveprofessionalInfoData: (...args) => {
       dispatch(saveprofessionalInfoData(...args));
+    },
+    clientProffesionalAttributes: () => {
+      dispatch(clientProffesionalAttributes());
     }
   };
 };

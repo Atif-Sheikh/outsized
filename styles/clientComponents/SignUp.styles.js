@@ -280,8 +280,8 @@ export const styles = theme => ({
     }
   },
   errorText: {
-    width: "100%",
-    height: "20px",
+    width: "95%",
+    height: "auto",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     textAlign: "center !important",
     fontSize: "14px",
@@ -292,10 +292,13 @@ export const styles = theme => ({
     letterSpacing: "normal",
     color: "#e0383e",
     paddingTop: "14px",
+    margin: "0px auto -30px",
     [theme.breakpoints.up("sm")]: {
       fontSize: "14px",
       width: "85%",
-      margin: "auto",
+      height: "60px",
+      paddingTop: "20px",
+      margin: "0px auto -30px",
       textAlign: "left !important"
     }
   },

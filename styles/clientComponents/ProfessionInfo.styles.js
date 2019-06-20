@@ -108,11 +108,12 @@ export const styles = theme => ({
   contractContaienr: {
     width: "100%",
     borderBottom: "solid 1px rgba(0, 0, 0, 0.22);",
-    padding: "15px 0px 15px",
+    padding: "10px 0px 10px",
     display: "flex",
     flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
-      flexDirection: "row"
+      flexDirection: "row",
+      alignItems: "center"
     }
   },
   checkBoxContainer: {},
@@ -125,7 +126,7 @@ export const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    paddingBottom: "10px",
+    // paddingBottom: "10px",
     justifyContent: "flex-start",
     padding: "0px 40px",
     [theme.breakpoints.up("sm")]: {
@@ -172,8 +173,17 @@ export const styles = theme => ({
     color: "rgba(0, 0, 0, 1)",
     fontWeight: "bold",
     display: "flex",
-    width: "92px",
-    borderBottom: "solid 2px rgba(0, 0, 0, 0.32);"
+    width: "95px"
+    // borderBottom: "solid 2px rgba(0, 0, 0, 0.32);"
+  },
+  ratesTexts: {
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "13px",
+    color: "rgba(0, 0, 0, 1)",
+    fontWeight: "bold",
+    display: "flex",
+    width: "95px"
+    // borderBottom: "solid 2px rgba(0, 0, 0, 0.32);"
   },
   chipText: {
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",

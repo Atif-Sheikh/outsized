@@ -193,21 +193,27 @@ export const styles = theme => ({
   closeIcon: {
     // display: "none",
     // [theme.breakpoints.up("sm")]: {
-    display: "flex",
-    justifyContent: "flex-end",
+    // display: "flex",
+    // justifyContent: "flex-end",
     width: "50px",
     alignSelf: "flex-end"
     // }
   },
   icon: {
+    display: "none",
     width: "24px",
     height: "24px",
-    color: "#000"
+    color: "#000",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
+    }
   },
   paperzzzzz: {
     borderRadius: "0px",
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
       margin: 0,
+      padding: "20px",
+      overflow: "hidden",
       height: "100% !important",
       maxHeight: "100vh"
     },
@@ -217,7 +223,7 @@ export const styles = theme => ({
       borderRadius: "15px !important",
       backgroundColor: "#fff",
       display: "flex",
-      margin: "60px auto",
+      margin: "20px auto",
       display: "flex",
       justifyContent: "center",
       padding: "5px 0 5px 0"
@@ -264,7 +270,29 @@ export const styles = theme => ({
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal",
-    color: "#575553"
+    color: "#575553",
+    padding: "30px 0px",
+    [theme.breakpoints.up("sm")]: {
+      width: "292px",
+      display: "flex",
+      alignItems: "center",
+      height: "28px",
+      fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+      fontSize: "20px",
+      fontWeight: "550",
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: "normal",
+      letterSpacing: "normal",
+      color: "#575553",
+      paddingBottom: "0px"
+    }
+  },
+  iconNext: {
+    display: "inline",
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   },
   headerTextChildsssssss: {
     display: "inline-block",
@@ -521,7 +549,7 @@ export const styles = theme => ({
   },
   headerTextChi: {
     display: "inline-block",
-    width: "100%",
+    width: "94%",
     display: "flex",
     alignItems: "center",
     height: "50px",
@@ -533,11 +561,27 @@ export const styles = theme => ({
     lineHeight: "normal",
     letterSpacing: "normal",
     color: "#575553",
-    padding: "0 0px 0px 26px"
+    height: "100px",
+    justifyContent: "space-between",
+    padding: "20 0px 20px 26px",
+    [theme.breakpoints.up("sm")]: {
+      height: "auto",
+      padding: "0 0px 20px 26px"
+    }
+  },
+  errorsss: {
+    color: "white",
+    textAlign: "center",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "13px",
+    [theme.breakpoints.up("sm")]: {
+      textAlign: "left",
+      fontSize: "15px"
+    }
   },
   errorContainerss: {
     width: "85%",
-    height: "30px",
+    height: "140px",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     // textAlign:'center !important',
     fontSize: "16px",
@@ -545,10 +589,18 @@ export const styles = theme => ({
     fontWeight: "550",
     fontStyle: "normal",
     fontStretch: "normal",
+    marginBottom: "20px",
     lineHeight: 0.25,
     letterSpacing: "normal",
     color: "#e0383e",
-    paddingTop: "4px"
+    paddingTop: "4px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "5px",
+    border: "solid 3px #e0383e",
+    backgroundColor: "#8a3639",
+    opacity: 0.95
   },
   FormContainerss: {
     width: "85%",
@@ -560,7 +612,8 @@ export const styles = theme => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    margin: 0
+    margin: 0,
+    width: "100%"
   },
   midSecDatass: {
     width: "100%",
@@ -573,9 +626,10 @@ export const styles = theme => ({
     letterSpacing: "normal",
     color: "rgba(0, 0, 0, 0.87)",
     overflowY: "auto",
+    height: "67vh",
     [theme.breakpoints.up("sm")]: {
       width: "520px",
-      height: "345px"
+      height: "305px"
     }
   },
   wrapperss: {

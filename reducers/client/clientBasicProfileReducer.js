@@ -31,7 +31,10 @@ import {
   EDIT_PROFILE_FAILED,
   UPDATE_PROFILE,
   UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_FAILED
+  UPDATE_PROFILE_FAILED,
+  PROFILE_ATTRIBUTES_SUCCESS,
+  PROFILE_ATTRIBUTES_FAILED,
+  PROFILE_ATTRIBUTES_STARTED
 } from "../../utils/redux/types";
 
 const initialState = {
@@ -50,7 +53,8 @@ const initialState = {
   editExperience: {},
   deleteExperience: {},
   editProfile: {},
-  updateProfessional: {}
+  updateProfessional: {},
+  profileAttributes: {}
 };
 
 export const clientBasicProfileReducer = (state = initialState, action) => {
@@ -267,6 +271,26 @@ export const clientBasicProfileReducer = (state = initialState, action) => {
         hasError: false
       };
     case UPDATE_PROFILE_FAILED:
+      return {
+        ...state,
+        hasError: true,
+        isLoading: false,
+        access: false,
+        message: action.payload,
+        message: "Please fill the form perfectly"
+      };
+    case PROFILE_ATTRIBUTES_STARTED:
+      return { ...state, isLoading: true, message: "", access: false };
+    case PROFILE_ATTRIBUTES_SUCCESS:
+      return {
+        ...state,
+        profileAttributes: action.payload,
+        message: "Edit Successfully",
+        isLoading: false,
+        access: true,
+        hasError: false
+      };
+    case PROFILE_ATTRIBUTES_FAILED:
       return {
         ...state,
         hasError: true,

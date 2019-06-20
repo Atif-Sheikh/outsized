@@ -62,6 +62,12 @@ class BasicComponent extends Component {
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
+    setTimeout(() => {
+      let showTermsModal = localStorage.getItem("terms");
+      this.setState({ showTermsModal });
+      console.log("showTermsModal", showTermsModal);
+      console.log("type", typeof showTermsModal);
+    }, 1000);
   }
   componentWillReceiveProps(nextProps) {
     if (this.state.actionPerform === "edit") {
@@ -160,7 +166,11 @@ class BasicComponent extends Component {
         </IconButton>
         <div className={classes.headerContainerss}>
           <Typography className={classes.headerTextChi}>
-            Terms &amp; Conditions
+            <span>Terms &amp; Conditions</span>
+            <CloseIcon
+              className={classes.iconNext}
+              onClick={() => this.setState({ termsError: true })}
+            />
           </Typography>
         </div>
         {termsError && (
@@ -206,7 +216,10 @@ class BasicComponent extends Component {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => this.setState({ showTermsModal: false })}
+                onClick={() => {
+                  this.setState({ showTermsModal: false });
+                  localStorage.setItem("terms", false);
+                }}
                 className={classes.agreeBtn}
               >
                 Accept and Continue
