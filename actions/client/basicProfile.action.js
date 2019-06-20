@@ -670,7 +670,9 @@ export const clientEditProfileApi = (
   name,
   mobile,
   currentLocation,
-  email
+  email,
+  enqueueSnackbar,
+  closeSnackbar
 ) => dispatch => {
   dispatch(editProfileStarted());
   let token = localStorage.getItem("token");
@@ -705,6 +707,16 @@ export const clientEditProfileApi = (
     .then(res => {
       dispatch(editProfileSuccess(res.data));
       localStorage.setItem("token", res.data.editBasicProfile.token);
+      const key = enqueueSnackbar("Edit Successfully", {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
+        }
+      });
+      setTimeout(() => {
+        closeSnackbar(key);
+      }, 2000);
     })
     .catch(err => {
       const error =
@@ -715,6 +727,16 @@ export const clientEditProfileApi = (
           ? err.response.data.errors[0]
           : err.message;
       dispatch(editProfileFailed(error));
+      const key = enqueueSnackbar(error, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right"
+        }
+      });
+      setTimeout(() => {
+        closeSnackbar(key);
+      }, 2000);
     });
 };
 

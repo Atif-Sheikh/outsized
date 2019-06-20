@@ -347,14 +347,24 @@ class BasicComponent extends Component {
     ) {
       console.log("email", email);
       if (number && number.slice(0, 1) === "+") {
-        this.props.clientEditProfileApi(gender, name, number, location, email);
+        this.props.clientEditProfileApi(
+          gender,
+          name,
+          number,
+          location,
+          email,
+          this.props.enqueueSnackbar,
+          this.props.closeSnackbar
+        );
       } else {
         this.props.clientEditProfileApi(
           gender,
           name,
           this.state.code + number,
           location,
-          email
+          email,
+          this.props.enqueueSnackbar,
+          this.props.closeSnackbar
         );
       }
     }
@@ -799,8 +809,26 @@ const mapDispatchToProps = dispatch => {
         clientVerifyEmail(email, enqueueSnackbar, closeSnackbar, Router)
       );
     },
-    clientEditProfileApi: (gender, name, number, location, email) => {
-      dispatch(clientEditProfileApi(gender, name, number, location, email));
+    clientEditProfileApi: (
+      gender,
+      name,
+      number,
+      location,
+      email,
+      enqueueSnackbar,
+      closeSnackbar
+    ) => {
+      dispatch(
+        clientEditProfileApi(
+          gender,
+          name,
+          number,
+          location,
+          email,
+          enqueueSnackbar,
+          closeSnackbar
+        )
+      );
     },
     clearTermsModal: () => {
       dispatch(clearTermsModalComp());

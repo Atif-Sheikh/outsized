@@ -2,10 +2,10 @@ export const styles = theme => ({
   mainContainer: {
     width: "20%",
     display: "flex",
-    height: "600px",
-    [theme.breakpoints.up("sm")]: {
-      width: "80%"
-    }
+    height: "600px"
+    // [theme.breakpoints.up("sm")]: {
+    //   width: "80%"
+    // }
   },
   sideBarIcon: {
     width: "30%",
