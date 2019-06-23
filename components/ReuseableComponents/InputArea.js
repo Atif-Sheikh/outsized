@@ -72,7 +72,8 @@ class InputArea extends Component {
             fontStretch: "normal",
             lineHeight: 1.5,
             letterSpacing: "normal",
-            color: "rgba(0, 0, 0, 0.87)"
+            color: "rgba(0, 0, 0, 0.87)",
+            marginTop: "-10px"
           }
         }}
       />

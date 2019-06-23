@@ -26,6 +26,8 @@ class CaseLinks extends Component {
       addlink: false,
       saveFile: false,
       openDeleteModal: false,
+      validName: true,
+      validLinks: true,
       cases: [],
       add: [],
       name: "",
@@ -55,6 +57,7 @@ class CaseLinks extends Component {
 
     return (
       <Dialog
+        className={classes.paper}
         open={openDeleteModal}
         onClose={() => this.setState({ openDeleteModal: false })}
         style={{ minWidth: "500px", minHeight: "250px", borderRadius: "5px" }}
@@ -104,6 +107,7 @@ class CaseLinks extends Component {
     const { classes } = this.props;
     return (
       <Dialog
+        className={classes.paper}
         open={addlink}
         onClose={() => {}}
         style={{ minWidth: "630px !important", minHeight: "400px" }}
@@ -111,13 +115,16 @@ class CaseLinks extends Component {
         aria-describedby="alert-dialog-description"
       >
         <IconButton
-          className={classes.closeIcon}
+          className={classes.closeIcon + " " + classes.caseLinkIcon}
           aria-label="Close"
           onClick={() => this.setState({ addlink: false })}
         >
           <CloseIcon className={classes.icon} />
         </IconButton>
-        <DialogTitle className={classes.headerTitle} id="alert-dialog-title">
+        <DialogTitle
+          className={classes.headerTitle + " " + classes.caseLinkText}
+          id="alert-dialog-title"
+        >
           Case studies link(s)
         </DialogTitle>
         <DialogContent>
@@ -127,7 +134,7 @@ class CaseLinks extends Component {
               label={"Name"}
               handleInputChange={this.handleInputChange}
               value={name}
-              validation={true}
+              validation={this.state.validName}
               styleprops={classes.textField}
             />
 
@@ -136,24 +143,34 @@ class CaseLinks extends Component {
               label={"Url"}
               handleInputChange={this.handleInputChange}
               value={url}
-              validation={true}
+              validation={this.state.validLinks}
               styleprops={classes.textField}
             />
           </div>
         </DialogContent>
         <DialogActions>
-          <Button
-            className={classes.saveBtn}
-            onClick={() => {
-              this.setState({ addlink: false }),
-                this.props.addCaseStudyLink(name, url);
-            }}
-          >
+          <Button className={classes.saveBtn} onClick={this.addLink}>
             Save
           </Button>
         </DialogActions>
       </Dialog>
     );
+  };
+  addLink = () => {
+    if (!this.state.name.length) {
+      this.setState({
+        validName: false
+      });
+    }
+    if (!this.state.url.length) {
+      this.setState({
+        validLinks: false
+      });
+    }
+    if (this.state.url.length && this.state.name.length) {
+      this.props.addCaseStudyLink(this.state.name, this.state.url);
+      this.setState({ addlink: false });
+    }
   };
   addNewFiled = () => {
     console.log(this.state.add.length);
@@ -175,13 +192,14 @@ class CaseLinks extends Component {
   };
   handleInputChange = async event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      validLinks: true,
+      validName: true
     });
   };
   render() {
     const { classes, fileName } = this.props;
     const { cases, add, name, url } = this.state;
-    console.log(this.state);
     return (
       <div className={classes.resumeSection}>
         <Typography className={classes.resume}>
@@ -248,7 +266,6 @@ const mapStateToProps = state => {
     updateProfessional: data,
     caseLink: state.PortfolioReducer.caseLink,
     CaseDoc: state.PortfolioReducer.caseDoc
-    // caseLink: state.portfolioReducer.caseLink
   };
 };
 

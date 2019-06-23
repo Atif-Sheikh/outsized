@@ -10,13 +10,11 @@ import PdfFile from "@material-ui/icons/PictureAsPdf";
 import { styles } from "@styles/clientComponents/Portfolio.styles.js";
 import InputArea from "../../ReuseableComponents/InputArea";
 import FilesContainer from "./FileContainer";
+import DialogActions from "@material-ui/core/DialogActions";
 import {
   retrieveFreelancerProfile,
   addProject,
   addProjectDocuments
-  // clientAddExperienceApi,
-  // clientEditExperienceApi,
-  // clientDeleteExperienceApi
 } from "@actions/client";
 import { connect } from "react-redux";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -24,7 +22,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Dialog from "@material-ui/core/Dialog";
 import Back from "@material-ui/icons/ArrowBack";
 import DeleteIcon from "@material-ui/icons/Delete";
-// import { styles } from "@styles/clientComponents/Experience.styles.js";
 import MenuItem from "@material-ui/core/MenuItem";
 import EditIcon from "@material-ui/icons/Edit";
 import FormControl from "@material-ui/core/FormControl";
@@ -33,6 +30,7 @@ import { withSnackbar } from "notistack";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
 class ProjectDetails extends Component {
   constructor(props) {
     super(props);
@@ -218,13 +216,11 @@ class ProjectDetails extends Component {
     );
   };
   callModal = id => {
-    this.setState({ id: id });
-    var input = document.getElementById("file-upload");
-    // var infoArea = document.getElementById( 'file-upload-filename' );
+    var input = document.getElementById(id);
+    console.log("+++", input);
     input.addEventListener("change", this.showFileName);
   };
   showFileName = event => {
-    // the change event gives us the input it occurred in
     var input = event.srcElement;
     var file = input.files[0];
     var reader = new FileReader();
@@ -308,17 +304,6 @@ class ProjectDetails extends Component {
       nextProps.freelancerProfile &&
       nextProps.freelancerProfile.freelancer &&
       nextProps.freelancerProfile.freelancer.portfolio;
-    // let deleteData =
-    //   nextProps &&
-    //   nextProps.deleteExperience &&
-    //   nextProps.deleteExperience.deleteExperience &&
-    //   nextProps.deleteExperience.deleteExperience.deleteExperience &&
-    //   nextProps.deleteExperience.deleteExperience.deleteExperience
-    //     .freelancerProfile &&
-    //   nextProps.deleteExperience.deleteExperience.deleteExperience
-    //     .freelancerProfile.portfolio;
-    // console.log("deleteData", deleteData);
-
     if (
       basicData &&
       basicData.projects &&
@@ -350,7 +335,8 @@ class ProjectDetails extends Component {
     roots,
     formControl,
     formControlText,
-    formControlSelect
+    formControlSelect,
+    condition
   ) => {
     return (
       <form className={roots} autoComplete="off">
@@ -362,6 +348,7 @@ class ProjectDetails extends Component {
             value={this.state[name]}
             onChange={this.handleChange}
             className={formControlSelect}
+            disabled={condition && this.state.onGoing}
             inputProps={{
               name: name,
               id: "age-simple"
@@ -439,7 +426,7 @@ class ProjectDetails extends Component {
           name: name,
           client: clientName,
           startDate: sDate,
-          endDate: lDate,
+          endDate: lDate ? lDate : sDate,
           projectType: type,
           ongoing: onGoing,
           description: description
@@ -460,7 +447,6 @@ class ProjectDetails extends Component {
     this.setState({
       showText: true
     });
-    console.log(sDate);
   };
   setYears = () => {
     let currentYear = new Date().getFullYear();
@@ -495,7 +481,6 @@ class ProjectDetails extends Component {
   addNewFiled = () => {
     var data = [];
     if (!this.state.add.length) {
-      // this.state.add.push({name:"sss",url:"sss"})
       this.setState({ add: [{ name: "sss", url: "sss" }] });
     }
   };
@@ -523,14 +508,22 @@ class ProjectDetails extends Component {
       <div className={classes.resumeSection}>
         <div className={classes.casePreview}>
           <Typography className={classes.resume}>Project</Typography>
+
           <div className={classes.iconCaseSection}>
-            <IconButton
-              className={classes.AddFiles}
-              aria-label="Close"
-              onClick={() => this.setState({ open: true, buttonText: "Save" })}
+            <Button
+              onClick={() => this.callModal(`file-upload`)}
+              className={classes.uploadFiles}
             >
-              <Add className={classes.iconAdd} />
-            </IconButton>
+              <form>
+                <input
+                  type="file"
+                  id={`file-upload`}
+                  style={{ Zindex: -1, position: "absolute", opacity: 0 }}
+                  className={classes.uploadFiles}
+                />
+                <label for="file-upload">Upload file</label>
+              </form>
+            </Button>
           </div>
         </div>
         {projects.length > 0 &&
@@ -539,7 +532,7 @@ class ProjectDetails extends Component {
               <div className={classes.casePreview}>
                 <div className={classes.caseLinkSection}>
                   <InputArea
-                    label={"Peoject Name"}
+                    label={"Project Name"}
                     value={projectsData.name}
                     validation={true}
                     disabled={true}
@@ -548,7 +541,7 @@ class ProjectDetails extends Component {
                 <div className={classes.caseLinkSection}>
                   <InputArea
                     label={"Client Name"}
-                    value={projectsData.clientName}
+                    value={projectsData.client}
                     validation={true}
                     disabled={true}
                   />
@@ -557,7 +550,7 @@ class ProjectDetails extends Component {
               <div className={classes.casePreview}>
                 <div className={classes.caseLinkSection}>
                   <InputArea
-                    label={"Peoject Start Date"}
+                    label={"Project Start Date"}
                     value={projectsData.startDate}
                     validation={true}
                     disabled={true}
@@ -565,8 +558,10 @@ class ProjectDetails extends Component {
                 </div>
                 <div className={classes.caseLinkSection}>
                   <InputArea
-                    label={"Peoject End Date"}
-                    value={projectsData.endDate}
+                    label={"Project End Date"}
+                    value={
+                      projectsData.ongoing ? "Ongoing" : projectsData.endDate
+                    }
                     validation={true}
                     disabled={true}
                   />
@@ -576,7 +571,7 @@ class ProjectDetails extends Component {
                 <div className={classes.caseLinkSection}>
                   <InputArea
                     label={"Type of Project"}
-                    value={projectsData.type}
+                    value={projectsData.projectType}
                     validation={true}
                     disabled={true}
                   />
@@ -586,7 +581,6 @@ class ProjectDetails extends Component {
                 <div className={classes.caseLinkSection}>
                   <InputArea
                     multiline={true}
-                    rows={4}
                     label={
                       "What else would you like to tell us about yourself and what you’re looking for?"
                     }
@@ -610,13 +604,13 @@ class ProjectDetails extends Component {
               )}
               <div className={classes.uploadBtnContainer}>
                 <Button
-                  onClick={() => this.callModal(projectsData.id)}
+                  onClick={() => this.callModal(`file-upload${i}`)}
                   className={classes.uploadFiles}
                 >
                   <form>
                     <input
                       type="file"
-                      id="file-upload"
+                      id={`file-upload${i}`}
                       style={{ Zindex: -1, position: "absolute", opacity: 0 }}
                       className={classes.uploadFiles}
                     />
@@ -687,13 +681,14 @@ class ProjectDetails extends Component {
 
                 <div className={classes.dropDownContainer}>
                   {this.dropDown(
-                    "From Date",
+                    "Start Date",
                     months,
                     "fromMonth",
                     roots,
                     formControl,
                     formControlText,
-                    formControlSelect
+                    formControlSelect,
+                    false
                   )}
 
                   {this.dropDown(
@@ -703,17 +698,19 @@ class ProjectDetails extends Component {
                     roots,
                     formControl,
                     formControlText,
-                    formControlSelect
+                    formControlSelect,
+                    false
                   )}
 
                   {this.dropDown(
-                    "Till Date",
+                    "End Date",
                     months,
                     "tillMonth",
                     roots,
                     formControl,
                     formControlText,
-                    formControlSelect
+                    formControlSelect,
+                    true
                   )}
 
                   {this.dropDown(
@@ -723,7 +720,8 @@ class ProjectDetails extends Component {
                     roots,
                     formControl,
                     formControlText,
-                    formControlSelect
+                    formControlSelect,
+                    true
                   )}
                 </div>
                 <div>
@@ -772,13 +770,14 @@ class ProjectDetails extends Component {
             </DialogContentText>
           </DialogContent>
         </Dialog>
+        {this.uploadFileModal("kayla_life_case_study.pdf")}
+        {this.saveBeforeLeaving()}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  console.log("state", state);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,

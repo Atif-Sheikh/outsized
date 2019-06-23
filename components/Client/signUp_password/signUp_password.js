@@ -173,7 +173,6 @@ class SignUp_PasswordFormComponent extends Component {
           <CloseIcon className={classes.icon} />
         </IconButton>
         <div className={classes.Header} />
-        {/* <Paper className={classes.inner}> */}
         <div className={classes.FormContainerDup}>
           <Typography className={classes.headerText}>
             <IconButton
@@ -267,7 +266,6 @@ class SignUp_PasswordFormComponent extends Component {
                 type="submit"
                 className={classes.SignUpBtn}
                 disabled={!allow}
-                // onClick={() => this.setState({ message: "something went wrong" })}
               >
                 Continue
               </Button>
@@ -299,7 +297,6 @@ class SignUp_PasswordFormComponent extends Component {
             </Link>
           </div>
         </div>
-        {/* </Paper> */}
       </Dialog>
     );
   }

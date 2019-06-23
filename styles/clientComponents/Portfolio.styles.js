@@ -5,22 +5,35 @@ export const styles = theme => ({
     // height: "100%",
     paddingTop: 20,
     [theme.breakpoints.down("sm")]: {
-      masrginTop: 75
+      marginTop: "75px"
     }
   },
   paper: {
-    minwidth: "100%",
+    minWidth: "100%",
     position: "relative",
     zIndex: 333333423432432,
     // overflow:'hidden',
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
       overflowY: "auto",
-      width: "600px",
-      height: "642px"
+      width: "600px"
     },
-    [theme.breakpoints.up("sm")]: {
-      minwidth: "1000px !important"
-      // overflow:'hidden',
+    [theme.breakpoints.down("sm")]: {
+      "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+        maxWidth: "505px",
+        minHeight: "100vh",
+        overflow: "hidden",
+        top: "8%",
+        margin: "0"
+      }
+    }
+  },
+  caseLinkPaper: {
+    [theme.breakpoints.down("sm")]: {
+      "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+        width: "430px",
+        margin: "45px",
+        right: "9%"
+      }
     }
   },
   resumeSection: {},
@@ -128,10 +141,15 @@ export const styles = theme => ({
     justifyContent: "center"
   },
   nameSection: {
-    flex: 2,
+    flex: 6,
+    paddingLeft: "30px",
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around"
+    [theme.breakpoints.down("sm")]: {
+      wordBreak: "break-all",
+      paddingLeft: "0"
+    }
+    // justifyContent: "space-around"
   },
   caseLinkSection: {
     flex: 2,
@@ -153,6 +171,11 @@ export const styles = theme => ({
   headerTitle: {
     paddingLeft: "50px !important",
     paddingTop: "0 !important"
+  },
+  caseLinkText: {
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "30px !important"
+    }
   },
   iconSection: {
     flex: 3,
@@ -311,12 +334,20 @@ export const styles = theme => ({
     paddingLeft: "10px"
   },
   closeIcon: {
-    display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "flex",
       justifyContent: "flex-end",
       width: "50px",
       alignSelf: "flex-end"
+    },
+    [theme.breakpoints.down("sm")]: {
+      left: "10%",
+      marginTop: "2%"
+    }
+  },
+  caseLinkIcon: {
+    [theme.breakpoints.down("sm")]: {
+      left: "40%"
     }
   },
   formControl: {
@@ -339,7 +370,10 @@ export const styles = theme => ({
   },
   textField: {
     maxWidth: "90%",
-    marginLeft: "30px"
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "100%",
+      marginLeft: "0"
+    }
   },
   saveBtn: {
     minWidth: "66px",
@@ -348,7 +382,12 @@ export const styles = theme => ({
     boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
     backgroundColor: "#5e35b1",
     color: "#fff",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    [theme.breakpoints.down("sm")]: {
+      width: "94%",
+      marginBottom: "100%",
+      right: "3%"
+    }
   },
   saveBefore: {
     minWidth: "222px",
@@ -370,10 +409,19 @@ export const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    bottom: "20%"
+    bottom: "20%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      marginLeft: "30px",
+      marginTop: "25px",
+      justifyContent: "flex-start"
+    }
   },
   dialogTitle: {
-    paddingTop: "0 !important"
+    paddingTop: "0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "70px 0 0 0"
+    }
   },
   deleteTitle: {
     minWidth: "355px",
@@ -386,7 +434,10 @@ export const styles = theme => ({
     fontStretch: "normal",
     lineHeight: "normal",
     letterSpacing: "normal",
-    color: "#575553"
+    color: "#575553",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "20px"
+    }
   },
   deleteBtnsContainer: {
     display: "flex",

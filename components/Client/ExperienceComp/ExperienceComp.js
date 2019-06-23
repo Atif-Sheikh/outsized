@@ -119,7 +119,6 @@ class Experience extends Component {
         ? nextProps.deleteExperience.deleteExperience.deleteExperience
             .freelancerProfile.experiences
         : [];
-    console.log("deleteData", deleteData);
     this.setState({
       experienceData: deleteData.length
         ? deleteData
@@ -244,7 +243,6 @@ class Experience extends Component {
     this.setState({
       showText: true
     });
-    console.log(sDate);
   };
   setYears = () => {
     let currentYear = new Date().getFullYear();
@@ -289,7 +287,6 @@ class Experience extends Component {
       defaultChecked
     } = this.state;
     const { roots, formControl, formControlText, formControlSelect } = classes;
-    console.log("------", this.state.currentlyWorking);
     return (
       <div className={classes.mainContainer}>
         <div className={classes.iconBtnDiv}>
@@ -329,9 +326,6 @@ class Experience extends Component {
                     {date} - {val.currentlyWorking ? "Present" : todate}
                     <span className={classes.oval} />
                   </Typography>
-                  {/*<Typography className={classes.place}>
-                                    {val.designation}
-                                </Typography>*/}
                   <Typography className={classes.dummyText}>
                     {val.description}
                   </Typography>
@@ -343,7 +337,7 @@ class Experience extends Component {
         <Dialog
           open={open}
           onClose={() => this.setState({ open: false })}
-          className={classes.modalContainer}
+          className={classes.paper}
         >
           <IconButton
             className={classes.closeIcon}
@@ -361,20 +355,11 @@ class Experience extends Component {
               >
                 <Back className={classes.icon} />
               </IconButton>{" "}
-              <Typography>Add Work Experience</Typography>
+              <Typography className={classes.heading}>
+                Add Work Experience
+              </Typography>
             </Typography>
           </DialogTitle>
-          <Typography className={classes.headerText}>
-            <span
-              className={classes.headerTextChild}
-              style={{
-                color: this.props.hasError ? "red" : "green",
-                paddingLeft: "20px"
-              }}
-            >
-              {this.state.showText ? this.props.message : ""}
-            </span>
-          </Typography>
           <DialogContent className={classes.modal}>
             <DialogContentText
               id="alert-dialog-description"
@@ -485,7 +470,6 @@ class Experience extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,

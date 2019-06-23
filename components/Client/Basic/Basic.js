@@ -7,6 +7,10 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputArea from "../../ReuseableComponents/InputArea";
 import MenuListComposition from "../../ReuseableComponents/NumberSelectoin";
@@ -115,8 +119,6 @@ class BasicComponent extends Component {
               .alternateMobiles
           : [];
 
-      console.log("basicData", basicData);
-      // let { name, number, gender, email, linkedlnUrl, location} = this.state
       this.setState({
         name: basicData && basicData.name,
         number: basicData && basicData.mobile,
@@ -144,6 +146,24 @@ class BasicComponent extends Component {
         });
       }, 1000);
     }
+    setTimeout(() => {
+      if (this.state.numberModal) {
+        this.setState({
+          numberModal: nextProps && !nextProps.access
+        });
+      }
+      if (this.state.emailModal) {
+        this.setState({
+          emailModal: nextProps && !nextProps.access
+        });
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      this.setState({
+        showText: false
+      });
+    }, 2000);
   }
 
   termsAndConditionsModal = () => {
@@ -151,7 +171,6 @@ class BasicComponent extends Component {
     const { showTermsModal, termsError } = this.state;
     return (
       <Dialog
-        // style={styles.rectangle}
         className={classes.paperzzzz}
         onClose={() => {}}
         open={showTermsModal}
@@ -261,7 +280,6 @@ class BasicComponent extends Component {
       });
     }
     if (this.state.addNewEmailValid) {
-      console.log("add new emeil", this.state.addNewEmail);
       if (this.state.submitText === "Submit") {
         this.props.clientAddEmailApi(this.state.addNewEmail);
         this.setState({
@@ -300,13 +318,13 @@ class BasicComponent extends Component {
         });
       }
       if (this.state.addNewNumberValid) {
-        this.props.clientAddNumberApi(
-          this.state.addNewCode + this.state.addNewNumber
-        );
-        console.log(
-          "add new addNewNumberl",
-          this.state.addNewCode + this.state.addNewNumber
-        );
+        if (this.state.addNewNumber.slice(0, 1) === "+") {
+          this.props.clientAddNumberApi(this.state.addNewNumber);
+        } else {
+          this.props.clientAddNumberApi(
+            this.state.addNewCode + this.state.addNewNumber
+          );
+        }
       }
       this.setState({
         phoneNumberError: false,
@@ -358,7 +376,6 @@ class BasicComponent extends Component {
       location.length &&
       email.length
     ) {
-      console.log("email", email);
       if (number && number.slice(0, 1) === "+") {
         this.props.clientEditProfileApi(
           gender,
@@ -367,7 +384,8 @@ class BasicComponent extends Component {
           location,
           email,
           this.props.enqueueSnackbar,
-          this.props.closeSnackbar
+          this.props.closeSnackbar,
+          Router
         );
       } else {
         this.props.clientEditProfileApi(
@@ -377,7 +395,8 @@ class BasicComponent extends Component {
           location,
           email,
           this.props.enqueueSnackbar,
-          this.props.closeSnackbar
+          this.props.closeSnackbar,
+          Router
         );
       }
     }
@@ -402,7 +421,6 @@ class BasicComponent extends Component {
             <span className={classes.headerTextChild}>Add Email address</span>
           </Typography>
           <IconButton
-            // className={classes.closeIcon}
             aria-label="Close"
             onClick={() => {
               this.setState({
@@ -438,7 +456,6 @@ class BasicComponent extends Component {
               name="addNewEmail"
               value={this.state.addNewEmail}
               handleInputChange={event => this.handleInputChange(event)}
-              // onFocus={() => this.setState({ emailValid: true })}
               styleprops={classes.textFieldPass}
               validation={this.state.addNewEmailValid}
             />
@@ -460,7 +477,6 @@ class BasicComponent extends Component {
   addAlternateNumberModal = () => {
     const { numberModal } = this.state;
     const { classes } = this.props;
-
     return (
       <Dialog
         open={numberModal}
@@ -563,6 +579,43 @@ class BasicComponent extends Component {
       </div>
     );
   };
+  dropDown = (
+    value,
+    dropDownValue,
+    name,
+    roots,
+    formControl,
+    formControlText,
+    formControlSelect
+  ) => {
+    return (
+      <form className={roots} autoComplete="off">
+        <FormControl className={formControl}>
+          <InputLabel className={formControlText} htmlFor="age-simple">
+            {value}
+          </InputLabel>
+          <Select
+            defaultValue={this.state.gender}
+            value={this.state.gender}
+            onChange={this.handleInputChange}
+            className={formControlSelect}
+            inputProps={{
+              name: name,
+              id: "age-simple"
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {dropDownValue &&
+              dropDownValue.map(val => {
+                return <MenuItem value={val}>{val}</MenuItem>;
+              })}
+          </Select>
+        </FormControl>
+      </form>
+    );
+  };
   formDesign = (
     name,
     gender,
@@ -598,15 +651,15 @@ class BasicComponent extends Component {
           validation={nameValid}
           styleprops={textFieldPass}
         />
-        <InputArea
-          styleprops={textFieldPass}
-          label="Gender"
-          value={gender}
-          name="gender"
-          handleInputChange={event => this.handleInputChange(event)}
-          validation={genderValid}
-          styleprops={textFieldPass}
-        />
+        {this.dropDown(
+          "Gender",
+          ["Male", "Female"],
+          "gender",
+          classes.roots,
+          classes.formControl,
+          classes.formControlText,
+          classes.formControlSelect
+        )}
         <MenuListComposition
           number={number}
           handleInputChange={event => this.handleInputChange(event)}
@@ -633,7 +686,6 @@ class BasicComponent extends Component {
                   handleInputChange={event => this.handleInputChange(event)}
                   code={val.mobile.slice(0, 3)}
                   alternateNumber={true}
-                  // numberName=
                   counterCode={code => this.setState({ code: code })}
                   search={this.state.search}
                   searching={this.searching}
@@ -797,7 +849,6 @@ class BasicComponent extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,
@@ -834,7 +885,8 @@ const mapDispatchToProps = dispatch => {
       location,
       email,
       enqueueSnackbar,
-      closeSnackbar
+      closeSnackbar,
+      Router
     ) => {
       dispatch(
         clientEditProfileApi(
@@ -844,7 +896,8 @@ const mapDispatchToProps = dispatch => {
           location,
           email,
           enqueueSnackbar,
-          closeSnackbar
+          closeSnackbar,
+          Router
         )
       );
     },

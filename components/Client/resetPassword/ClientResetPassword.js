@@ -61,7 +61,6 @@ class ClientResetPass extends Component {
     this.setState({ error: nextProps.error, sucsess: nextProps.sucsess });
   }
   handleInputChange = event => {
-    console.log([event.target.name], event.target.value);
     this.setState({
       [event.target.name]: event.target.value,
       passwordValid: true,
@@ -130,7 +129,6 @@ class ClientResetPass extends Component {
               color="primary"
               type="submit"
               style={styles.resetBtn}
-              // onClick={this.formValidator}
             >
               Reset Password
             </Button>
@@ -142,7 +140,6 @@ class ClientResetPass extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     token: state.clientResetPassword.token,
     isLoading: state.clientResetPassword.isLoading,

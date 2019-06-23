@@ -31,7 +31,6 @@ class VerifyEmailAddress extends Component {
     }
   }
   componentWillReceiveProps(NewProps) {
-    console.log(NewProps.email);
     if (NewProps.email.valid) {
       Router.push("/basic-profile");
       this.setState({ linkVerification: false, valided: true });
@@ -62,7 +61,6 @@ class VerifyEmailAddress extends Component {
         </div>
         <div className={classes.lowerContainer}>
           <Typography className={classes.midSecTypo}>
-            {/* Please click on the link that has just been sent to <span className={classes.underlineTypo}>{this.props.email || ''}</span> and verify your email account. */}
             {linkVerification
               ? "Please wait verfing your account..."
               : valided

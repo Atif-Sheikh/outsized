@@ -44,16 +44,6 @@ class SignUpFormComponent extends Component {
     }
   }
   handleInputChange = async event => {
-    //  if (
-    //   !this.state.emailValid ||
-    //   this.state.name.trim() === "" ||
-    //   this.state.number.trim() === "" ||
-    //   this.state.name.trim() === ""
-    // ) {
-    //   this.setState({
-    //     allow: false
-    //   });
-    // }
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -94,11 +84,6 @@ class SignUpFormComponent extends Component {
         nameValid: false
       });
     }
-    // if (this.state.LinkedInUrl.length === 0) {
-    //   await this.setState({
-    //     linkedInValid: false
-    //   });
-    // }
     if (this.state.code === "code" || !this.state.number.length > 0) {
       this.setState({
         message: "Please select country code & enter phone number",
@@ -237,7 +222,6 @@ class SignUpFormComponent extends Component {
                 type="submit"
                 className={classes.SignUpBtn}
                 disabled={!this.props.isValidEmail || !condition}
-                // onClick={() => this.setState({ message: "something went wrong" })}
               >
                 Continue
               </Button>
@@ -275,7 +259,6 @@ class SignUpFormComponent extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     token: state.clientSignUpReducer.token,
     isLoading: state.clientSignUpReducer.isLoading,

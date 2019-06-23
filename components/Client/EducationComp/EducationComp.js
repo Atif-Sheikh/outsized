@@ -99,8 +99,6 @@ class Education extends Component {
           : []
       });
     } else if (this.state.actionPerform === "editEducation") {
-      console.log("editEducationData", editEducationData);
-
       let editEducationData =
         nextProps &&
         nextProps.editEducation &&
@@ -288,7 +286,10 @@ class Education extends Component {
               {this.state.showText ? this.props.message : ""}
             </span>
           </Typography>
-          <DialogContent className={classes.modal}>
+          <DialogContent
+            style={{ overflow: "hidden", minHeight: "100%" }}
+            className={styles.modal}
+          >
             <DialogContentText
               id="alert-dialog-description"
               className={classes.textModal}
@@ -350,7 +351,6 @@ class Education extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,

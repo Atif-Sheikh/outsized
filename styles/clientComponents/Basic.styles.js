@@ -31,6 +31,24 @@ export const styles = theme => ({
       width: "182px"
     }
   },
+  roots: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  formControl: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    width: "100%",
+    backgroundColor: "white"
+  },
+  formControlText: {},
+  formControlSelect: {
+    width: "100%",
+    position: "relative",
+    zIndex: 999,
+    padding: "2px",
+    height: "40px"
+  },
   papers: {
     borderRadius: "0px",
     position: "relative",

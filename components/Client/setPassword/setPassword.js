@@ -25,7 +25,6 @@ class SetPasswordFormComponent extends Component {
   };
 
   handleInputChange = event => {
-    console.log([event.target.name], event.target.value);
     this.setState({
       [event.target.name]: event.target.value,
       passwordValid: true,
@@ -35,7 +34,6 @@ class SetPasswordFormComponent extends Component {
   componentDidMount(props) {
     if (this.props.userData) {
       this.setState({ userData: this.props.userData });
-      console.log("setpassword", this.props.userData);
     }
   }
   formValidator = async event => {
@@ -108,12 +106,7 @@ class SetPasswordFormComponent extends Component {
     } = this.state;
 
     return (
-      <Dialog
-        // style={styles.rectangle}
-        className={classes.paper}
-        onClose={() => {}}
-        open={true}
-      >
+      <Dialog className={classes.paper} onClose={() => {}} open={true}>
         <div className={classes.Header} />
         <div className={classes.headerContainer}>
           <Typography className={classes.headerText}>
@@ -141,7 +134,6 @@ class SetPasswordFormComponent extends Component {
             className={classes.messageText}
           >
             {message}
-            {/* rohit.yadav@gmail.com is already registered with outsized. Please use a different email address or<span className={classes.signupTypo}> login.</span> */}
           </Typography>
         ) : null}
         <div className={classes.FormContainer}>
@@ -179,7 +171,6 @@ class SetPasswordFormComponent extends Component {
                 color="primary"
                 type="submit"
                 className={classes.SignUpBtn}
-                // onClick={() => this.setState({ error: "something went wrong" })}
               >
                 Signup
               </Button>
@@ -192,7 +183,6 @@ class SetPasswordFormComponent extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     token: state.clientSignUpReducer.token,
     isLoading: state.clientSignUpReducer.isLoading,

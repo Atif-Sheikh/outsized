@@ -41,10 +41,14 @@ class Portfolio extends Component {
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
   }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.resumes.length || nextProps.CaseDoc.length) {
-      this.setAllData(nextProps.resumes, nextProps.CaseDoc);
+    if (nextProps && nextProps.resumes && nextProps.resumes.length) {
+      this.setAllData(
+        nextProps.resumes,
+        nextProps.updateProfessional.caseStudies
+      );
+    } else if (nextProps && nextProps.CaseDoc && nextProps.CaseDoc.length) {
+      this.setAllData(nextProps.updateProfessional.resumes, nextProps.CaseDoc);
     } else {
       this.setAllData(
         nextProps.updateProfessional.resumes,
@@ -62,6 +66,7 @@ class Portfolio extends Component {
 
     return (
       <Dialog
+        className={classes.paper}
         open={openDeleteModal}
         onClose={() => this.setState({ openDeleteModal: false })}
         style={{ minWidth: "500px", minHeight: "250px", borderRadius: "5px" }}
@@ -116,7 +121,7 @@ class Portfolio extends Component {
     if (forCall === "CaseDoc") {
       this.props.addCaseDoc(data);
     }
-    this.setState({ saveFile: false });
+    this.setState({ uploadFile: false });
   };
   saveBeforeLeaving = () => {
     const { saveFile } = this.state;
@@ -164,11 +169,10 @@ class Portfolio extends Component {
   callModal = (type, id) => {
     forCall = type;
     var input = document.getElementById(id);
-    // var infoArea = document.getElementById( 'file-upload-filename' );
+    console.log("+++", input);
     input.addEventListener("change", this.showFileName);
   };
   showFileName = event => {
-    // the change event gives us the input it occurred in
     var input = event.srcElement;
     var file = input.files[0];
     var reader = new FileReader();
@@ -233,7 +237,9 @@ class Portfolio extends Component {
         <DialogActions>
           <Button
             className={classes.saveBtn}
-            onClick={() => this.setState({ uploadFile: false, saveFile: true })}
+            onClick={() => {
+              this.saveSendDoc();
+            }}
           >
             Save
           </Button>
@@ -261,10 +267,6 @@ class Portfolio extends Component {
               }
             />
           ))}
-          {/* <FilesContainer
-            fileName={"Rohit_Resume.pdf"}
-            callFunction={() => this.setState({ openDeleteModal: true })}
-          /> */}
 
           <div className={classes.uploadBtnContainer}>
             <Button
@@ -286,7 +288,7 @@ class Portfolio extends Component {
 
         <div className={classes.resumeSection}>
           <Typography className={classes.resume}>Case Studies</Typography>
-          {CaseStudy.map(data => (
+          {this.state.CaseStudy.map(data => (
             <FilesContainer
               fileName={data.name}
               callFunction={() =>
@@ -337,7 +339,6 @@ const mapStateToProps = state => {
     updateProfessional: data,
     resumes: state.PortfolioReducer.resumes,
     CaseDoc: state.PortfolioReducer.caseDoc
-    // resumes: state.portfolioReducer.resumes
   };
 };
 

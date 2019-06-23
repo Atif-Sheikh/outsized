@@ -28,7 +28,8 @@ export const styles = theme => ({
   btnContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    padding: "26px 25px"
   },
   closee: {
     width: "24px",
@@ -54,17 +55,36 @@ export const styles = theme => ({
   },
   modalContainer: {
     minwidth: "100%",
+    maxHeight: "100%",
     margin: "0px !important",
     position: "relative",
     zIndex: 333333423432432,
+    borderRadius: "10px",
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      height: "570px",
+      display: "flex",
+      borderCadius: "10px",
+      justifyContent: "center",
+      backgroundColor: "#fff",
+      overflow: "hidden"
+    },
     // overflow:'hidden',
-    [theme.breakpoints.up("sm")]: {
-      minwidth: "800px !important",
-      maxHeight: "800px"
+    [theme.breakpoints.down("sm")]: {
+      "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+        height: "100%",
+        borderRadius: "0px",
+        minWidth: "100%",
+        minHeight: "640px",
+        top: "45px"
+      }
     }
   },
   modal: {
     width: "100vw",
+    maxWidth: "70vw",
+    minHeight: "100%",
+    borderRadius: "10px",
+    overflow: "hidden",
     borderRadius: "5px",
     position: "relative",
     zIndex: 3333333099999999,
@@ -86,21 +106,22 @@ export const styles = theme => ({
     }
   },
   educationModalTitle: {
+    top: "10%",
     position: "relative",
     margin: "0px !important",
     zIndex: 9999,
     height: "auto"
   },
   back: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+    display: "none"
   },
   FormContainer: {
     width: "100%",
-    minHeight: "230px",
-    margin: "0 auto",
-    paddingBottom: "5px"
+    margin: "0 0 30px 0",
+    padding: "0 30px",
+    [theme.breakpoints.down("sm")]: {
+      padding: "25px 15px"
+    }
   },
   btnContainer: {
     display: "flex",
@@ -114,7 +135,11 @@ export const styles = theme => ({
     boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
     backgroundColor: "#5e35b1",
     color: "#fff",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      margin: "0 10px"
+    }
   },
   descr: {
     width: "81px",
@@ -142,8 +167,14 @@ export const styles = theme => ({
     color: "rgba(0, 0, 0, 0.87)"
   },
   closeIcon: {
-    display: "none",
+    left: "84%",
+    width: "10%",
+    top: "14%",
+    zIndex: "10000",
+    marginTop: "-55px",
     [theme.breakpoints.up("sm")]: {
+      left: "0",
+      marginTop: "0",
       display: "flex",
       justifyContent: "center",
       width: "50px",

@@ -42,7 +42,6 @@ import axios from "../../config/axios";
 export const retrieveFreelancerProfile = () => dispatch => {
   dispatch(getFreelancerProfileStarted());
   let token = localStorage.getItem("token");
-  console.log("token---------", token);
   let queryString = `
             query {
               freelancer(token:"${token}"){
@@ -74,6 +73,7 @@ export const retrieveFreelancerProfile = () => dispatch => {
                     enableHourlyProjects,
                     expectedHourlyRate,
                     minHours,
+                    description,
                     sectors{
                       id,
                       name
@@ -686,7 +686,8 @@ export const clientEditProfileApi = (
   currentLocation,
   email,
   enqueueSnackbar,
-  closeSnackbar
+  closeSnackbar,
+  Router
 ) => dispatch => {
   dispatch(editProfileStarted());
   let token = localStorage.getItem("token");
@@ -721,6 +722,7 @@ export const clientEditProfileApi = (
     .then(res => {
       dispatch(editProfileSuccess(res.data));
       localStorage.setItem("token", res.data.editBasicProfile.token);
+
       const key = enqueueSnackbar("Edit Successfully", {
         variant: "success",
         anchorOrigin: {
@@ -731,6 +733,7 @@ export const clientEditProfileApi = (
       setTimeout(() => {
         closeSnackbar(key);
       }, 2000);
+      Router.push("/professional-profile");
     })
     .catch(err => {
       const error =
@@ -784,6 +787,10 @@ export const saveprofessionalInfoData = ({
   enableHourlyProjects,
   expectedHourlyRate,
   minHours,
+  description,
+  clients,
+  sectors,
+  skills,
   enqueueSnackbar
 }) => dispatch => {
   dispatch(updateProfileStarted());
@@ -804,9 +811,10 @@ export const saveprofessionalInfoData = ({
         enableHourlyProjects: ${enableHourlyProjects},
         expectedHourlyRate: ${expectedHourlyRate},
         minHours: ${minHours},
-        sectors: [1],
-        skills: [1],
-        clients: [1],
+        sectors: [${sectors}],
+        skills: [${skills}],
+        clients: [${clients}],
+        description: "${description}",
         geoExperiences: ["Mumbai, India", "Kolkata, India"],
         token:"${localStorage.getItem("token")}"){
           freelancerProfile{
@@ -838,8 +846,8 @@ export const saveprofessionalInfoData = ({
               },
               geoExperiences{
                 name
-              }
-              
+              },
+              description
             }
           }
         }

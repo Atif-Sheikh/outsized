@@ -19,6 +19,11 @@ import {
   clientBasicProfileReducer,
   PortfolioReducer
 } from "./client";
+import {
+  firmLoginReducer,
+  firmSignUpReducer,
+  firmBasicProfileReducer
+} from "./firm";
 export default combineReducers({
   loginReducer,
   registerReducer,
@@ -37,5 +42,8 @@ export default combineReducers({
   clientResetPassword,
   clientForgotPassword,
   clientBasicProfileReducer,
-  PortfolioReducer
+  PortfolioReducer,
+  firmLoginReducer,
+  firmSignUpReducer,
+  firmBasicProfileReducer
 });

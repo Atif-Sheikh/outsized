@@ -14,7 +14,6 @@ export const clientSignUpApi = (
   Router
 ) => dispatch => {
   const { email, password, number, name, linkedinUrl } = userData;
-  console.log("userData", userData);
   dispatch(signUpStarted());
   let queryString = `
     mutation {

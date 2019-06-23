@@ -152,22 +152,21 @@ export const deleteCaseStudy = (
         deleteCaseStudy(token:"${localStorage.getItem("token")}",
         id:${id}){ 
         portfolio{
-            caseStudyLinks{
-                id,
-                name,
-                link
-                }
+          caseStudies{
+            id,
+            name,
+            link
             }
+          }
         }
     } `;
 
   axios
     .post("/graphql", queryString)
     .then(res => {
+      console.log("res", res);
       dispatch(
-        deleteCaseStudySuccess(
-          res.data.deleteCaseStudy.portfolio.caseStudyLinks
-        )
+        deleteCaseStudySuccess(res.data.deleteCaseStudy.portfolio.caseStudies)
       );
     })
     .catch(err => {
@@ -529,6 +528,7 @@ export const addProjectDocuments = (
   closeSnackbar
 ) => dispatch => {
   const { name, id, file } = data;
+  console.log("///////////////", data);
   var form = new FormData();
   form.append(
     "query",

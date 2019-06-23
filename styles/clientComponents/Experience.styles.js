@@ -26,13 +26,35 @@ export const styles = theme => ({
     }
   },
   modalContainer: {
-    minwidth: "100%",
+    width: "100%",
     position: "relative",
-    zIndex: 333333423432432,
-    // overflow:'hidden',
+    overflow: "hidden",
     [theme.breakpoints.up("sm")]: {
-      minwidth: "1000px !important"
-      // overflow:'hidden',
+      minwidth: "1000px !important",
+      overflow: "hidden"
+    }
+  },
+  paper: {
+    borderRadius: "10px",
+
+    "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+      maxWidth: "620px",
+      height: "570px",
+      borderRadius: "10px",
+      backgroundColor: "#fff",
+      display: "flex",
+      display: "flex",
+      justifyContent: "center",
+      overflow: "hidden"
+    },
+    [theme.breakpoints.down("sm")]: {
+      "&>div:nth-of-type(3)>div:nth-of-type(1)": {
+        height: "100%",
+        borderRadius: "0px",
+        minWidth: "100%",
+        minHeight: "640px",
+        top: "45px"
+      }
     }
   },
   iconBtnDiv: {
@@ -50,7 +72,7 @@ export const styles = theme => ({
     justifyContent: "space-between",
     visibility: "visible",
     [theme.breakpoints.up("sm")]: {
-      visibility: "hidden"
+      visibility: "visible"
     }
   },
   line: {
@@ -138,39 +160,51 @@ export const styles = theme => ({
   modalTitle: {
     position: "relative",
     margin: "0px !important",
-
-    zIndex: 9999
+    zIndex: 9999,
+    padding: "140px 0 0 13px",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      paddingLeft: "12px",
+      padding: "16px 24px",
+      top: "4%"
+    }
   },
   content: {
     margin: "0px !important",
     width: "100%",
     height: "100vh",
+    borderRadius: "10px",
     padding: "0px",
     overflow: "hidden !important",
     [theme.breakpoints.up("sm")]: {
-      width: "75%"
+      width: "100%",
+      padding: "0 35px",
+      height: "100%"
     }
   },
   modal: {
-    width: "100vw",
-    maxHeight: "100vh",
-    borderRadius: "5px",
+    width: "100%",
+    maxHeight: "50vh",
+    minHeight: "100%",
+    borderRadius: "10px",
     position: "relative",
     zIndex: 3333333099999999,
+    overflow: "hidden",
     position: "relative",
     margin: "0px !important",
     "&>div:nth-of-type(3)>div:nth-of-type(1)": {
       margin: 0,
       borderRadius: "0px",
       width: "100vw",
-      // minHeight: "573px",
       borderRadius: "5px",
       backgroundColor: "#ffffff"
     },
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "800px",
       height: "auto",
-      overflow: "hidden"
+      overflow: "scroll",
+      maxWidth: "100% !important",
+      maxHeight: "100%"
     }
   },
   saveBtn: {
@@ -180,15 +214,24 @@ export const styles = theme => ({
     boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
     backgroundColor: "#5e35b1",
     color: "#fff",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    }
   },
   closeIcon: {
-    display: "none",
+    left: "86%",
+    width: "10%",
+    top: "14%",
+    marginTop: "-55px",
+    zIndex: "10000",
     [theme.breakpoints.up("sm")]: {
+      top: "25%",
       display: "flex",
       justifyContent: "flex-end",
       width: "50px",
-      alignSelf: "flex-end"
+      alignSelf: "flex-start",
+      zIndex: "10000"
     }
   },
   btnContainer: {
@@ -202,32 +245,54 @@ export const styles = theme => ({
     color: "#000"
   },
   headerText: {
-    width: "85%",
-    margin: "auto",
+    [theme.breakpoints.up("sm")]: {
+      width: "85%",
+      margin: "auto",
+      height: "28px",
+      fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+      fontSize: "24px",
+      fontWeight: "550",
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: "normal",
+      letterSpacing: "normal",
+      color: "#575553"
+    },
+    marginTop: 25,
+    width: "100%",
     height: "28px",
     fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-    fontSize: "24px",
+    fontSize: "18px",
     fontWeight: "550",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: "normal",
+    lineHeight: "2.7",
     letterSpacing: "normal",
-    color: "#575553"
+    color: "#575553",
+    display: "flex",
+    marginLeft: "12px",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  heading: {
+    fontSize: "24px",
+    fontFamily: "Roboto-Medium, Helvetica, Arial, sans-serif",
+    fontWeight: "bold"
   },
   back: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+    display: "none"
   },
   FormContainer: {
-    width: "85%",
+    width: "100%",
     minHeight: "230px",
     margin: "0 auto",
-    paddingBottom: "35px"
+    paddingBottom: "35px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    }
   },
   FormContainerDup: {
     width: "100%",
-    // minHeight: "230px",
     margin: "0 auto",
     paddingBottom: "35px"
   },
@@ -263,20 +328,30 @@ export const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    minWidth: "20%"
-    // flexWrap: "wrap"
+    minWidth: "23%",
+    [theme.breakpoints.down("sm")]: {
+      minWidth: "100%",
+      flexWrap: "wrap",
+      marginLeft: "0"
+    }
   },
   dropDownContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column"
+    }
   },
   formControl: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
     width: "24%",
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    }
   },
   working: {
     width: "195px",
@@ -297,7 +372,10 @@ export const styles = theme => ({
   checkBoxContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "flex-start"
+    }
   },
   descr: {
     width: "81px",

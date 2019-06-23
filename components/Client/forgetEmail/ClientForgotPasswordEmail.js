@@ -103,7 +103,6 @@ class ClientForgotPassword extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     token: state.clientForgotPassword.token,
     isLoading: state.clientForgotPassword.isLoading,

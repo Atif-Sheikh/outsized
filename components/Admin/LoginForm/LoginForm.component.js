@@ -143,7 +143,7 @@ class LoginFormComponent extends Component {
           </form>
           <div>
             <Button color="inherit" style={styles.suggestionLink}>
-              <Link href="/forgot-password">
+              <Link href="/admin/forgot-password">
                 <a style={styles.links}>Forgot Password ?</a>
               </Link>
             </Button>

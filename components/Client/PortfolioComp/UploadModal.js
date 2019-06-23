@@ -24,9 +24,6 @@ class ModalClient extends Component {
     show: ""
   };
 
-  componentDidMount(props) {
-    console.log(this.props);
-  }
   componentWillReceiveProps(newProps) {
     this.setState({ uploadFile: newProps.uploadFile });
   }

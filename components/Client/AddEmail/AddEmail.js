@@ -47,12 +47,7 @@ class AddEmail extends Component {
     const { classes } = this.props;
     const { email, emailValid } = this.state;
     return (
-      <Dialog
-        // style={styles.rectangle}
-        className={classes.paper}
-        onClose={() => {}}
-        open={true}
-      >
+      <Dialog className={classes.paper} onClose={() => {}} open={true}>
         <div className={classes.Header} />
         <div className={classes.headerContainer}>
           <Typography className={classes.headerText}>
@@ -94,7 +89,6 @@ class AddEmail extends Component {
                 color="primary"
                 type="submit"
                 className={classes.AddEmailBtn}
-                // onClick={() => this.setState({ error: "something went wrong" })}
               >
                 Send Verification Link
               </Button>

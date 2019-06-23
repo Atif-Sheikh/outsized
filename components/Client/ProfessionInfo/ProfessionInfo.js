@@ -54,7 +54,8 @@ class ProfileComponent extends Component {
     profileAttributesSectors: [],
     detectSkill: false,
     detectSector: false,
-    detectClient: false
+    detectClient: false,
+    description: ""
   };
   componentDidMount() {
     this.props.retrieveFreelancerProfile();
@@ -63,15 +64,6 @@ class ProfileComponent extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.actionPerform === "update") {
-      console.log(
-        "======================",
-        nextProps &&
-          nextProps.updateProfessional &&
-          nextProps.updateProfessional.editExperience &&
-          nextProps.updateProfessional.editExperience.addProfessionalInfo &&
-          nextProps.updateProfessional.editExperience.addProfessionalInfo
-            .freelancerProfile
-      );
       if (
         nextProps &&
         nextProps.updateProfessional &&
@@ -100,10 +92,6 @@ class ProfileComponent extends Component {
         nextProps.freelancerProfile &&
         Object.keys(nextProps.freelancerProfile).length
       ) {
-        console.log(
-          nextProps.freelancerProfile.freelancer,
-          ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-        );
         this.setAllFieldsData(
           nextProps.freelancerProfile.freelancer.professionalInfo
         );
@@ -127,24 +115,41 @@ class ProfileComponent extends Component {
       role,
       relocation,
       currency,
-
       fullTime,
       fixedProject,
       dayProject,
       hourlyContract,
-
+      sectors,
+      clients,
+      skills,
+      description,
       expectedAnnualSalary,
       expectedDailyRate,
       expectedHourlyRate,
       expectedMonthlyRate,
       minHours
     } = this.state;
+    let clientId = clients.map(val => {
+      return val.id;
+    });
+
+    let sectorId = sectors.map(val => {
+      return val.id;
+    });
+
+    let skillId = skills.map(val => {
+      return val.id;
+    });
+
     let obj = {
       currentEmploymentType: type,
       relocation: relocation,
       currentRole: role,
       currency: currency,
-
+      sectors: sectorId,
+      clients: clientId,
+      skills: skillId,
+      description: description,
       enableFullTime: fullTime,
       expectedAnnualSalary: expectedAnnualSalary,
       enableFixedRateProjects: fixedProject,
@@ -172,7 +177,7 @@ class ProfileComponent extends Component {
     enableFullDayProjects,
     enableFullTime,
     enableHourlyProjects,
-
+    description,
     expectedAnnualSalary,
     expectedDailyRate,
     expectedHourlyRate,
@@ -191,7 +196,7 @@ class ProfileComponent extends Component {
       roleValue: [...this.state.roleValue],
       relocationValue: [...this.state.relocationValue],
       currencyValue: [...this.state.currencyValue],
-
+      description: description,
       fullTime: enableFullTime,
       fixedProject: enableFixedRateProjects,
       dayProject: enableFullDayProjects,
@@ -278,7 +283,6 @@ class ProfileComponent extends Component {
     profileArray,
     key
   ) => {
-    console.log("search", search);
     return (
       <div className={chipMain}>
         <Typography className={chipText}>
@@ -310,7 +314,6 @@ class ProfileComponent extends Component {
         updateChanges={e => this.handelTemplate(e, objValue)}
         handleAuto={event => this.handleAuto(event, objValue)}
         labelArry={this.state.profileAttributesSectors}
-        // className={classNames(textField, dense)}
         value={this.state.searchSector}
         name="searchSector"
       />
@@ -322,7 +325,6 @@ class ProfileComponent extends Component {
         updateChanges={e => this.handelTemplate(e, objValue)}
         handleAuto={event => this.handleAuto(event, objValue)}
         labelArry={this.state.profileAttributesSkills}
-        // className={classNames(textField, dense)}
         value={this.state.searchSkill}
         name="searchSkill"
       />
@@ -334,7 +336,6 @@ class ProfileComponent extends Component {
         updateChanges={e => this.handelTemplate(e, objValue)}
         handleAuto={event => this.handleAuto(event, objValue)}
         labelArry={this.state.profileAttributesClients}
-        // className={classNames(textField, dense)}
         value={this.state.searchClient}
         name="searchClient"
       />
@@ -410,13 +411,10 @@ class ProfileComponent extends Component {
               <Typography className={ExpectedText}>Min. Hours</Typography>
               <span className={ratesText}>
                 <InputArea
-                  // styleprops={styles.ratesText}
-                  // label="LinkedIn profile Url"
                   value={this.state[rateKey]}
                   name={rateKey}
                   handleInputChange={event => this.handleInputChange(event)}
                   validation={true}
-                  // styleprops={styles.ratesText}
                 />
               </span>
             </div>
@@ -506,9 +504,6 @@ class ProfileComponent extends Component {
       chip,
       textFieldPass
     } = classes;
-    console.log(profileAttributesClients, "profileAttributesClients");
-    console.log(profileAttributesSectors, "profileAttributesSectors");
-    console.log(profileAttributesSkills, "profileAttributesSkills");
     return (
       <div className={classes.paper}>
         {this.dropDown(
@@ -679,14 +674,15 @@ class ProfileComponent extends Component {
             What else would you like to tell us about yourself and what you’re
             looking for?
           </Typography>
-          <Typography className={classes.lowerTypos}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-            consectetur condimentum nunc, vel ultrices ante elementum in.
-            Aliquam bibendum egestas nunc. Morbi a urna arcu. Nunc euismod purus
-            ut elit luctus aliquet. Maecenas a interdum tortor. Sed tempus quam
-            eget egestas pellentesque. Praesent vehicula varius lectus, vel
-            maximus turpis rhoncus a.
-          </Typography>
+          <InputArea
+            styleprops={classes.ratesText}
+            label="Description"
+            value={this.state.description}
+            name="description"
+            handleInputChange={event => this.handleInputChange(event)}
+            validation={true}
+            styleprops={styles.ratesText}
+          />
         </div>
         <div
           style={{
@@ -710,7 +706,6 @@ class ProfileComponent extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state", state.clientBasicProfileReducer);
   return {
     isLoading: state.clientBasicProfileReducer.isLoading,
     error: state.clientBasicProfileReducer.message,
